@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HKU Canteen Finder</title>
+<meta name="description" content="Describe what you want to eat — get three canteens at HKU that fit." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="crest" aria-hidden="true">
+      <span>HKU</span>
+    </div>
+    <div class="brand-text">
+      <h1>Canteen Finder</h1>
+      <p>Say what you want. Get three places.</p>
+    </div>
+  </div>
+  <div class="status-chip" id="statusChip" data-state="idle">
+    <span class="dot"></span>
+    <span id="statusText">Ready</span>
+  </div>
+</header>
+
+<main class="page">
+
+  <section class="hero" id="hero">
+    <p class="eyebrow">The University of Hong Kong</p>
+    <h2 class="hero-title">What are you looking for?</h2>
+    <p class="hero-sub">
+      Describe your lunch in plain language — budget, diet, craving, where you are, how much time you have.
+    </p>
+
+    <form class="searchbar" id="searchForm" autocomplete="off">
+      <label class="sr-only" for="query">What are you looking for?</label>
+      <input
+        id="query"
+        name="query"
+        type="text"
+        maxlength="300"
+        placeholder="e.g. cheap vegetarian lunch near the Main Library before 2pm"
+        spellcheck="false"
+      />
+      <button type="submit" id="submitBtn">
+        <span class="btn-label">Find food</span>
+        <span class="btn-spinner" aria-hidden="true"></span>
+      </button>
+    </form>
+
+    <div class="examples" id="examples">
+      <button class="chip" data-q="I need a cheap vegetarian lunch near the Main Library before 2pm.">cheap vegetarian lunch, Main Library</button>
+      <button class="chip" data-q="I want noodles near Centennial Campus.">noodles near Centennial</button>
+      <button class="chip" data-q="Something quick and open now for coffee and a snack.">quick coffee and a snack</button>
+      <button class="chip" data-q="Halal dinner under 80 dollars with a friend.">halal dinner under $80</button>
+    </div>
+  </section>
+
+  <div class="error-box" id="errorBox" hidden>
+    <strong>That didn't work.</strong>
+    <span id="errorText"></span>
+    <button class="link" id="retryBtn">Try again</button>
+  </div>
+
+  <section class="results" id="results" hidden>
+    <div class="results-head">
+      <div>
+        <h3 id="resultsTitle">Top picks</h3>
+        <p class="results-sub" id="resultsSub"></p>
+      </div>
+      <button class="ghost-btn" id="toggleIntent" aria-expanded="true">
+        <span class="ghost-icon" aria-hidden="true">⌘</span> Parsed intent
+      </button>
+    </div>
+
+    <div class="banner" id="banner" hidden>
+      <span class="banner-icon" aria-hidden="true">!</span>
+      <p id="bannerText"></p>
+    </div>
+
+    <div class="sortbar" id="sortBar" hidden role="group" aria-label="Sort results">
+      <span class="sortbar-label">Sort</span>
+      <button class="sortbtn" type="button" data-sort="best_match">Best match</button>
+      <button class="sortbtn" type="button" data-sort="cheapest">Cheapest</button>
+      <button class="sortbtn" type="button" data-sort="closest">Closest</button>
+      <button class="sortbtn" type="button" data-sort="top_rated">Top rated</button>
+    </div>
+
+    <div class="layout" id="layout">
+      <div class="cards" id="cards"></div>
+
+      <aside class="intent-panel" id="intentPanel">
+        <div class="panel-head">
+          <h4>What we understood</h4>
+          <span class="mode-badge" id="modeBadge">—</span>
+        </div>
+        <div class="panel-facts" id="panelFacts"></div>
+        <details class="raw" id="rawDetails">
+          <summary>Raw model output</summary>
+          <pre id="rawJson">—</pre>
+        </details>
+        <p class="panel-note" id="panelNote"></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="empty-state" id="emptyState">
+    <div class="empty-grid" id="emptyGrid"></div>
+    <p class="empty-caption">Fifteen canteens across the Main, Centennial and West campuses — demo data for a prototype.</p>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span>Prototype · demo dataset, not an official HKU directory</span>
+  <span class="foot-sep">·</span>
+  <span id="footClock"></span>
+</footer>
+
+<div class="modal-overlay" id="detailModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Close details">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

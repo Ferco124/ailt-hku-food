@@ -1,0 +1,53 @@
+{
+  "note": "Closed vocabularies the intent parser may emit, plus the facet vocabulary used for tags, keyword synonym matching and UI colouring. This file is the single source of truth: server/data/vocab.js reads it and re-exports the same names the rest of the app already imports.",
+  "cuisines": [
+    { "key": "chinese", "label": "Chinese", "color": "t-red" },
+    { "key": "noodles", "label": "Noodles", "color": "t-red" },
+    { "key": "rice", "label": "Rice", "color": "t-red" },
+    { "key": "dimsum", "label": "Dim sum", "color": "t-red" },
+    { "key": "vegetarian", "label": "Vegetarian", "color": "t-green" },
+    { "key": "vegan", "label": "Vegan", "color": "t-green" },
+    { "key": "japanese", "label": "Japanese", "color": "t-pink" },
+    { "key": "sushi", "label": "Sushi", "color": "t-pink" },
+    { "key": "indian", "label": "Indian", "color": "t-amber" },
+    { "key": "curry", "label": "Curry", "color": "t-amber" },
+    { "key": "western", "label": "Western", "color": "t-purple" },
+    { "key": "sandwich", "label": "Sandwich", "color": "t-purple" },
+    { "key": "salad", "label": "Salad", "color": "t-blue" },
+    { "key": "coffee", "label": "Coffee", "color": "t-purple" },
+    { "key": "bakery", "label": "Bakery", "color": "t-purple" },
+    { "key": "snack", "label": "Snack", "color": "t-amber" },
+    { "key": "asian", "label": "Asian", "color": "t-amber" },
+    { "key": "hotpot", "label": "Hot pot", "color": "t-red" }
+  ],
+  "diets": [
+    { "key": "vegetarian", "label": "Vegetarian", "color": "t-green" },
+    { "key": "vegan", "label": "Vegan", "color": "t-green" },
+    { "key": "halal", "label": "Halal", "color": "t-amber" },
+    { "key": "gluten_free", "label": "Gluten-free", "color": "t-blue" }
+  ],
+  "facets": [
+    { "key": "budget", "label": "Budget", "color": "t-green", "synonyms": ["cheap", "affordable", "inexpensive", "value", "wallet-friendly", "low cost", "low-cost", "money"] },
+    { "key": "quick", "label": "Quick", "color": "t-amber", "synonyms": ["fast", "speedy", "hurry", "in a rush", "express", "grab and go", "grab-and-go"] },
+    { "key": "takeaway", "label": "Takeaway", "color": "t-purple", "synonyms": ["take out", "take-out", "takeout", "to go", "to-go", "packed"] },
+    { "key": "many-seats", "label": "Many seats", "color": "t-blue", "synonyms": ["spacious", "plenty of seating", "lots of seats", "roomy", "large", "big"] },
+    { "key": "quiet", "label": "Quiet", "color": "t-blue", "synonyms": ["calm", "peaceful", "quiet place", "low noise"] },
+    { "key": "study-spot", "label": "Study spot", "color": "t-blue", "synonyms": ["study", "study space", "study spot", "laptop", "work", "revise", "revision"] },
+    { "key": "wifi", "label": "Wi-Fi", "color": "t-blue", "synonyms": ["internet", "power socket", "power sockets", "sockets", "plug", "charging"] },
+    { "key": "group-dining", "label": "Group dining", "color": "t-amber", "synonyms": ["group", "friends", "with friends", "large group", "colleagues", "team"] },
+    { "key": "sit-down", "label": "Sit-down", "color": "t-purple", "synonyms": ["dine in", "dine-in", "formal", "table service", "restaurant"] },
+    { "key": "breakfast", "label": "Breakfast", "color": "t-amber", "synonyms": ["morning", "early", "brekkie"] },
+    { "key": "lunch-only", "label": "Lunch only", "color": "t-amber", "synonyms": ["lunch hour", "midday"] },
+    { "key": "dinner", "label": "Dinner", "color": "t-purple", "synonyms": ["evening", "supper", "night"] },
+    { "key": "open-late", "label": "Open late", "color": "t-pink", "synonyms": ["late", "late night", "late-night", "after hours", "midnight", "open late", "night owl"] },
+    { "key": "weekday-only", "label": "Weekday only", "color": "t-amber", "synonyms": ["weekdays", "weekday", "mon-fri", "monday to friday"] },
+    { "key": "halal", "label": "Halal", "color": "t-amber", "synonyms": ["muslim", "halal counter", "no pork"] },
+    { "key": "spicy", "label": "Spicy", "color": "t-red", "synonyms": ["hot", "chilli", "chili", "fiery"] },
+    { "key": "buffet-style", "label": "Buffet", "color": "t-green", "synonyms": ["buffet", "all you can eat", "self serve", "self-serve"] },
+    { "key": "customisable", "label": "Customisable", "color": "t-purple", "synonyms": ["custom", "make your own", "build your own", "choose your own"] },
+    { "key": "veg-thali", "label": "Veg thali", "color": "t-green", "synonyms": ["thali", "veg thali", "vegetarian set"] },
+    { "key": "residential", "label": "Residences", "color": "t-blue", "synonyms": ["dorm", "halls", "hall", "student village", "residence"] },
+    { "key": "off-campus", "label": "Off campus", "color": "t-blue", "synonyms": ["off campus", "outside campus", "neighbourhood", "neighborhood"] },
+    { "key": "international", "label": "International", "color": "t-purple", "synonyms": ["exchange", "exchange students", "international students", "expat"] }
+  ]
+}

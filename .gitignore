@@ -1,0 +1,9 @@
+node_modules/
+.env
+.DS_Store
+*.log
+
+# SQLite database — reproducible with `npm run migrate` from server/data/seed.js
+data/*.db
+data/*.db-wal
+data/*.db-shm

@@ -1,0 +1,362 @@
+{
+  "note": "Illustrative demo data for a prototype, not an official HKU catering directory. Venue names are plausible; prices, hours, positions, menus and images are approximations used to exercise the ranking logic. The single source link per canteen points at the real HKU CEDARS site, but no individual record has been verified against it.",
+  "landmarks": {
+    "main_library": { "label": "Main Library", "lat": 22.28302, "lng": 114.13736 },
+    "centennial_campus": { "label": "Centennial Campus", "lat": 22.28183, "lng": 114.13521 },
+    "hku_station": { "label": "HKU MTR Station (Exit A2)", "lat": 22.28393, "lng": 114.13551 },
+    "main_building": { "label": "Main Building", "lat": 22.28361, "lng": 114.13744 },
+    "knowles_building": { "label": "Knowles Building", "lat": 22.28319, "lng": 114.13628 },
+    "run_run_shaw": { "label": "Run Run Shaw Tower", "lat": 22.28246, "lng": 114.13478 },
+    "university_street": { "label": "University Street", "lat": 22.28458, "lng": 114.13633 },
+    "pokfulam_road": { "label": "Pokfulam Road", "lat": 22.28158, "lng": 114.13302 },
+    "jockey_club_village": { "label": "Jockey Club Student Village", "lat": 22.27996, "lng": 114.13452 },
+    "haking_wong": { "label": "Haking Wong Building", "lat": 22.28418, "lng": 114.13761 }
+  },
+  "canteens": [
+    {
+      "id": "cym-green-kitchen",
+      "name": "Green Kitchen 素食小廚",
+      "venue": "Chong Yuet Ming Amenities Centre, 1/F",
+      "zone": "Main Campus",
+      "lat": 22.28365, "lng": 114.13662,
+      "cuisines": ["vegetarian", "vegan", "chinese", "rice"],
+      "diets": ["vegetarian", "vegan"],
+      "priceLevel": 1, "avgPrice": 42, "rating": 4.3,
+      "hours": [["11:00", "19:00"], ["11:00", "20:30"], ["11:00", "20:30"], ["11:00", "20:30"], ["11:00", "20:30"], ["11:00", "20:30"], ["11:00", "19:00"]],
+      "emoji": "🥬",
+      "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=60",
+      "tags": ["budget", "buffet-style", "many-seats"],
+      "overview": "Pay-by-weight vegetarian buffet; the cheapest reliable veggie lunch on campus.",
+      "menu": [
+        { "name": "Veggie Set Meal", "price": 42 },
+        { "name": "Buddha's Delight Rice", "price": 46 },
+        { "name": "Tofu & Mushroom Bowl", "price": 38 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "cym-noodle-bar",
+      "name": "CYM Noodle Bar 麵軒",
+      "venue": "Chong Yuet Ming Amenities Centre, G/F",
+      "zone": "Main Campus",
+      "lat": 22.28359, "lng": 114.13671,
+      "cuisines": ["noodles", "chinese", "rice"],
+      "diets": [],
+      "priceLevel": 1, "avgPrice": 45, "rating": 4.1,
+      "hours": [["08:30", "20:00"], ["07:30", "21:00"], ["07:30", "21:00"], ["07:30", "21:00"], ["07:30", "21:00"], ["07:30", "21:00"], ["08:30", "20:00"]],
+      "emoji": "🍜",
+      "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=60",
+      "tags": ["quick", "breakfast", "budget"],
+      "overview": "Wonton noodles and congee from breakfast onwards; served in under 10 minutes.",
+      "menu": [
+        { "name": "Wonton Noodle Soup", "price": 45 },
+        { "name": "Beef Chow Fun", "price": 52 },
+        { "name": "Congee Set", "price": 34 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "cym-chinese-restaurant",
+      "name": "Chong Yuet Ming Chinese Restaurant",
+      "venue": "Chong Yuet Ming Amenities Centre, 2/F",
+      "zone": "Main Campus",
+      "lat": 22.28370, "lng": 114.13655,
+      "cuisines": ["chinese", "dimsum", "rice"],
+      "diets": [],
+      "priceLevel": 3, "avgPrice": 128, "rating": 4.0,
+      "hours": [["10:30", "22:00"], ["11:00", "22:00"], ["11:00", "22:00"], ["11:00", "22:00"], ["11:00", "22:00"], ["11:00", "22:00"], ["10:30", "22:00"]],
+      "emoji": "🥢",
+      "image": "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=60",
+      "tags": ["sit-down", "group-dining", "dinner"],
+      "overview": "Full-service Cantonese restaurant; better for a sit-down dinner than a quick bite.",
+      "menu": [
+        { "name": "Roast Pork Rice", "price": 98 },
+        { "name": "Steamed Fish Set", "price": 138 },
+        { "name": "Vegetable Stir-Fry", "price": 88 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "subway-cym",
+      "name": "Subway",
+      "venue": "Chong Yuet Ming Amenities Centre, G/F",
+      "zone": "Main Campus",
+      "lat": 22.28348, "lng": 114.13680,
+      "cuisines": ["sandwich", "salad", "western"],
+      "diets": ["vegetarian"],
+      "priceLevel": 1, "avgPrice": 52, "rating": 3.9,
+      "hours": [["09:00", "20:00"], ["08:00", "21:00"], ["08:00", "21:00"], ["08:00", "21:00"], ["08:00", "21:00"], ["08:00", "21:00"], ["09:00", "20:00"]],
+      "emoji": "🥪",
+      "image": "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=900&q=60",
+      "tags": ["quick", "takeaway", "customisable"],
+      "overview": "Made-to-order subs; veggie options available, queues move fast at noon.",
+      "menu": [
+        { "name": "Grilled Chicken Sub", "price": 52 },
+        { "name": "Veggie Delite Sub", "price": 42 },
+        { "name": "Tuna Melt", "price": 58 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "starbucks-main-library",
+      "name": "Starbucks (Main Library)",
+      "venue": "Main Library, G/F Extension",
+      "zone": "Main Campus",
+      "lat": 22.28309, "lng": 114.13731,
+      "cuisines": ["coffee", "snack", "bakery", "sandwich"],
+      "diets": ["vegetarian"],
+      "priceLevel": 2, "avgPrice": 46, "rating": 4.2,
+      "hours": [["09:00", "18:00"], ["08:00", "20:00"], ["08:00", "20:00"], ["08:00", "20:00"], ["08:00", "20:00"], ["08:00", "20:00"], ["09:00", "18:00"]],
+      "emoji": "☕",
+      "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=60",
+      "tags": ["study-spot", "wifi", "quick"],
+      "overview": "Directly inside the library — the obvious choice for coffee between study blocks.",
+      "menu": [
+        { "name": "Flat White", "price": 42 },
+        { "name": "Café Latte", "price": 40 },
+        { "name": "Butter Croissant", "price": 28 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "pacific-coffee-centennial",
+      "name": "Pacific Coffee (Centennial)",
+      "venue": "Centennial Campus, 3/F Run Run Shaw Tower podium",
+      "zone": "Centennial Campus",
+      "lat": 22.28195, "lng": 114.13503,
+      "cuisines": ["coffee", "snack", "bakery"],
+      "diets": ["vegetarian"],
+      "priceLevel": 2, "avgPrice": 48, "rating": 4.0,
+      "hours": [null, ["08:00", "19:00"], ["08:00", "19:00"], ["08:00", "19:00"], ["08:00", "19:00"], ["08:00", "19:00"], null],
+      "emoji": "🧋",
+      "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=60",
+      "tags": ["wifi", "quiet"],
+      "overview": "Quiet seating with power sockets; closed at weekends.",
+      "menu": [
+        { "name": "Cappuccino", "price": 42 },
+        { "name": "Iced Mocha", "price": 48 },
+        { "name": "Pain au Chocolat", "price": 30 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "centennial-food-court",
+      "name": "Centennial Food Court",
+      "venue": "Centennial Campus, LG/F",
+      "zone": "Centennial Campus",
+      "lat": 22.28172, "lng": 114.13544,
+      "cuisines": ["chinese", "asian", "rice", "noodles", "western"],
+      "diets": ["vegetarian", "halal"],
+      "priceLevel": 1, "avgPrice": 48, "rating": 3.8,
+      "hours": [["11:00", "19:00"], ["11:00", "20:00"], ["11:00", "20:00"], ["11:00", "20:00"], ["11:00", "20:00"], ["11:00", "20:00"], ["11:00", "19:00"]],
+      "emoji": "🍱",
+      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=60",
+      "tags": ["many-seats", "halal", "budget"],
+      "overview": "Six stalls under one roof, including a halal counter and a veggie set-meal stall.",
+      "menu": [
+        { "name": "Two-Dish Rice Set", "price": 48 },
+        { "name": "Hainanese Chicken Rice", "price": 52 },
+        { "name": "Veggie Set Meal", "price": 44 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "global-cafe",
+      "name": "Global Café",
+      "venue": "Global Lounge, UG/F Chong Yuet Ming",
+      "zone": "Main Campus",
+      "lat": 22.28382, "lng": 114.13642,
+      "cuisines": ["western", "sandwich", "coffee", "salad"],
+      "diets": ["vegetarian"],
+      "priceLevel": 2, "avgPrice": 72, "rating": 4.1,
+      "hours": [null, ["10:00", "18:00"], ["10:00", "18:00"], ["10:00", "18:00"], ["10:00", "18:00"], ["10:00", "18:00"], null],
+      "emoji": "🥗",
+      "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=60",
+      "tags": ["quiet", "international"],
+      "overview": "Relaxed lounge seating; popular with exchange students, limited weekend hours.",
+      "menu": [
+        { "name": "Grilled Sandwich", "price": 68 },
+        { "name": "Caesar Salad", "price": 62 },
+        { "name": "Flat White", "price": 38 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "indian-kitchen-rrs",
+      "name": "Indian Kitchen",
+      "venue": "Run Run Shaw Tower, 1/F",
+      "zone": "Centennial Campus",
+      "lat": 22.28252, "lng": 114.13488,
+      "cuisines": ["indian", "curry", "rice"],
+      "diets": ["vegetarian", "halal"],
+      "priceLevel": 2, "avgPrice": 68, "rating": 4.2,
+      "hours": [["12:00", "20:30"], ["11:30", "21:00"], ["11:30", "21:00"], ["11:30", "21:00"], ["11:30", "21:00"], ["11:30", "21:00"], ["12:00", "20:30"]],
+      "emoji": "🍛",
+      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=60",
+      "tags": ["halal", "spicy", "veg-thali"],
+      "overview": "Thali sets with a vegetarian option; the only halal kitchen on the centennial side.",
+      "menu": [
+        { "name": "Veg Thali", "price": 68 },
+        { "name": "Chicken Tikka Masala", "price": 78 },
+        { "name": "Garlic Naan", "price": 24 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "knowles-cafe",
+      "name": "Knowles Café",
+      "venue": "Knowles Building, G/F",
+      "zone": "Main Campus",
+      "lat": 22.28325, "lng": 114.13621,
+      "cuisines": ["sandwich", "salad", "coffee", "snack"],
+      "diets": ["vegetarian"],
+      "priceLevel": 2, "avgPrice": 55, "rating": 3.7,
+      "hours": [null, ["08:30", "17:30"], ["08:30", "17:30"], ["08:30", "17:30"], ["08:30", "17:30"], ["08:30", "17:30"], null],
+      "emoji": "🥙",
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=60",
+      "tags": ["quick", "takeaway"],
+      "overview": "Grab-and-go counter aimed at staff; closes early in the afternoon.",
+      "menu": [
+        { "name": "Tuna Melt", "price": 52 },
+        { "name": "Garden Salad", "price": 48 },
+        { "name": "Americano", "price": 32 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "sushi-university-street",
+      "name": "Sushi Take-Out 寿司屋",
+      "venue": "University Street, Shop 3",
+      "zone": "Main Campus",
+      "lat": 22.28449, "lng": 114.13639,
+      "cuisines": ["japanese", "sushi", "rice"],
+      "diets": [],
+      "priceLevel": 2, "avgPrice": 74, "rating": 4.0,
+      "hours": [["11:30", "20:00"], ["11:00", "20:30"], ["11:00", "20:30"], ["11:00", "20:30"], ["11:00", "20:30"], ["11:00", "20:30"], ["11:30", "20:00"]],
+      "emoji": "🍣",
+      "image": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=900&q=60",
+      "tags": ["takeaway", "quick"],
+      "overview": "Pre-packed sushi boxes and donburi; no seating, eat on the street or take away.",
+      "menu": [
+        { "name": "Salmon Nigiri Set", "price": 78 },
+        { "name": "California Roll", "price": 58 },
+        { "name": "Chicken Donburi", "price": 72 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "deli-fresh-main-building",
+      "name": "Deli Fresh",
+      "venue": "Main Building, G/F",
+      "zone": "Main Campus",
+      "lat": 22.28355, "lng": 114.13738,
+      "cuisines": ["sandwich", "salad", "snack"],
+      "diets": ["vegetarian"],
+      "priceLevel": 1, "avgPrice": 40, "rating": 3.6,
+      "hours": [null, ["08:00", "16:00"], ["08:00", "16:00"], ["08:00", "16:00"], ["08:00", "16:00"], ["08:00", "16:00"], null],
+      "emoji": "🥖",
+      "image": "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=900&q=60",
+      "tags": ["budget", "quick"],
+      "overview": "Cheap sandwiches and soup; closes at 4pm sharp.",
+      "menu": [
+        { "name": "Ham & Cheese Sandwich", "price": 38 },
+        { "name": "Soup of the Day", "price": 28 },
+        { "name": "Egg Mayo Roll", "price": 32 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "haking-wong-dimsum",
+      "name": "Haking Wong Dim Sum 點心坊",
+      "venue": "Haking Wong Building, 1/F",
+      "zone": "Main Campus",
+      "lat": 22.28412, "lng": 114.13752,
+      "cuisines": ["dimsum", "chinese"],
+      "diets": [],
+      "priceLevel": 2, "avgPrice": 82, "rating": 4.1,
+      "hours": [["10:00", "16:00"], ["10:30", "15:00"], ["10:30", "15:00"], ["10:30", "15:00"], ["10:30", "15:00"], ["10:30", "15:00"], ["10:00", "16:00"]],
+      "emoji": "🥟",
+      "image": "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=60",
+      "tags": ["lunch-only", "group-dining"],
+      "overview": "Traditional trolley dim sum, lunch service only — kitchen closes at 3pm.",
+      "menu": [
+        { "name": "Har Gow (4 pcs)", "price": 42 },
+        { "name": "Siu Mai (4 pcs)", "price": 40 },
+        { "name": "Char Siu Bao (3 pcs)", "price": 36 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "village-vegetarian",
+      "name": "Village Vegetarian 素心",
+      "venue": "Jockey Club Student Village, G/F",
+      "zone": "West Campus",
+      "lat": 22.28005, "lng": 114.13458,
+      "cuisines": ["vegetarian", "vegan", "chinese", "rice"],
+      "diets": ["vegetarian", "vegan"],
+      "priceLevel": 1, "avgPrice": 38, "rating": 4.4,
+      "hours": [["11:00", "21:00"], ["11:00", "21:00"], ["11:00", "21:00"], ["11:00", "21:00"], ["11:00", "21:00"], ["11:00", "21:00"], ["11:00", "21:00"]],
+      "emoji": "🌱",
+      "image": "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=900&q=60",
+      "tags": ["budget", "residential"],
+      "overview": "Cheapest vegan set meals on campus and open seven days a week.",
+      "menu": [
+        { "name": "Vegan Set Meal", "price": 38 },
+        { "name": "Buddha's Delight Rice", "price": 42 },
+        { "name": "Tofu & Mushroom Bowl", "price": 34 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    },
+    {
+      "id": "pokfulam-noodle-house",
+      "name": "Pokfulam Noodle House 薄扶林麵家",
+      "venue": "Pokfulam Road, G/F",
+      "zone": "West Campus",
+      "lat": 22.28148, "lng": 114.13312,
+      "cuisines": ["noodles", "chinese", "rice"],
+      "diets": ["vegetarian"],
+      "priceLevel": 1, "avgPrice": 46, "rating": 4.0,
+      "hours": [["07:00", "20:00"], ["07:00", "20:00"], ["07:00", "20:00"], ["07:00", "20:00"], ["07:00", "20:00"], ["07:00", "20:00"], ["07:00", "20:00"]],
+      "emoji": "🍲",
+      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=60",
+      "tags": ["breakfast", "budget", "off-campus"],
+      "overview": "Neighbourhood noodle shop just off campus; opens early for breakfast.",
+      "menu": [
+        { "name": "Wonton Noodle Soup", "price": 46 },
+        { "name": "Beef Brisket Noodles", "price": 56 },
+        { "name": "Congee Set", "price": 32 }
+      ],
+      "sources": [
+        { "label": "HKU CEDARS — campus amenities & catering", "url": "https://www.cedars.hku.hk/", "checkedAt": null }
+      ]
+    }
+  ]
+}
