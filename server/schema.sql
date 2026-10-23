@@ -32,12 +32,13 @@ CREATE TABLE IF NOT EXISTS canteens (
   zone        TEXT    NOT NULL,
   lat         REAL    NOT NULL,
   lng         REAL    NOT NULL,
-  price_level INTEGER NOT NULL CHECK (price_level BETWEEN 1 AND 3),
-  avg_price   INTEGER NOT NULL CHECK (avg_price > 0),
-  rating      REAL    NOT NULL CHECK (rating BETWEEN 0 AND 5),
+  price_level INTEGER CHECK (price_level BETWEEN 1 AND 3),
+  avg_price   REAL CHECK (avg_price > 0),
+  rating      REAL CHECK (rating BETWEEN 0 AND 5),
   emoji       TEXT,
   image       TEXT,
-  overview    TEXT
+  overview    TEXT,
+  verified    INTEGER NOT NULL DEFAULT 0 CHECK (verified IN (0, 1))
 );
 
 CREATE TABLE IF NOT EXISTS canteen_cuisines (
@@ -63,7 +64,16 @@ CREATE TABLE IF NOT EXISTS canteen_menu (
   canteen_id TEXT    NOT NULL REFERENCES canteens(id) ON DELETE CASCADE,
   position   INTEGER NOT NULL,
   name       TEXT    NOT NULL,
-  price      INTEGER NOT NULL CHECK (price > 0),
+  price      REAL CHECK (price > 0),
+  stall      TEXT NOT NULL,
+  cuisines   TEXT NOT NULL,
+  verified   INTEGER NOT NULL CHECK (verified IN (0, 1)),
+  is_certified_halal INTEGER CHECK (is_certified_halal IN (0, 1)),
+  is_vegetarian INTEGER CHECK (is_vegetarian IN (0, 1)),
+  ingredients_listed TEXT NOT NULL,
+  dietary_tags TEXT NOT NULL,
+  dietary_tags_source TEXT NOT NULL,
+  sources TEXT NOT NULL,
   PRIMARY KEY (canteen_id, position)
 );
 

@@ -17,7 +17,13 @@ STRICT RULES
 2. Never invent canteen names, venues, dish names, prices, opening hours, ratings or tags. You are not recommending anything.
 3. Only extract preferences that the user actually states or that are unambiguous.
 4. If a value is not clearly stated, use null (for scalars) or [] (for arrays). Do not guess.
-5. Use ONLY the allowed values listed below. If the user asks for something outside these lists, omit it.
+5. Never drop a user constraint. Put unsupported requirements in "unsupported".
+6. Preserve any specifically requested restaurant or stall name in "requested_stall", even if unknown.
+7. For medical advice, ordering requests or allergen-safety claims set "refusal" to
+medical_refused, ordering_refused or allergen_refused respectively.
+8. Interpret English and Chinese. Use arrive_by for an explicit eating time, including "after 8 PM" as "20:00".
+9. Put explicit campus-area restrictions in zone (Main Campus, Centennial Campus, West Campus).
+10. For unsupported dates (tomorrow, holidays), time ranges or ambiguous constraints, put them in unsupported rather than guessing.
 
 ALLOWED VALUES
 cuisines: ${CUISINES.join(', ')}
@@ -29,8 +35,12 @@ sort: best_match, cheapest, closest, top_rated
 
 OUTPUT SCHEMA
 {
+  "requested_stall": string | null,
+  "zone": string | null,
+  "unsupported": string[],
+  "refusal": "medical_refused" | "ordering_refused" | "allergen_refused" | null,
   "cuisines": string[],            // 0-4 entries from the cuisine list
-  "diets": string[],               // 0-3 entries from the diet list
+  "diets": string[],               // all requested restrictions from the diet list; never truncate
   "max_price_hkd": number | null,  // hard budget per person, only if the user gives a number
   "price_preference": "cheap" | "mid" | "any",
   "open_now": boolean,             // true unless the user implies they are eating later

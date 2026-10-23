@@ -2,9 +2,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { config, ROOT } from './config.js';
-import { parseIntent } from './llm.js';
-import { hasConstraints } from './schema.js';
-import { search } from './search.js';
+import { recommend, coverage } from './recommend.js';
 import { nowInHK } from './geo.js';
 import { getCanteens, getStats, logSearch, DB_PATH, SCHEMA_VERSION } from './db.js';
 import { VOCAB } from './data/vocab.js';
@@ -85,64 +83,9 @@ async function serveStatic(res, pathname) {
  * Core pipeline:
  *   prompt → LLM (strict JSON) → validate → filter/rank → top 3
  *
- * There is deliberately no fallback search. If the model cannot be reached the
- * request fails with `model_offline` rather than quietly returning results from
- * a different code path — a status demo should never mask an outage.
+ * Exact walkthrough snapshots may be served offline with an explicit label.
+ * No arbitrary fallback search or generated menu data is permitted.
  */
-async function recommend(query, atMinutes = null) {
-  const now = nowInHK();
-  // Testing aid: ?at=HH:MM lets a reviewer check opening-hours logic at any hour.
-  if (atMinutes != null) {
-    now.minutes = atMinutes;
-    now.hhmm = `${String(Math.floor(atMinutes / 60)).padStart(2, '0')}:${String(atMinutes % 60).padStart(2, '0')}`;
-  }
-
-  const llm = await parseIntent(query);
-
-  if (!llm.ok) {
-    return { offline: true, query, llm };
-  }
-
-  const base = {
-    ok: true,
-    query,
-    intent: llm.intent,
-    notice: null,
-    llm: {
-      ok: true,
-      model: llm.model,
-      latencyMs: llm.latencyMs,
-      warnings: llm.warnings ?? [],
-      raw: llm.raw ?? null,
-    },
-  };
-
-  // The model answered, but the answer carried no usable constraints.
-  if (!hasConstraints(llm.intent)) {
-    return {
-      ...base,
-      reason: 'no_preferences',
-      notice:
-        "I couldn't pick any preferences out of that. Try naming a cuisine, a budget, a meal, or where you are.",
-      results: [],
-      meta: {
-        evaluated: 0,
-        totalMatches: 0,
-        lowConfidence: false,
-        bestMatch: 0,
-        relaxed: [],
-        sort: 'best_match',
-        sortBasis: null,
-        checkTime: now.hhmm,
-        dayName: now.dayName,
-      },
-    };
-  }
-
-  const { results, meta } = search(llm.intent, { now });
-  return { ...base, reason: null, results, meta };
-}
-
 const server = createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const ip = req.socket.remoteAddress || 'unknown';
@@ -170,6 +113,9 @@ const server = createServer(async (req, res) => {
   if (req.method === 'GET' && url.pathname === '/api/vocab') {
     return json(res, 200, { ok: true, ...VOCAB });
   }
+  if (req.method === 'GET' && url.pathname === '/api/coverage') {
+    return json(res, 200, { ok: true, ...coverage });
+  }
 
   if (req.method === 'GET' && url.pathname === '/api/canteens') {
     return json(res, 200, {
@@ -188,10 +134,18 @@ const server = createServer(async (req, res) => {
 
     let query = '';
     let atMinutes = null;
+    let demo = false;
     try {
       const raw = await readBody(req);
       const parsed = JSON.parse(raw || '{}');
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed) ||
+          (parsed.query !== undefined && typeof parsed.query !== 'string') ||
+          (parsed.demo !== undefined && typeof parsed.demo !== 'boolean') ||
+          (parsed.at !== undefined && (typeof parsed.at !== 'string' || !/^([01]\d|2[0-3]):[0-5]\d$/.test(parsed.at)))) {
+        return json(res, 400, { ok: false, error: 'Expected query as text, demo as a boolean, and optional at as HH:MM.' });
+      }
       query = String(parsed.query ?? '').trim();
+      demo = parsed.demo === true;
       if (typeof parsed.at === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(parsed.at)) {
         const [h, m] = parsed.at.split(':').map(Number);
         atMinutes = h * 60 + m;
@@ -205,7 +159,12 @@ const server = createServer(async (req, res) => {
 
     const t0 = Date.now();
     try {
-      const result = await recommend(query, atMinutes);
+      const now = nowInHK();
+      if (atMinutes != null) {
+        now.minutes = atMinutes;
+        now.hhmm = `${String(Math.floor(atMinutes / 60)).padStart(2, '0')}:${String(atMinutes % 60).padStart(2, '0')}`;
+      }
+      const result = await recommend(query, { now, demo, allowCache: atMinutes == null });
 
       if (result.offline) {
         logSearch({ query, mode: 'offline', latencyMs: Date.now() - t0 });
@@ -222,7 +181,7 @@ const server = createServer(async (req, res) => {
 
       logSearch({
         query,
-        mode: result.reason === 'no_preferences' ? 'no_preferences' : 'llm',
+        mode: result.reason || result.mode,
         intent: result.intent,
         resultIds: result.results.map((r) => r.id),
         latencyMs: Date.now() - t0,
@@ -246,14 +205,21 @@ const server = createServer(async (req, res) => {
   json(res, 405, { ok: false, error: 'Method not allowed' });
 });
 
-server.listen(config.port, () => {
+server.listen(config.port, '127.0.0.1', () => {
   const { hhmm, dayName } = nowInHK();
   const count = getCanteens().length;
   console.log(`\n  HKU Canteen Finder`);
   console.log(`  ─────────────────────────────────────────`);
-  console.log(`  http://localhost:${config.port}`);
+  console.log(`  http://127.0.0.1:${server.address().port}`);
   console.log(`  model      ${config.model} @ ${config.baseUrl}`);
-  console.log(`  api key    ${config.hasKey ? 'configured' : 'MISSING — searches will fail'}`);
+  console.log(`  api key    ${config.hasKey ? 'configured' : 'MISSING — safety responses and exact cached walkthroughs only'}`);
   console.log(`  database   ${DB_PATH} (${count} canteens)`);
   console.log(`  hong kong  ${dayName} ${hhmm}\n`);
+  if (process.send) process.send({ type: 'ready', port: server.address().port });
 });
+if (process.send) {
+  process.on('disconnect', () => {
+    server.closeAllConnections();
+    server.close();
+  });
+}

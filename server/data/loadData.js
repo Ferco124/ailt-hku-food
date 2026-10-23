@@ -15,6 +15,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { toMinutes } from '../time.js';
+import { validSource } from '../policy.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export const DATA_DIR = join(__dirname, '..', '..', 'data');
@@ -131,8 +132,7 @@ export function deriveTags(canteen) {
 }
 
 /** Load and validate data/canteens.json against the vocabulary. */
-export function loadDataset(vocab = loadVocab()) {
-  const { value } = readJson(CANTEENS_PATH);
+export function loadDataset(vocab = loadVocab(), value = readJson(CANTEENS_PATH).value) {
   if (!isObject(value)) throw new DataError('canteens.json must be a JSON object');
 
   const cuisineKeys = new Set(vocab.cuisines.map((c) => c.key));
@@ -161,7 +161,7 @@ export function loadDataset(vocab = loadVocab()) {
     if (seen.has(c.id)) throw new DataError(`canteens.json: duplicate canteen id "${c.id}"`);
     seen.add(c.id);
 
-    for (const field of ['name', 'venue', 'zone', 'overview', 'image']) {
+    for (const field of ['name', 'venue', 'zone', 'overview']) {
       if (!isNonEmptyString(c[field])) {
         throw new DataError(`canteens.json: ${where} is missing "${field}"`);
       }
@@ -169,18 +169,22 @@ export function loadDataset(vocab = loadVocab()) {
     if (!Number.isFinite(c.lat) || !Number.isFinite(c.lng)) {
       throw new DataError(`canteens.json: ${where} needs numeric lat/lng`);
     }
-    if (!Number.isInteger(c.priceLevel) || c.priceLevel < 1 || c.priceLevel > 3) {
+    if (c.image != null && !isNonEmptyString(c.image)) throw new DataError(`${where}: image must be text or null`);
+    if (c.priceLevel !== null && (!Number.isInteger(c.priceLevel) || c.priceLevel < 1 || c.priceLevel > 3)) {
       throw new DataError(`canteens.json: ${where} priceLevel must be 1, 2 or 3`);
     }
-    if (!Number.isFinite(c.avgPrice) || c.avgPrice <= 0) {
+    if (c.avgPrice !== null && (!Number.isFinite(c.avgPrice) || c.avgPrice <= 0)) {
       throw new DataError(`canteens.json: ${where} avgPrice must be > 0`);
     }
-    if (!Number.isFinite(c.rating) || c.rating < 0 || c.rating > 5) {
+    if (c.rating !== null && (!Number.isFinite(c.rating) || c.rating < 0 || c.rating > 5)) {
       throw new DataError(`canteens.json: ${where} rating must be between 0 and 5`);
     }
 
     const hours = checkHours(c.id, c.hours);
 
+    for (const field of ['cuisines', 'diets', 'tags', 'menu']) {
+      if (!Array.isArray(c[field])) throw new DataError(`${where}: ${field} must be an array`);
+    }
     const cuisines = c.cuisines ?? [];
     if (cuisines.length === 0) throw new DataError(`canteens.json: ${where} has no cuisines`);
     for (const k of cuisines) {
@@ -196,10 +200,49 @@ export function loadDataset(vocab = loadVocab()) {
     }
 
     const menu = c.menu ?? [];
+    if (typeof c.verified !== 'boolean') throw new DataError(`${where}: verified must be a boolean`);
+    if (c.verified && (!Array.isArray(c.sources) || !c.sources.length || !c.sources.every(validSource))) {
+      throw new DataError(`${where}: verified venue needs dated HTTPS sources for its hours and identity`);
+    }
     if (menu.length === 0) throw new DataError(`canteens.json: ${where} has an empty menu`);
     menu.forEach((m, j) => {
-      if (!isObject(m) || !isNonEmptyString(m.name) || !Number.isInteger(m.price) || m.price <= 0) {
-        throw new DataError(`canteens.json: ${where} menu[${j}] needs a name and a positive integer price`);
+      if (!isObject(m) || !isNonEmptyString(m.name) || (m.price !== null && (!Number.isFinite(m.price) || m.price <= 0))) {
+        throw new DataError(`canteens.json: ${where} menu[${j}] needs a name and a positive price or null (unknown)`);
+      }
+      if (!isNonEmptyString(m.stall) || typeof m.verified !== 'boolean') {
+        throw new DataError(`${where}: menu[${j}] needs stall and verified`);
+      }
+      if (!Array.isArray(m.cuisines) || !m.cuisines.length || m.cuisines.some((k) => !cuisineKeys.has(k))) {
+        throw new DataError(`${where}: menu[${j}] needs known item-level cuisines`);
+      }
+      for (const key of ['is_certified_halal', 'is_vegetarian']) {
+        if (m[key] !== null && typeof m[key] !== 'boolean') throw new DataError(`${where}: ${key} must be boolean or null`);
+      }
+      if (m.ingredients_listed !== null &&
+          (!Array.isArray(m.ingredients_listed) || !m.ingredients_listed.every(isNonEmptyString))) {
+        throw new DataError(`${where}: ingredients_listed must be a string array or null (unknown)`);
+      }
+      if (!Array.isArray(m.dietary_tags) || m.dietary_tags.some((d) => !dietKeys.has(d)) ||
+          !Array.isArray(m.dietary_tags_source) || !Array.isArray(m.sources)) {
+        throw new DataError(`${where}: menu dietary tags and sources must be arrays`);
+      }
+      if (m.verified && (!c.verified || !m.sources.length || !m.sources.every(validSource))) {
+        throw new DataError(`${where}: verified menu needs a verified venue and dated item sources`);
+      }
+      if (m.dietary_tags_source.some((s) => !validSource(s) || !dietKeys.has(s.tag) || !isNonEmptyString(s.statement))) {
+        throw new DataError(`${where}: dietary evidence needs tag, statement, source and check date`);
+      }
+      const claims = [...m.dietary_tags, ...(m.is_certified_halal ? ['halal'] : []), ...(m.is_vegetarian ? ['vegetarian'] : [])];
+      for (const [tag, flag] of [['halal', 'is_certified_halal'], ['vegetarian', 'is_vegetarian']]) {
+        if (m.dietary_tags.includes(tag) && m[flag] !== true) {
+          throw new DataError(`${where}: ${tag} tag contradicts ${flag}`);
+        }
+      }
+      if (m.dietary_tags_source.some((s) => !claims.includes(s.tag))) {
+        throw new DataError(`${where}: dietary evidence must describe a declared positive claim`);
+      }
+      if (claims.length && (!m.verified || claims.some((tag) => !m.dietary_tags_source.some((s) => s.tag === tag)))) {
+        throw new DataError(`${where}: every positive dietary claim requires reviewed, explicit source evidence`);
       }
     });
 

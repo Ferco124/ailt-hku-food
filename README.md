@@ -1,394 +1,290 @@
-# HKU Canteen Finder
+# HKU Campus Dining & Dietary Navigator
 
-A vertical slice of a natural-language canteen finder for the University of Hong Kong.  
-You type what you want, a lightweight LLM turns it into strict JSON, the server  
-validates that JSON, filters a small demo database, and the top three places are  
-rendered as cards.
+A local information-only dining app. It does **not** place or modify orders,
+provide medical advice, diagnose allergies or guarantee allergen safety.
 
-This is a **demo prototype**, not a product. The canteen data is illustrative.
+**Readiness: not ready for real dietary recommendations.** The shipped dataset
+has 15 illustrative venues and 45 unverified menu items, not 50 source-reviewed
+items. Verified mode excludes them. An empty answer means **"No match found in
+the current dataset"**, not that suitable food does not exist on campus.
 
----
+Informational only, not a safety guarantee. Confirm dietary status, ingredients
+and cross-contamination risks with canteen staff. An absent ingredient is not
+evidence of safety.
 
-## Quick start
+## Three-step first use (packaged release)
 
-```bash
-npm start          # http://localhost:4173
+1. **Unzip** the release folder matching your OS and architecture. Keep its
+   `runtime`, `data`, `public` and `server` folders together.
+2. **Open the launcher:** double-click `run.bat` on Windows. On macOS/Linux,
+   open `run.sh` with your system's executable-script handler. The release
+   includes Node, so no Python, Node installation or terminal commands are
+   required on Windows. macOS security prompts and Linux file-manager
+   executable policies vary; those launch paths still need platform testing.
+3. **Use the browser** at <http://127.0.0.1:5000>. Keep the launcher window open.
+   Try a sample query. Without an API key, exact sample queries use prominently
+   labelled cached walkthroughs, not current opening status.
+
+![Verified mode and coverage](docs/start.png)
+
+To see illustrative cards, explicitly select **Show unverified demonstration
+data**, then select the noodles example. Dietary searches still exclude
+unverified dishes, even in demonstration mode.
+
+![Cached demonstration with disclaimers](docs/demo.png)
+
+For live parsing, copy `.env.example` to `.env` with a text editor and insert
+your existing Week 2 DeepSeek key as `BAILIAN_API_KEY`. The key stays on the
+local server; it is never included in a release folder or browser response.
+Never put a key in a query or commit `.env`.
+
+## Source checkout / developer setup
+
+Requires **Node.js 22.16 or newer** (`node:sqlite` is not available in Node 18).
+There are no npm dependencies and no build step.
+
+```sh
+npm start
+npm test
+npm run migrate
+npm run evaluate
+npm run evaluate -- --live
+npm run cache:walkthrough
+npm run package
 ```
 
-No dependencies, no build step. Node 18+ (developed on 22).
+- `npm start`: starts on port 5000, loopback only. `PORT` overrides it.
+- `npm test`: scoped regression tests, including HTTP, launcher lifecycle and a
+  local fake model provider. No external provider calls. The explicit test glob
+  prevents copied release tests from being discovered a second time.
+- `npm run migrate`: validates schema, data import and database integrity.
+- `npm run evaluate`: executes local safety cases; marks model-dependent
+  cases blocked and exits nonzero while acceptance requirements remain unmet.
+- `npm run evaluate -- --live`: makes real model calls using the configured
+  key (may incur cost), disables cached answers and writes a report.
+- `npm run cache:walkthrough`: regenerates eight snapshots (four example
+  queries in verified and demo modes), using Friday 23 October 2026 at 12:30
+  HKT as the explicit walkthrough clock. These are authored walkthroughs,
+  not captured successful live-model answers. Actual save time is separate.
+- `npm run package`: creates `dist/hku-food-<platform>-<architecture>` with
+  the running Node binary and its LICENSE. Use an official Node distribution
+  with LICENSE beside the executable. Zip the output folder for distribution.
+  Build separately on each target OS; a Windows runtime cannot run on macOS.
+  Existing output directories are not overwritten.
+  To create another release without touching the existing one, use
+  `npm run package -- dist/hku-food-validated`.
 
-The database is created automatically on first run, so `npm start` is enough. To
-manage it explicitly:
+`run.bat` and `run.sh` can also use an installed runtime in a source checkout.
+A source checkout without Node is not a self-contained release.
 
-```bash
-npm run migrate    # create/verify the database
-npm run db:reset   # drop and re-import from data/canteens.json
+### Provider configuration
+
+```dotenv
+PORT=5000
+BAILIAN_API_KEY=
+BAILIAN_BASE_URL=https://api.deepseek.com/v1
+BAILIAN_MODEL=deepseek-chat
+LLM_TIMEOUT_MS=12000
 ```
 
-The only requirement is a working API key in `.env`:
+The `BAILIAN_*` variable names are retained for compatibility. Existing
+OpenAI-compatible providers remain supported; set their base URL and model
+together. `npm run check-key` makes a real diagnostic provider call.
 
-```
-BAILIAN_API_KEY=sk-...
-BAILIAN_BASE_URL=https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1
-BAILIAN_MODEL=qwen3.8-flash
-```
+## Pipeline and safety contract
 
----
-
-## Getting a working key
-
-If the model path fails, run the diagnostic before changing anything:
-
-```bash
-npm run check-key
-```
-
-It inspects the key's shape, makes one real call, and explains the failure in
-plain terms (expired token, wrong region, unknown model, missing quota).
-
-**Standard Model Studio keys are a single `sk-…` token with no dots.** Create one
-at <https://bailian.console.aliyun.com> → 模型服务 → API-KEY.
-
-### Which endpoint does the key belong to?
-
-A key only authenticates against the gateway that issued it. Mixing them up is the
-most common cause of a 401:
-
-| Key type | Base URL |
-| --- | --- |
-| Console key, 华北2 (Beijing) | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
-| Console key, Singapore | `https://dashscope-intl.aliyuncs.com/compatible-mode/v1` |
-| MaaS **token plan** key | `https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1` |
-
-Token-plan keys look different from console keys: `sk-sp-…` followed by three more
-dot-separated segments, the last being a DER ECDSA signature. If `npm run check-key`
-reports an unusual shape, the key is almost certainly a token-plan key and needs the
-`token-plan` host. Token-plan gateways also serve their own model catalogue — run
-`curl -H "Authorization: Bearer $KEY" …/v1/models` to see what is available, since
-`qwen-turbo` may not exist there.
-
-### Using a different provider
-
-The client only speaks the OpenAI chat-completions shape, so any compatible
-provider works by editing `.env` alone:
-
-| Provider | `BAILIAN_BASE_URL` | `BAILIAN_MODEL` |
-| --- | --- | --- |
-| DeepSeek | `https://api.deepseek.com/v1` | `deepseek-chat` |
-| OpenAI | `https://api.openai.com/v1` | `gpt-4o-mini` |
-| Moonshot | `https://api.moonshot.cn/v1` | `moonshot-v1-8k` |
-| Ollama (local) | `http://localhost:11434/v1` | `qwen2.5:7b` |
-
-No code changes — the parser only cares about the JSON the model returns.
-
----
-
-## The pipeline
-
-```
-prompt
-  │
-  ├─► Bailian chat/completions (temperature 0, JSON mode)
-  │      │
-  │      ├─ unreachable / rejected / timed out ──► 503 model_offline
-  │      ▼                                        (no results, by design)
-  │   extractJSON()  →  validateIntent()
-  │      │                    │
-  │      │                    └─ unknown cuisine, invented venue,
-  │      │                       bad enum → dropped or rejected
-  │      ▼
-  └─► Intent
-         │
-         ▼
-  search(): filter → score → relevance floor → sort
-         ▼
-    top 3 results
+```text
+query
+  -> local ordering / medical / allergen guard
+  -> model parses intent (English or Chinese)
+  -> validate known values; preserve unsupported requirements
+  -> restore explicitly stated dietary requirements
+  -> verified item retrieval + strict time / location / budget filtering
+  -> rank qualifying venues; return only qualifying menu items
+  -> cards with stall, sources, check dates and safety disclaimer
 ```
 
-There is **no fallback search**. If the model cannot be reached, the request fails
-with `503 model_offline` and the UI shows an offline state instead of results. A
-status demo should never mask an outage by quietly answering from a different code
-path.
+The model never supplies menu records, prices or hours. Recommendations come
+from local JSON projected into SQLite. Unknown diets and locations are retained
+as unsupported constraints, not silently broadened. Multiple diets must hold
+on the **same item**. Hard constraints, particularly dietary restrictions, are
+never relaxed.
 
-### Why the model cannot invent canteens
+All requested diets are preserved, including four simultaneous restrictions.
+Malformed constraint types fail validation. Dietary terms in the cuisine field
+also activate dietary checks. Decimal budgets are never rounded upward.
+Cuisine filtering selects individual dishes, not other items sold by the same
+food court. Cheapest ordering uses the lowest matching dish price; the API's
+legacy `avgPrice` field now carries this matching-item price for compatibility.
+Unknown prices cannot satisfy a hard budget and sort after known prices.
+A walking limit without a starting landmark is reported as unsupported.
 
-The model **never sees the canteen database**. It only receives a fixed  
-vocabulary (cuisines, diets, landmark keys, sort options) and returns an intent  
-object. Even if it hallucinated `"near": "Fuji Restaurant"`, `normaliseLandmark()`  
-would drop it before it reached the search stage. Prices and opening hours are  
-never taken from the model at all — they come only from the `canteens` and  
-`canteen_hours` tables.
+Explicit eating times are checked even when `open_now` is false; closing time
+is exclusive. "After 8 PM" is evaluated at 20:00, not as an all-evening
+availability promise. Unsupported future dates and ranges must be reported
+as unsupported by the parser. Distances remain straight-line estimates
+multiplied by 1.35, not accessible walking-route guarantees.
+Meal-only queries require schedule overlap with the documented interpretation:
+breakfast 07:00-11:00, lunch 11:00-15:00, dinner 17:00-22:00, and snack at any
+opening time. An explicit time takes precedence. These are query interpretation
+windows, not evidence that a particular dish is served throughout that window.
 
-`server/schema.js` is the enforcement point: every field is type-checked, every  
-enum value is whitelisted, and numeric ranges are clamped.
+Safety refusals run before the model and work offline. They are conservative
+English/Chinese pattern rules plus a model refusal field, not a clinically
+validated language classifier. Unusual paraphrases still need broader testing.
+No safety claim should be inferred from any result.
 
-The vocabularies used to live as constants in `server/data/vocab.js`. They now
-live in `data/vocab.json`, and that file is also where facet synonyms live
-(`"late night" → open-late`, `"fast" → quick`), so keyword matching is data-driven
-in the same way the parser contract is.
+If the model is unavailable, an exact example query may use a cached snapshot
+only when its dataset hash and safety-policy version match. It is prominently labelled with the
+walkthrough clock and save date. Other queries return `503 model_offline`.
+Explicit test-time overrides disable cached answers.
 
----
+## Data and evidence schema
 
-## Data layer
+Source of truth:
 
-Canteens and landmarks live in **SQLite**, accessed through Node's built-in
-`node:sqlite` module — no dependency, no server process, no connection pool. The
-database file is `data/canteens.db` (gitignored).
+- `data/canteens.json`: venues, hours and menu items.
+- `data/vocab.json`: permitted cuisines, diets and facets.
+- `data/coverage.json`: reviewed official pages and known omissions.
+- `data/walkthrough.json`: labelled example snapshots.
 
-The records themselves live in two files under `data/`, which are the source of
-truth:
+Each venue has `verified: boolean` and dated `sources` supporting its identity
+and hours. Each menu item has:
 
-```
-data/canteens.json   landmarks + canteens, with menus, sources and opening hours
-data/vocab.json      cuisines, diets and the facet vocabulary (+ synonyms)
-```
+| Field | Meaning |
+|---|---|
+| `name`, `price` | Source-supported dish and HKD price, or `null` when price is unknown; do not invent a price |
+| `stall` | Actual stall identity within its parent venue |
+| `cuisines` | Item-level cuisine categories; demonstration categories are not dietary evidence |
+| `verified` | Item and its source were reviewed, not inferred |
+| `is_certified_halal` | `true`, `false`, or `null` for unknown |
+| `is_vegetarian` | `true`, `false`, or `null` for unknown |
+| `ingredients_listed` | Source-listed strings or `null` for unknown |
+| `dietary_tags` | Additional explicitly supported tags, e.g. vegan |
+| `dietary_tags_source` | Evidence objects with `tag`, `statement`, `label`, HTTPS `url`, and `checkedAt` |
+| `sources` | Dish/price evidence with `label`, HTTPS `url`, and `checkedAt` (`YYYY-MM-DD`) |
 
-`server/db.js` projects those files into SQLite and keeps the projection honest:
-it stores a content hash and a schema version in `meta`, and on startup rebuilds
-automatically when either changes. Editing the JSON and restarting is enough — no
-manual step.
+Every positive dietary claim requires explicit evidence. Unverified items
+cannot carry positive claims. A `null` value means unknown, not false or safe.
+Allergen requests are refused rather than treating a "nut-free" tag as proof
+against cross-contamination.
 
-```
-meta               key, value          (schema_version, data_hash, imported_at)
-landmarks          key, label, lat, lng
-canteens           id, name, name_zh, venue, zone, lat, lng,
-                   price_level, avg_price, rating, emoji, image, overview
-canteen_cuisines   canteen_id → cuisine     (many-to-many)
-canteen_diets      canteen_id → diet        (many-to-many)
-canteen_tags       canteen_id → tag         (many-to-many)
-canteen_menu       canteen_id, position, name, price
-canteen_sources    canteen_id, position, label, url, checked_at
-canteen_hours      canteen_id, day_of_week, opens_min, closes_min
-search_log         every query, mode, intent, result ids, latency
-```
+Venue ratings, average prices, price tiers and images may also be explicitly
+unknown (`null`). A real outlet must not be assigned invented ratings or prices
+just to fit a demo schema. Source URLs must parse as HTTPS URLs, dates must be
+real calendar dates no later than today, and dietary tags cannot contradict
+their corresponding boolean fields.
 
-A few deliberate choices:
+### Curation procedure
 
-- **Normalised, not a JSON blob per row.** Cuisines, diets and hours are things a
-  real app filters on; stuffing them into a text column would make the database
-  decorative.
-- **A missing `canteen_hours` row means "closed that day"**, rather than a nullable
-  sentinel. Weekday-only venues need no special casing.
-- **Times are stored as minutes since midnight**, so opening-hours logic does
-  integer comparisons with range checks (`CHECK (opens_min BETWEEN 0 AND 1439)`)
-  instead of parsing strings.
-- **Some tags are derived, not authored.** `weekday-only` and `open-late` are
-  computed from a canteen's own hours at import, so the tag can never drift out of
-  step with the opening times it describes.
-- **`search_log` is written on every search**, which makes the database a live part
-  of the app rather than a read-only dump.
+1. Review a current official outlet/menu source, including the actual stall,
+   dish, price, hours and any explicitly stated dietary certification.
+2. Record precise source URLs and the real review date. Do not use a general
+   homepage as evidence for a particular dish.
+3. Record dietary evidence at the item level. Outlet-level certification must
+   not be applied to an individual dish without checking its actual scope.
+4. Mark the venue and item verified only after that review. Unknown ingredients
+   remain null; do not infer safety from names, cuisine or missing ingredients.
+5. Restart, run migration checks and regenerate walkthrough snapshots.
+6. Recheck source changes and temporary closures before relying on results.
+   A schema-valid source object is not automated proof that its claims are true.
 
-`server/db.js` is the only module that touches SQL. Everything else asks it for
-plain objects, so swapping in Postgres means rewriting that one file.
+Official pages reviewed on 23 October 2026:
 
-### Verifying a migration
+- [BIJAS Vegetarian](https://catering.hku.hk/en/eateries/CCOutletD/):
+  outlet-level halal-certified vegetarian offerings and opening hours.
+- [JuYing Tai](https://catering.hku.hk/en/eateries/FSCACR/):
+  outlet identity, offerings and opening hours.
 
-`npm run migrate` does not just insert rows — it checks that the copy is intact:
+These pages do not establish 50 individually verified dishes with prices and
+dietary evidence. Their findings are listed in coverage; they have **not** been
+used to relabel fictional records as real.
 
-```
-Checks
-  ✓ canteen rows match JSON  (15 / 15)
-  ✓ landmark rows match JSON  (10 / 10)
-  ✓ menu items match JSON  (45 rows)
-  ✓ sources match JSON  (15 rows)
-  ✓ schema version recorded  (expect 2)
-  ✓ every canteen has ≥1 cuisine
-  ✓ every canteen has ≥1 opening slot
-  ✓ every canteen has ≥1 menu item
-  ✓ every canteen has ≥1 source
-  ✓ every canteen has an image
-  ✓ cuisine values are in the vocabulary
-  ✓ tag values are known facets
-  ✓ derived tags present where expected
-  ✓ foreign keys intact
-  ✓ sqlite integrity_check  (ok)
-  ✓ hours round-trip correctly  (Mon 660–1230 min (expect 660–1230))
-```
+The database `data/canteens.db` is generated and gitignored. Schema version and
+content hash trigger reimport; search logs are preserved. Item evidence is
+stored alongside the existing normalised venue relationships, and older schemas
+are automatically upgraded on startup.
+`DB_PATH=:memory:` is suitable for isolated tests. Schema 5 includes item cuisines
+and nullable prices/presentation metadata. Migration checks compare every menu
+item and every day's hours with the JSON, not one hard-coded fictional venue.
 
-It exits non-zero if any check fails, so it can gate a deploy. `npm run db:reset`
-additionally drops and re-imports everything first.
+## Evaluation and acceptance
 
-### Inspecting the data
+The fixed benchmark is `tests/cases.json`:
 
-`GET /api/stats` reports row counts, how searches split by outcome (`llm`,
-`no_preferences`, `offline`, `error`), average latency, and the five most recent
-queries.
+| Group | Queries | Required |
+|---|---:|---:|
+| Dietary, including safe handling of nut-free requests | 15 | At least 12 pass |
+| Time and location | 10 | At least 8 pass |
+| Refusal / unknown stall | 5 | All 5 pass |
 
-```bash
-curl -s localhost:4173/api/stats
-```
+The evaluator uses an explicit Friday 12:30 HKT clock for reproducibility,
+records expected constraints and full responses, and writes
+`reports/evaluation.json` (gitignored). Positive cases require nonempty,
+verified item results. Empty results do not count as positive-query success.
+Each returned dish must exactly match a stored item of the cited canteen,
+including its stall and evidence. Returned venue identity, source links, hours
+and walking origin/distance are checked independently of the ranking function.
+Refusals require the correct reason, no results, an explanation and the safety
+disclaimer. Negative fixtures confirm that invented dishes or altered evidence
+cannot pass evaluation. Source truth must also be
+manually checked against the cited pages; the evaluator checks metadata and
+retrieval behaviour, not remote-page factual accuracy.
 
----
+The proposal's 50 reviewed-item milestone is tracked separately and also
+required before the report marks the project ready. Synthetic unit-test data
+does not count toward that milestone or the live-model accuracy threshold.
 
-## Request / response
+**Current acceptance blockers:** zero verified menu items, live-model accuracy
+not yet measured, Pi Agent verification not yet performed, and macOS/Linux
+launch behaviour not yet tested. Passing unit or migration tests does not
+remove those blockers.
 
-`POST /api/recommend`
+### Validation performed on 24 October 2026
 
-```json
-{ "query": "cheap vegetarian lunch near the Main Library before 2pm" }
-```
+Regression coverage includes malformed model output, preserving all dietary
+restrictions, item-level cuisine/diet matching, decimal budgets, unknown
+prices, future-time filtering, data round trips, refusal responses, HTTP errors,
+cached-mode labelling, a local fake model endpoint, and launcher lifecycle.
+Launcher tests check that an occupied port is not mistaken for a successful
+startup and that closing the launcher stops its child server. No live model
+accuracy or real menu completeness is claimed by these tests.
 
-```json
-{
-  "ok": true,
-  "reason": null,
-  "intent": {
-    "cuisines": ["vegetarian"],
-    "diets": ["vegetarian"],
-    "max_price_hkd": null,
-    "price_preference": "cheap",
-    "open_now": false,
-    "arrive_by": "14:00",
-    "near": "main_library",
-    "max_walk_minutes": null,
-    "meal": "lunch",
-    "keywords": ["cheap"],
-    "sort": "best_match",
-    "confidence": 0.92
-  },
-  "results": [ { "name": "...", "matchPct": 85, "reasons": [ ... ] } ],
-  "meta": {
-    "totalMatches": 11, "relaxed": [], "checkTime": "14:00",
-    "sort": "best_match", "sortBasis": null
-  },
-  "llm": { "ok": true, "latencyMs": 640, "model": "qwen3.8-flash" }
-}
-```
+## API
 
-`reason` is `null` on a normal search, or `no_preferences` when the model answered
-but found nothing actionable in the prompt — in that case `results` is empty and
-`notice` explains what to try instead.
+- `POST /api/recommend`: `{ "query": "...", "demo": false, "at": "12:30" }`.
+  `at` is an optional test-time override for today's HK day.
+- `GET /api/coverage`: what is and is not covered, plus official source links.
+- `GET /api/health`: runtime model configuration and HK clock (never the key).
+- `GET /api/vocab`: vocabulary for the UI.
+- `GET /api/canteens`: illustrative venue summaries for opt-in browsing.
+- `GET /api/stats`: local query counts and recent queries.
 
-Each result also carries `image`, `overview`, `menu` (`[{ name, price }]`) and
-`sources` (`[{ label, url, checkedAt }]`), so the detail view renders real menu and
-provenance data rather than placeholders.
+Responses include `reason`, `notice`, `disclaimer`, `coverage`, `mode`, `intent`,
+`results` and `meta`. Modes are `local` (guard), `live` or `cached`. Refusal
+reasons are `allergen_refused`, `medical_refused`, `ordering_refused`.
+Other empty outcomes are `no_match` and `no_preferences`.
 
-### Sorting
+Queries are sent to the configured model provider and logged in the local
+database. Do not enter private medical or identifying information. API calls
+are external; **retrieval itself** uses only the local dataset.
 
-The relevance floor decides *which* canteens qualify; `sort` decides their order:
+## Agent skill
 
-| `sort` | ordered by | tie-break |
-| --- | --- | --- |
-| `best_match` (default) | match score | walk, rating |
-| `cheapest` | average price | match score |
-| `closest` | walking distance | match score |
-| `top_rated` | rating | match score |
+The reusable skill is [.github/skills/campus-dining/SKILL.md](.github/skills/campus-dining/SKILL.md).
+It uses the same API and safety rules. Its Pi Agent verification procedure is
+included, but no Pi Agent validation is claimed.
 
-The model only sets `sort` when the user asks for an order ("cheapest", "closest",
-"best rated"). The UI also exposes a four-way control that re-orders the results
-already on screen, so changing the order does not cost another model call.
+## Agreed proposal changes and limitations
 
-### Other endpoints
-
-```bash
-curl -s localhost:4173/api/vocab      # cuisines, diets, facets — drives the UI labels
-curl -s localhost:4173/api/health     # key present? which model? current HK time
-curl -s localhost:4173/api/canteens   # id, name, emoji, image, venue, zone
-```
-
-### When the model is unavailable
-
-A missing key, a rejected key, a timeout, a network error, malformed JSON, or a
-failed schema check all produce the same response — no results:
-
-```json
-HTTP 503
-{
-  "ok": false,
-  "error": { "code": "model_offline", "message": "The language model is not reachable right now." },
-  "detail": { "code": "auth", "message": "API key rejected (401)" },
-  "llm": { "model": "qwen3.8-flash", "latencyMs": 412 }
-}
-```
-
-The UI shows an offline panel with the underlying error and a retry button. It
-does not substitute other results, and an internal server error returns `500`
-rather than inventing an answer.
-
----
-
-## Ranking
-
-Hard filters: dietary fit, price cap, walking budget, opening status.
-
-Score components (weights in `server/search.js`): cuisine overlap 46, diet 28,  
-budget 22, proximity 30, meal window 12, keyword hits 21, rating 10, availability 4.  
-The percentage on each card is the score normalised against the maximum the  
-current intent could achieve, so it is comparable within a search but not across  
-different searches.
-
-A relevance floor then trims the tail: only results scoring at least 60% of the
-best match are shown, so `korean bbq` returns one honest food court rather than a
-coffee shop at 29%. If even the best result scores below 25%, the UI says so
-instead of pretending.
-
-The floor decides which canteens qualify; the requested `sort` decides their
-order (see [Sorting](#sorting)). Every sort keeps the match score as a tie-break,
-so asking for "cheapest" cannot promote an irrelevant result over a relevant one
-that happens to cost the same.
-
-If nothing survives the hard filters, constraints are relaxed one at a time —  
-walking distance, then budget, then opening hours, then diet — and the relaxation  
-is reported in `meta.relaxed` and shown in the UI. Diet is relaxed last on  
-purpose: showing a meat dish to a vegetarian is worse than showing a closed  
-vegetarian restaurant.
-
----
-
-## Demo helpers
-
-| Flag             | Effect                                                   |
-| ---------------- | -------------------------------------------------------- |
-| `?q=...`         | Runs a query on page load (shareable link).              |
-| `?at=12:30`      | Evaluates opening hours at a fixed time instead of now.  |
-| `?sort=cheapest` | Overrides the result order (`cheapest`, `closest`, `top_rated`). |
-
-```bash
-open "http://localhost:4173/?q=noodles+near+Centennial&at=12:30"
-```
-
----
-
-## Layout
-
-```
-server/
-  index.js        HTTP server, routes, pipeline orchestration
-  db.js           SQLite access — the only module that touches SQL
-  schema.sql      DDL: tables, constraints, indexes
-  llm.js          Bailian client, prompt, JSON extraction
-  schema.js       Intent contract + validation (the anti-hallucination guard)
-  search.js       Filtering, scoring, sorting, constraint relaxation
-  geo.js          Haversine distance, opening-hours logic
-  time.js         HK local time, minute conversions
-  data/
-    loadData.js   Reads + validates the JSON records; derives hours-based tags
-    vocab.js      Re-exports the vocabularies from data/vocab.json
-scripts/
-  migrate.mjs     Project the JSON into SQLite + verify integrity
-  check-key.mjs   Diagnose API key / endpoint problems
-data/
-  canteens.json   Landmarks + canteens: menus, sources, hours (source of truth)
-  vocab.json      Cuisines, diets, facets + synonyms (source of truth)
-  canteens.db     SQLite database (generated, gitignored)
-public/
-  index.html  styles.css  app.js
-```
-
----
-
-## Known limitations
-
-- Demo data: 15 canteens, approximate prices and hours, no live menus.
-- Opening hours are weekday/weekend pairs; no public-holiday calendar.
-- Distance is straight-line × 1.35, not a real pedestrian route.
-- No caching: every submit is one model call.
-- Single-process, in-memory rate limiting only.
-- SQLite allows one writer at a time. Fine for a single process, but running
-  several app instances against the same file would need WAL plus a busy timeout,
-  or a client-server database.
-- No offline mode: if the model is unreachable, search stops working entirely. That
-  is a deliberate choice, not an oversight — but it does mean a model outage is a
-  full outage for the app.
-- Chinese prompts work because the model handles them; nothing else in the stack is
-  localised (the UI copy is English-only).
+- **Node.js retained instead of Python**, agreed during implementation.
+- Local structured data is projected into SQLite; no external menu API is
+  used at query time. Model parsing still uses the configured provider.
+- The default port is now 5000 and the default provider is DeepSeek.
+- Interactive cards and source links are implemented. Chinese cases are
+  included in the benchmark; end-to-end Chinese accuracy is unverified.
+- No holiday calendar, dynamic closures, real walking routes, comprehensive
+  stall coverage, ordering, diagnosis or allergen guarantees.
+- Photos, prices, ratings and names in demo mode remain illustrative.
+- This is a local, single-process application with in-memory rate limiting,
+  not a deployed multiuser service.

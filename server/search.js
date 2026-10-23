@@ -1,6 +1,7 @@
 import { getCanteens, landmarks } from './db.js';
 import { nowInHK, toMinutes, openStatus, distanceToLandmark, nearestLandmark } from './geo.js';
 import { facetForCue } from './data/vocab.js';
+import { eligibleMenu, hasEvidence } from './policy.js';
 
 const MAX_RESULTS = 3;
 
@@ -12,20 +13,19 @@ const title = (s) => String(s).replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUp
  * Returns null when a hard constraint excludes it.
  */
 function evaluate(canteen, intent, ctx) {
-  const { checkMinutes, relax } = ctx;
+  const { checkMinutes } = ctx;
+  const menu = eligibleMenu(canteen, intent, ctx.demo);
+  if (!menu.length) return null;
 
   // --- hard filters -------------------------------------------------------
   const status = openStatus(canteen, ctx.now, intent.arrive_by ? checkMinutes : null);
-  if (intent.open_now && !status.open && !relax.has('open')) return null;
-
-  if (intent.diets.length && !relax.has('diet')) {
-    const hasDiet = intent.diets.some((d) => canteen.diets.includes(d));
-    if (!hasDiet) return null;
+  if ((intent.open_now || intent.arrive_by) && !status.open) return null;
+  if (intent.meal && !intent.arrive_by) {
+    const window = { breakfast: [420, 660], lunch: [660, 900], dinner: [1020, 1320], snack: [0, 1440] }[intent.meal];
+    if (!status.today || toMinutes(status.today[0]) >= window[1] || toMinutes(status.today[1]) <= window[0]) return null;
   }
-
-  if (intent.max_price_hkd != null && !relax.has('price')) {
-    if (canteen.avgPrice > intent.max_price_hkd) return null;
-  }
+  if (intent.zone && canteen.zone.toLowerCase() !== intent.zone.toLowerCase()) return null;
+  if (intent.max_walk_minutes != null && !intent.near) return null;
 
   // --- distance -----------------------------------------------------------
   let distance = null;
@@ -41,7 +41,7 @@ function evaluate(canteen, intent, ctx) {
     walkFrom = { key: nearest.key, label: nearest.label, requested: false };
   }
 
-  if (intent.max_walk_minutes != null && !relax.has('walk')) {
+  if (intent.max_walk_minutes != null) {
     if (distance > intent.max_walk_minutes) return null;
   }
 
@@ -50,9 +50,9 @@ function evaluate(canteen, intent, ctx) {
   let applicable = 0;
   const reasons = [];
 
-  // Cuisine overlap (soft — a wrong cuisine just ranks lower).
+  // Cuisine and dietary labels describe returned dishes, not other stalls.
   const matchedCuisines = intent.cuisines.filter(
-    (c) => canteen.cuisines.includes(c) || canteen.diets.includes(c)
+    (c) => menu.some((m) => m.cuisines.includes(c)) || intent.diets.includes(c)
   );
   if (intent.cuisines.length) {
     applicable += 46;
@@ -67,7 +67,7 @@ function evaluate(canteen, intent, ctx) {
   // Dietary fit.
   if (intent.diets.length) {
     applicable += 28;
-    const hitDiets = intent.diets.filter((d) => canteen.diets.includes(d));
+    const hitDiets = intent.diets;
     if (hitDiets.length) {
       score += 28;
       reasons.push({ icon: '🌿', text: `${hitDiets.map(title).join(' · ')} options` });
@@ -144,8 +144,10 @@ function evaluate(canteen, intent, ctx) {
   }
 
   // Quality nudge.
-  applicable += 10;
-  score += (canteen.rating - 3.5) * 10;
+  if (canteen.rating != null) {
+    applicable += 10;
+    score += (canteen.rating - 3.5) * 10;
+  }
 
   // Availability nudge.
   applicable += 4;
@@ -169,7 +171,16 @@ function evaluate(canteen, intent, ctx) {
   });
 
   return {
-    canteen,
+    canteen: {
+      ...canteen, menu,
+      avgPrice: menu.some((m) => m.price != null) ? Math.min(...menu.map((m) => m.price ?? Infinity)) : null,
+      cuisines: [...new Set(menu.flatMap((m) => m.cuisines))],
+      diets: [...new Set(menu.filter(hasEvidence).flatMap((m) => [
+        ...m.dietary_tags, ...(m.is_certified_halal ? ['halal'] : []), ...(m.is_vegetarian ? ['vegetarian'] : []),
+      ]))],
+      tags: canteen.tags.filter((tag) => !['halal', 'veg-thali'].includes(tag)),
+      verified: canteen.verified && menu.every(hasEvidence),
+    },
     score,
     matchPct,
     reasons: uniqueReasons.slice(0, 4),
@@ -189,7 +200,7 @@ function orderBy(list, sort) {
   switch (sort) {
     case 'cheapest':
       return copy.sort(
-        (a, b) => a.canteen.avgPrice - b.canteen.avgPrice || b.matchPct - a.matchPct || a.distance - b.distance
+        (a, b) => (a.canteen.avgPrice ?? Infinity) - (b.canteen.avgPrice ?? Infinity) || b.matchPct - a.matchPct || a.distance - b.distance
       );
     case 'closest':
       return copy.sort((a, b) => a.distance - b.distance || b.matchPct - a.matchPct);
@@ -206,7 +217,7 @@ function orderBy(list, sort) {
 /** Human-readable description of what the list is ordered by. */
 function sortBasis(sort, intent) {
   switch (sort) {
-    case 'cheapest': return 'average price';
+    case 'cheapest': return 'lowest matching dish price';
     case 'closest': return intent.near ? `walk from ${landmarks[intent.near].label}` : 'walk from the nearest landmark';
     case 'top_rated': return 'rating';
     default: return null;
@@ -216,51 +227,25 @@ function sortBasis(sort, intent) {
 /**
  * Filter + rank the demo database.
  *
- * If the strict pass returns nothing, hard constraints are relaxed one at a
- * time (walk budget → price cap → diet → opening hours) and the relaxations are
- * reported back so the UI can be honest about it.
+ * Hard constraints are never relaxed. Only eligible menu items are returned.
  */
-export function search(intent, { now = nowInHK(), limit = MAX_RESULTS } = {}) {
+export function search(intent, { now = nowInHK(), limit = MAX_RESULTS, demo = false, canteens = getCanteens() } = {}) {
   const checkMinutes = intent.arrive_by ? toMinutes(intent.arrive_by) : now.minutes;
-  // Relax in order of least to most semantically important. Dietary needs are
-  // relaxed last: showing a meat dish to a vegetarian is worse than showing a
-  // vegetarian place that happens to be closed.
-  const relaxationOrder = ['walk', 'price', 'open', 'diet'];
   const relaxed = [];
-  const relax = new Set();
-  let ranked = [];
-
-  // Only report a relaxation if that constraint was actually in play.
-  const active = new Set();
-  if (intent.max_walk_minutes != null) active.add('walk');
-  if (intent.max_price_hkd != null) active.add('price');
-  if (intent.open_now) active.add('open');
-  if (intent.diets.length) active.add('diet');
-
-  // Read once per search so the database stays the single source of truth.
-  const canteens = getCanteens();
-
-  for (let attempt = 0; attempt <= relaxationOrder.length; attempt++) {
-    ranked = canteens.map((c) => evaluate(c, intent, { now, checkMinutes, relax }))
+  const ranked = (intent.unsupported?.length ? [] : canteens)
+    .map((c) => evaluate(c, intent, { now, checkMinutes, demo }))
       .filter(Boolean)
       .sort((a, b) => b.score - a.score || a.distance - b.distance || b.canteen.rating - a.canteen.rating);
 
-    if (ranked.length > 0) break;
-    const next = relaxationOrder[attempt];
-    if (!next) break;
-    relax.add(next);
-    if (active.has(next)) relaxed.push(next);
-  }
-
   // A weak match shown confidently is worse than no match: "korean bbq" should
   // not return a coffee shop at 29% next to a food court at 74%. Keep only
-  // results reasonably close to the best one, but never return nothing.
+  // results reasonably close to the best one; return no match otherwise.
   const best = ranked[0]?.matchPct ?? 0;
   const cutoff = Math.max(25, best * 0.6);
   const strong = ranked.filter((r) => r.matchPct >= cutoff);
   const lowConfidence = best > 0 && best < 25;
   const sort = intent.sort ?? 'best_match';
-  const chosen = orderBy(strong.length ? strong : ranked, sort).slice(0, limit);
+  const chosen = orderBy(strong, sort).slice(0, limit);
 
   return {
     results: chosen.map((r) => ({
@@ -280,6 +265,7 @@ export function search(intent, { now = nowInHK(), limit = MAX_RESULTS } = {}) {
       overview: r.canteen.overview,
       menu: r.canteen.menu,
       sources: r.canteen.sources,
+      verified: r.canteen.verified,
       status: r.status,
       walkMinutes: r.distance,
       walkFrom: r.walkFrom,
@@ -287,7 +273,7 @@ export function search(intent, { now = nowInHK(), limit = MAX_RESULTS } = {}) {
       reasons: r.reasons,
     })),
     meta: {
-      totalMatches: ranked.length,
+      totalMatches: strong.length,
       lowConfidence,
       bestMatch: best,
       relaxed,
@@ -296,6 +282,7 @@ export function search(intent, { now = nowInHK(), limit = MAX_RESULTS } = {}) {
       checkTime: intent.arrive_by || now.hhmm,
       dayName: now.dayName,
       evaluated: canteens.length,
+      demo,
     },
   };
 }

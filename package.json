@@ -10,9 +10,13 @@
     "dev": "node --disable-warning=ExperimentalWarning --watch server/index.js",
     "migrate": "node --disable-warning=ExperimentalWarning scripts/migrate.mjs",
     "db:reset": "node --disable-warning=ExperimentalWarning scripts/migrate.mjs --reset",
-    "check-key": "node scripts/check-key.mjs"
+    "check-key": "node scripts/check-key.mjs",
+    "test": "node --test \"tests/*.test.js\"",
+    "evaluate": "node scripts/evaluate.mjs",
+    "cache:walkthrough": "node scripts/cache-walkthrough.mjs",
+    "package": "node scripts/package.mjs"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.16.0"
   }
 }

@@ -41,7 +41,7 @@
     { "key": "dinner", "label": "Dinner", "color": "t-purple", "synonyms": ["evening", "supper", "night"] },
     { "key": "open-late", "label": "Open late", "color": "t-pink", "synonyms": ["late", "late night", "late-night", "after hours", "midnight", "open late", "night owl"] },
     { "key": "weekday-only", "label": "Weekday only", "color": "t-amber", "synonyms": ["weekdays", "weekday", "mon-fri", "monday to friday"] },
-    { "key": "halal", "label": "Halal", "color": "t-amber", "synonyms": ["muslim", "halal counter", "no pork"] },
+    { "key": "halal", "label": "Halal", "color": "t-amber", "synonyms": ["muslim", "halal counter"] },
     { "key": "spicy", "label": "Spicy", "color": "t-red", "synonyms": ["hot", "chilli", "chili", "fiery"] },
     { "key": "buffet-style", "label": "Buffet", "color": "t-green", "synonyms": ["buffet", "all you can eat", "self serve", "self-serve"] },
     { "key": "customisable", "label": "Customisable", "color": "t-purple", "synonyms": ["custom", "make your own", "build your own", "choose your own"] },

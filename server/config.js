@@ -24,18 +24,20 @@ function loadDotEnv() {
       }
       if (!(key in process.env)) process.env[key] = value;
     }
-  } catch {
-    /* .env is optional */
+  } catch (err) {
+    if (err.code !== 'ENOENT') throw err;
   }
 }
 
 loadDotEnv();
+const port = process.env.PORT === undefined ? 5000 : Number(process.env.PORT);
+if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('PORT must be an integer from 0 to 65535');
 
 export const config = {
-  port: Number(process.env.PORT) || 4173,
+  port,
   apiKey: process.env.BAILIAN_API_KEY || '',
-  baseUrl: (process.env.BAILIAN_BASE_URL || 'https://dashscope.aliyuncs.com/compatible-mode/v1').replace(/\/$/, ''),
-  model: process.env.BAILIAN_MODEL || 'qwen-turbo',
+  baseUrl: (process.env.BAILIAN_BASE_URL || 'https://api.deepseek.com/v1').replace(/\/$/, ''),
+  model: process.env.BAILIAN_MODEL || 'deepseek-chat',
   timeoutMs: Number(process.env.LLM_TIMEOUT_MS) || 12000,
   hasKey: Boolean(process.env.BAILIAN_API_KEY),
 };
