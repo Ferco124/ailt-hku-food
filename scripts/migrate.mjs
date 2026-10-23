@@ -9,7 +9,8 @@
  * silently loses rows is worse than one that fails loudly.
  */
 
-import { getDb, seed, tableCounts, closeDb, DB_PATH, SCHEMA_VERSION } from '../server/db.js';
+import { getDb, getCanteens, seed, tableCounts, closeDb, DB_PATH, SCHEMA_VERSION } from '../server/db.js';
+import { isDeepStrictEqual } from 'node:util';
 import { loadAll, deriveTags, VOCAB_PATH, CANTEENS_PATH } from '../server/data/loadData.js';
 import { CUISINES, DIETS, FACET_META } from '../server/data/vocab.js';
 
@@ -84,8 +85,8 @@ const noSource = db.prepare(`
 check('every canteen has ≥1 source', noSource.length === 0,
   noSource.map((r) => r.id).join(', '));
 
-const badImage = db.prepare("SELECT id FROM canteens WHERE image IS NULL OR image = ''").all();
-check('every canteen has an image', badImage.length === 0,
+const badImage = db.prepare("SELECT id FROM canteens WHERE image = ''").all();
+check('images are usable or explicitly unknown', badImage.length === 0,
   badImage.map((r) => r.id).join(', '));
 
 const badCuisine = db.prepare('SELECT DISTINCT cuisine FROM canteen_cuisines').all()
@@ -120,14 +121,11 @@ const integrity = db.prepare('PRAGMA integrity_check').get();
 const integrityValue = Object.values(integrity ?? {})[0];
 check('sqlite integrity_check', integrityValue === 'ok', String(integrityValue));
 
-// Spot-check that hours survived the HH:MM -> minutes -> HH:MM round trip.
-const roundTrip = db.prepare(`
-  SELECT h.opens_min, h.closes_min
-  FROM canteen_hours h
-  WHERE h.canteen_id = 'cym-green-kitchen' AND h.day_of_week = 1
-`).get();
-check('hours round-trip correctly', roundTrip?.opens_min === 660 && roundTrip?.closes_min === 1230,
-  roundTrip ? `Mon ${roundTrip.opens_min}–${roundTrip.closes_min} min (expect 660–1230)` : 'row missing');
+const restored = getCanteens();
+check('all hours round-trip correctly', restored.every((c) =>
+  isDeepStrictEqual(c.hours, bundle.canteens.find((r) => r.id === c.id).hours)));
+check('all menu evidence round-trips correctly', restored.every((c) =>
+  isDeepStrictEqual(c.menu, bundle.canteens.find((r) => r.id === c.id).menu)));
 
 // ----------------------------------------------------------------- print ---
 console.log(`\n${B}Tables${X}`);

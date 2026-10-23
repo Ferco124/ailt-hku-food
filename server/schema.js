@@ -3,12 +3,13 @@ import { landmarks } from './db.js';
 
 /**
  * The contract the LLM must satisfy. Everything the model is allowed to say is
- * enumerated here; anything outside these vocabularies is discarded rather than
- * trusted. That is what stops the model from inventing canteens, tags or prices.
+ * enumerated here. Unsupported requirements block retrieval; malformed fields
+ * fail validation rather than silently becoming less restrictive.
  */
 export const INTENT_KEYS = [
   'cuisines', 'diets', 'max_price_hkd', 'price_preference', 'open_now',
   'arrive_by', 'near', 'max_walk_minutes', 'meal', 'keywords', 'sort', 'confidence',
+  'requested_stall', 'zone', 'unsupported', 'refusal',
 ];
 
 const MEALS = ['breakfast', 'lunch', 'dinner', 'snack'];
@@ -77,13 +78,31 @@ export function validateIntent(raw) {
   if (raw == null || typeof raw !== 'object' || Array.isArray(raw)) {
     return { ok: false, errors: ['Intent must be a JSON object'], warnings, intent: null };
   }
+  for (const key of ['cuisines', 'diets', 'diet', 'keywords', 'unsupported']) {
+    if (raw[key] != null && (!Array.isArray(raw[key]) || raw[key].some((v) => typeof v !== 'string'))) {
+      errors.push(`${key} must be an array of strings`);
+    }
+  }
+  for (const key of ['requested_stall', 'zone', 'arrive_by', 'near', 'meal', 'price_preference', 'sort', 'refusal']) {
+    if (raw[key] != null && typeof raw[key] !== 'string') errors.push(`${key} must be text or null`);
+  }
+  for (const key of ['max_price_hkd', 'max_walk_minutes', 'confidence']) {
+    if (raw[key] != null && (typeof raw[key] !== 'number' || !Number.isFinite(raw[key]))) {
+      errors.push(`${key} must be a finite number or null`);
+    }
+  }
+  if (raw.open_now != null && typeof raw.open_now !== 'boolean') errors.push('open_now must be a boolean');
+  if (raw.refusal != null && !['allergen_refused', 'medical_refused', 'ordering_refused'].includes(raw.refusal)) {
+    errors.push('Unknown refusal type');
+  }
+  if (errors.length) return { ok: false, intent: null, errors, warnings };
 
   const intent = {
     cuisines: [],
     diets: [],
     max_price_hkd: null,
     price_preference: 'any',
-    open_now: true,
+    open_now: false,
     arrive_by: null,
     near: null,
     max_walk_minutes: null,
@@ -91,7 +110,23 @@ export function validateIntent(raw) {
     keywords: [],
     sort: 'best_match',
     confidence: 0.5,
+    requested_stall: null,
+    zone: null,
+    unsupported: [],
+    refusal: null,
   };
+  if (Array.isArray(raw.unsupported)) {
+    intent.unsupported = raw.unsupported.map((s) => s.trim()).filter(Boolean);
+  }
+  if (['allergen_refused', 'medical_refused', 'ordering_refused'].includes(raw.refusal)) {
+    intent.refusal = raw.refusal;
+  }
+  if (typeof raw.requested_stall === 'string' && raw.requested_stall.trim()) {
+    intent.requested_stall = raw.requested_stall.trim();
+  }
+  if (typeof raw.zone === 'string' && raw.zone.trim()) {
+    intent.zone = raw.zone.trim();
+  }
 
   // --- cuisines -----------------------------------------------------------
   for (const c of asArray(raw.cuisines)) {
@@ -100,9 +135,9 @@ export function validateIntent(raw) {
       if (!intent.cuisines.includes(key)) intent.cuisines.push(key);
     } else if (key) {
       warnings.push(`Dropped unknown cuisine "${key}"`);
+      intent.unsupported.push(`cuisine: ${key}`);
     }
   }
-  intent.cuisines = intent.cuisines.slice(0, 4);
 
   // --- diets --------------------------------------------------------------
   for (const d of asArray(raw.diets ?? raw.diet)) {
@@ -112,23 +147,24 @@ export function validateIntent(raw) {
       if (!intent.diets.includes(canon)) intent.diets.push(canon);
     } else if (key) {
       warnings.push(`Dropped unknown diet "${key}"`);
+      intent.unsupported.push(`diet: ${key}`);
     }
   }
-  intent.diets = intent.diets.slice(0, 3);
+  intent.diets = [...new Set([...intent.diets, ...intent.cuisines.filter((c) => DIETS.includes(c))])];
 
   // --- price --------------------------------------------------------------
   if (raw.max_price_hkd != null && raw.max_price_hkd !== '') {
     const n = Number(raw.max_price_hkd);
     // Reject rather than clamp: a hallucinated "9999" must not silently become
     // a real budget filter, and clamping it would invent a constraint.
-    if (Number.isFinite(n) && n >= 10 && n <= 300) intent.max_price_hkd = Math.round(n);
-    else warnings.push(`Ignored out-of-range max_price_hkd (${raw.max_price_hkd})`);
+    if (Number.isFinite(n) && n > 0 && n <= 300) intent.max_price_hkd = n;
+    else intent.unsupported.push('Unsupported price limit');
   }
 
   if (typeof raw.price_preference === 'string' && PRICE_PREFS.includes(raw.price_preference.toLowerCase())) {
     intent.price_preference = raw.price_preference.toLowerCase();
   } else if (raw.price_preference != null) {
-    warnings.push('Ignored unknown price_preference');
+    intent.unsupported.push('Unknown price preference');
   }
   // A hard price cap implies "cheap" even if the model omitted the label.
   if (intent.max_price_hkd != null && intent.price_preference === 'any' && intent.max_price_hkd <= 60) {
@@ -143,28 +179,31 @@ export function validateIntent(raw) {
   if (raw.arrive_by != null && raw.arrive_by !== '') {
     const t = String(raw.arrive_by).trim();
     if (TIME_RE.test(t)) intent.arrive_by = t;
-    else warnings.push(`Ignored malformed arrive_by "${t}"`);
+    else intent.unsupported.push(`Invalid time: ${t}`);
   }
 
   // --- near ---------------------------------------------------------------
   if (raw.near != null && raw.near !== '') {
     const key = normaliseLandmark(raw.near);
     if (key) intent.near = key;
-    else warnings.push(`Dropped unknown location "${raw.near}"`);
+    else intent.unsupported.push(`Unknown location: ${raw.near}`);
   }
 
   // --- walk budget --------------------------------------------------------
   if (raw.max_walk_minutes != null && raw.max_walk_minutes !== '') {
     const n = Number(raw.max_walk_minutes);
-    if (Number.isFinite(n) && n > 0) intent.max_walk_minutes = Math.round(clamp(n, 1, 30));
-    else warnings.push('Ignored non-numeric max_walk_minutes');
+    if (Number.isFinite(n) && n > 0 && n <= 120) intent.max_walk_minutes = n;
+    else intent.unsupported.push('Unsupported walking limit');
+  }
+  if (intent.max_walk_minutes != null && !intent.near) {
+    intent.unsupported.push('A walking limit requires a starting landmark. Please specify where you are.');
   }
 
   // --- meal ---------------------------------------------------------------
   if (typeof raw.meal === 'string' && MEALS.includes(raw.meal.toLowerCase())) {
     intent.meal = raw.meal.toLowerCase();
   } else if (raw.meal != null) {
-    warnings.push('Ignored unknown meal');
+    intent.unsupported.push(`Unknown meal: ${raw.meal}`);
   }
 
   // --- keywords -----------------------------------------------------------
@@ -199,5 +238,8 @@ export function hasConstraints(intent) {
     intent.meal != null ||
     intent.keywords.length > 0 ||
     intent.arrive_by != null
+    || intent.open_now || intent.price_preference !== 'any'
+    || intent.sort !== 'best_match' || intent.requested_stall != null
+    || intent.zone != null || intent.unsupported.length > 0
   );
 }

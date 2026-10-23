@@ -135,49 +135,8 @@ const photoFor = (r) => {
   return unsplash(pool[hashStr(r.id) % pool.length]);
 };
 
-// Placeholder sample menus keyed by cuisine.
-const MENU_BY_CUISINE = {
-  noodles: ['Wonton Noodle Soup', 'Beef Chow Fun', 'Scallion Oil Noodles'],
-  rice: ['Daily Special Set Rice', 'Char Siu Rice', 'Three-Treasure Rice'],
-  chinese: ['Roast Pork Rice', 'Steamed Fish Set', 'Vegetable Stir-Fry'],
-  dimsum: ['Har Gow (4 pcs)', 'Siu Mai (4 pcs)', 'Char Siu Bao (3 pcs)'],
-  vegetarian: ['Veggie Set Meal', 'Mapo Tofu (meat-free)', "Buddha's Delight Rice"],
-  vegan: ["Buddha's Delight Rice", 'Veggie Set Meal', 'Tofu & Mushroom Bowl'],
-  japanese: ['Salmon Nigiri Set', 'Tuna Roll', 'Chicken Donburi'],
-  sushi: ['Salmon Nigiri Set', 'California Roll', 'Chirashi Bowl'],
-  indian: ['Chicken Tikka Masala', 'Veg Thali', 'Garlic Naan'],
-  curry: ['Curry Rice Set', 'Chicken Katsu Curry', 'Dhal & Roti'],
-  western: ['Smoked Salmon Cream Pasta', 'All-Day Western Breakfast', 'Flat White / Cafe Latte'],
-  sandwich: ['Grilled Chicken Sub', 'Tuna Melt', 'Fresh Salad Wrap'],
-  salad: ['Caesar Salad', 'Quinoa Power Bowl', 'Garden Salad'],
-  coffee: ['Flat White', 'Café Latte', 'Butter Croissant'],
-  bakery: ['Butter Croissant', 'Pain au Chocolat', 'Bake of the Day'],
-  snack: ['Assorted Snacks', 'Instant Noodles', 'Fried Dumplings'],
-  asian: ['Hainanese Chicken Rice', 'Nasi Lemak', 'Satay Skewers'],
-  hotpot: ['Hotpot Set for Two', 'A-la-carte Toppings', 'Soup Base Choice'],
-};
-const DEFAULT_MENU = ["Today's Special", 'Set Meal A', 'Drink of the Day'];
-
 // Broad labels used only when nothing more specific matches.
 const GENERIC = new Set(['chinese', 'asian']);
-
-/** Three placeholder menu items with prices hovering around the average. */
-function menuFor(r) {
-  const names = [];
-  // Prefer cuisines with a specific menu; skip generic 'chinese'/'asian' if possible.
-  const ordered = [
-    ...r.cuisines.filter((c) => MENU_BY_CUISINE[c] && !GENERIC.has(c)),
-    ...r.cuisines.filter((c) => GENERIC.has(c)),
-  ];
-  for (const c of ordered) {
-    for (const m of MENU_BY_CUISINE[c] || []) if (!names.includes(m)) names.push(m);
-    if (names.length >= 3) break;
-  }
-  const list = (names.length ? names : DEFAULT_MENU).slice(0, 3);
-  const base = Math.round(r.avgPrice);
-  const offsets = [0, 6, -8];
-  return list.map((name, i) => ({ name, price: Math.max(8, base + offsets[i]) }));
-}
 
 function to12h(t) {
   if (!t) return '';
@@ -244,7 +203,9 @@ function paintResultsSub() {
   const n = lastResults.length;
   const bits = [];
   if (meta.evaluated > 0) bits.push(`Checked ${meta.evaluated} canteens`);
-  bits.push(`as of ${meta.dayName ?? ''} ${meta.checkTime ?? ''} HKT`);
+  bits.push(meta.snapshotAt
+    ? `Historical snapshot: ${meta.snapshotAt}`
+    : `Schedule evaluated at ${meta.dayName ?? ''} ${meta.checkTime ?? ''} HKT`);
   if (timeOverride) bits.push('fixed test time');
   if (meta.totalMatches > n) bits.push(`${meta.totalMatches} matched in total`);
   if (n) {
@@ -274,7 +235,7 @@ function paintSortBar() {
 function resortLocal(sort) {
   if (!lastResults.length) return;
   const cmp = {
-    cheapest: (a, b) => a.avgPrice - b.avgPrice || b.matchPct - a.matchPct || a.walkMinutes - b.walkMinutes,
+    cheapest: (a, b) => (a.avgPrice ?? Infinity) - (b.avgPrice ?? Infinity) || b.matchPct - a.matchPct || a.walkMinutes - b.walkMinutes,
     closest: (a, b) => a.walkMinutes - b.walkMinutes || b.matchPct - a.matchPct,
     top_rated: (a, b) => b.rating - a.rating || b.matchPct - a.matchPct,
     best_match: (a, b) => b.matchPct - a.matchPct || a.walkMinutes - b.walkMinutes || b.rating - a.rating,
@@ -282,7 +243,8 @@ function resortLocal(sort) {
 
   lastMeta = { ...lastMeta, sort };
   // sortBasis only describes an intent-derived basis; a manual override has none.
-  if (sort === 'cheapest' || sort === 'top_rated') lastMeta.sortBasis = sort === 'cheapest' ? 'average price' : 'rating';
+  lastMeta.sortBasis = sort === 'cheapest' ? 'lowest matching dish price'
+    : sort === 'top_rated' ? 'rating' : null;
   lastResults = [...lastResults].sort(cmp);
   el.cards.innerHTML = lastResults.map(cardHTML).join('');
   paintResultsSub();
@@ -290,14 +252,14 @@ function resortLocal(sort) {
 }
 
 function cardHTML(r, i) {
-  const statusText = r.status.open && r.status.closesAt
+  const statusText = (lastMeta?.snapshotAt ? 'Snapshot: ' : 'Schedule: ') + (r.status.open && r.status.closesAt
     ? `Open • Closes ${to12h(r.status.closesAt)}`
-    : r.status.reason;
+    : r.status.reason);
 
   const cuisine = r.cuisines.find((c) => !GENERIC.has(c)) || r.cuisines[0];
   const cuisineLabel = CUISINE_LABEL[cuisine] || titleCase(cuisine || 'Canteen');
-  // Real menu when the record has one; the mock generator stays as a fallback.
-  const dish = r.menu?.length ? r.menu[0] : menuFor(r)[0];
+  // The server returns only eligible items; never fabricate a fallback dish.
+  const dish = r.menu[0];
   const image = r.image || photoFor(r);
   const c1 = TAG_COLOR[cuisine] || 't-blue';
   const tags = [
@@ -317,16 +279,21 @@ function cardHTML(r, i) {
         <span class="mloc">📍 ${esc(r.venue)}</span>
       </div>
       <div class="mcard-body">
+        <p class="safety-note">${r.verified ? 'Source-reviewed snapshot; verify current availability.' : 'UNVERIFIED DEMONSTRATION - not a dietary recommendation.'}</p>
         <h3>${esc(r.name)}</h3>
         <p class="msub">${esc(r.zone)} • ${esc(cuisineLabel)}</p>
         <div class="mtags">
           ${tags.map((t) => `<span class="mtag ${t.cls}">${esc(t.text)}</span>`).join('')}
         </div>
         <div class="mfoot">
-          <span class="mdish">⭐ ${esc(dish.name)} ($${dish.price})</span>
+          <span class="mdish">⭐ ${esc(dish.name)} (${dish.price == null ? 'price unknown' : `HK$${dish.price}`})</span>
           <button class="mdetails" type="button" data-idx="${i}"
                   aria-label="Show details for ${esc(r.name)}">Details <span aria-hidden="true">→</span></button>
         </div>
+        <p class="msub">Stall: ${esc(dish.stall)}</p>
+        <p class="safety-note">Informational only, not a safety guarantee. Confirm ingredients and dietary status with staff.</p>
+        ${(dish.sources || []).map((s) => `<p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a> - checked ${esc(s.checkedAt)}</p>`).join('')}
+        ${r.sources.map((s) => `<p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a> - ${s.checkedAt ? `checked ${esc(s.checkedAt)}` : 'not verified'}</p>`).join('')}
       </div>
     </article>`;
 }
@@ -337,7 +304,7 @@ let modalTrigger = null;
 
 function openDetails(r, trigger = null) {
   modalTrigger = trigger;
-  const menu = r.menu?.length ? r.menu : menuFor(r);
+  const menu = r.menu;
   const sources = r.sources ?? [];
   const hours = r.status.opensAt && r.status.closesAt
     ? `${to12h(r.status.opensAt)} – ${to12h(r.status.closesAt)}`
@@ -365,8 +332,7 @@ function openDetails(r, trigger = null) {
            )
            .join('')}
        </ul>
-       <p class="modal-note">Prototype dataset — hours and prices are approximations, so
-       confirm with the outlet before relying on them.</p>`
+       <p class="modal-note">${r.verified ? 'Source-reviewed schedule and menu snapshot; confirm current details with staff.' : 'Unverified demonstration: hours and prices are approximations.'}</p>`
     : `<div class="source-box">
          ⚠️ <span><strong>Source Verification:</strong> Placeholder data for this prototype —
          not yet verified against an official HKU catering directory.</span>
@@ -379,15 +345,20 @@ function openDetails(r, trigger = null) {
       <div>📍 ${esc(r.venue)}, ${esc(r.zone)}</div>
       <div>⏰ ${esc(hours)}</div>
     </div>
+    ${lastMeta?.snapshotAt ? `<p class="safety-note">Historical snapshot: ${esc(lastMeta.snapshotAt)}. Not current availability.</p>` : ''}
     ${reasons}
     <h4 class="modal-h">Overview</h4>
     <p class="modal-p">${esc(r.overview || r.note || '')}</p>
-    <h4 class="modal-h">Sample menu items</h4>
+    <p class="safety-note">Informational only, not a safety guarantee. Confirm with canteen staff. ${r.verified ? '' : 'Unverified demonstration data.'}</p>
+    <h4 class="modal-h">Matching menu items</h4>
     <div class="modal-menu">
       ${menu
         .map(
           (m) =>
-            `<div class="menu-row"><span>${esc(m.name)}</span><strong>HK$${m.price}</strong></div>`
+            `<div class="menu-row"><span>${esc(m.name)} - ${esc(m.stall)}<br />Ingredients: ${m.ingredients_listed === null ? 'unknown' : esc(m.ingredients_listed.join(', '))}
+            ${m.sources.map((s) => `<br /><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a> (checked ${esc(s.checkedAt)})`).join('')}
+            ${(m.dietary_tags_source || []).map((s) => `<br /><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.tag)}: ${esc(s.statement)}</a> (checked ${esc(s.checkedAt)})`).join('')}
+            </span><strong>${m.price == null ? 'Price unknown' : `HK$${m.price}`}</strong></div>`
         )
         .join('')}
     </div>
@@ -412,6 +383,15 @@ function factRow(key, valueHTML, isEmpty = false) {
 
 function renderPanel(data) {
   const it = data.intent;
+  if (!it) {
+    el.panelFacts.textContent = data.notice || '';
+    el.rawJson.textContent = 'No model call required for this safety response.';
+    el.modeBadge.textContent = 'LOCAL SAFETY';
+    el.rawDetails.querySelector('summary').textContent = 'Local policy response';
+    el.rawDetails.open = false;
+    el.panelNote.textContent = data.disclaimer;
+    return;
+  }
   const facts = [];
 
   facts.push(
@@ -439,8 +419,11 @@ function renderPanel(data) {
       : factRow('Near', 'anywhere on campus', true)
   );
 
-  facts.push(factRow('When', esc(it.arrive_by ? `by ${it.arrive_by}` : it.open_now ? 'open now' : 'later today'), false));
+  facts.push(factRow('When', esc(it.arrive_by ? `evaluated at ${it.arrive_by}` : it.open_now ? 'open now' : 'not specified'), false));
   facts.push(factRow('Meal', esc(it.meal ? titleCase(it.meal) : 'unspecified'), !it.meal));
+  if (it.zone) facts.push(factRow('Campus', esc(it.zone)));
+  if (it.requested_stall) facts.push(factRow('Stall', esc(it.requested_stall)));
+  if (it.unsupported?.length) facts.push(factRow('Unsupported', esc(it.unsupported.join('; '))));
 
   if (it.max_walk_minutes) facts.push(factRow('Max walk', `${it.max_walk_minutes} min`, false));
   if (it.keywords.length) {
@@ -451,10 +434,10 @@ function renderPanel(data) {
 
   el.panelFacts.innerHTML = facts.join('');
 
-  el.modeBadge.textContent = 'LLM';
+  el.modeBadge.textContent = data.mode === 'cached' ? 'CACHED' : 'LLM';
   el.modeBadge.dataset.mode = 'llm';
 
-  const raw = data.llm?.raw || JSON.stringify(data.intent, null, 2);
+  const raw = data.mode === 'cached' ? JSON.stringify(data.intent, null, 2) : data.llm?.raw || JSON.stringify(data.intent, null, 2);
   try {
     el.rawJson.textContent = JSON.stringify(JSON.parse(raw), null, 2);
   } catch {
@@ -465,13 +448,16 @@ function renderPanel(data) {
   // Label the disclosure honestly: only call it model output when it is.
   const summary = el.rawDetails.querySelector('summary');
   if (summary) {
-    summary.textContent = data.llm?.raw ? 'Raw model output' : 'Validated intent';
+    summary.textContent = data.mode === 'cached' ? 'Saved walkthrough intent' : data.llm?.raw ? 'Raw model output' : 'Validated intent';
   }
 
-  const src = 'Produced by the language model, then validated against a fixed vocabulary.';
+  const src = data.mode === 'cached'
+    ? 'Saved walkthrough snapshot, not a live model response or current availability.'
+    : 'Parsed by the model, validated and checked against local safety rules.';
 
   const conf = typeof data.intent.confidence === 'number' ? `${Math.round(data.intent.confidence * 100)}%` : '—';
-  el.panelNote.innerHTML = `${esc(src)}<br />Confidence ${esc(conf)} · model ${esc(data.llm?.model || 'n/a')} · ${esc(data.llm?.latencyMs ?? 0)} ms. The model never sees the canteen list.`;
+  el.panelNote.innerHTML = data.mode === 'cached' ? esc(src)
+    : `${esc(src)}<br />Confidence ${esc(conf)} · model ${esc(data.llm?.model || 'n/a')} · ${esc(data.llm?.latencyMs ?? 0)} ms. The model never sees the canteen list.`;
 }
 
 function renderBanner(data) {
@@ -484,7 +470,7 @@ function renderBanner(data) {
     msgs.push(`No canteen matched every constraint, so I relaxed: ${data.meta.relaxed.map((r) => labels[r] || r).join(', ')}.`);
   }
   if (data.meta?.lowConfidence) {
-    msgs.push(`Nothing matched closely — the best option only scores ${data.meta.bestMatch}%. Showing the closest alternatives.`);
+    msgs.push(`Nothing matched closely — the best option only scores ${data.meta.bestMatch}%. No weak alternatives are presented as matches.`);
   }
 
   if (!msgs.length) {
@@ -505,13 +491,14 @@ function render(data) {
   el.results.hidden = false;
   el.layout.classList.remove('no-panel');
   el.toggleIntent.hidden = false;
+  el.toggleIntent.setAttribute('aria-expanded', 'true');
 
   const n = results.length;
   const noPrefs = data.reason === 'no_preferences';
 
   el.resultsTitle.textContent = n
     ? `${n} place${n > 1 ? 's' : ''} for you`
-    : noPrefs
+    : data.reason?.endsWith('_refused') ? 'Information-only service' : noPrefs
       ? 'Nothing to search for'
       : 'Nothing matched';
 
@@ -524,12 +511,12 @@ function render(data) {
     el.cards.innerHTML = `<article class="mcard blank">
       <div class="mcard-body">
         <div class="blank-emoji" aria-hidden="true">${noPrefs ? '💭' : '🤔'}</div>
-        <h3>${noPrefs ? "I didn't catch any preferences" : 'No canteen fits that'}</h3>
+        <h3>${noPrefs ? "I didn't catch any preferences" : data.reason?.endsWith('_refused') ? 'Information-only service' : 'No match found in the current dataset'}</h3>
         <p class="msub" style="margin-top:8px">
           ${
             noPrefs
               ? 'Try naming a cuisine, a budget, a meal, or somewhere on campus.'
-              : 'Try loosening the budget, the walking distance, or the time of day.'
+              : esc(data.notice || 'No match found in the current dataset. This does not mean suitable food is unavailable on campus.')
           }
         </p>
       </div></article>`;
@@ -539,7 +526,8 @@ function render(data) {
 
   renderPanel(data);
   renderBanner(data);
-  setStatus('live', 'Model live');
+  setStatus(data.mode === 'cached' ? 'offline' : 'live',
+    data.mode === 'cached' ? 'Cached walkthrough' : data.mode === 'local' ? 'Local safety response' : 'Model live');
 }
 
 /**
@@ -558,6 +546,7 @@ function renderOffline(payload) {
   el.toggleIntent.hidden = true; // there is no intent panel to toggle
   el.sortBar.hidden = true; // nothing to sort
   lastMeta = null;
+  lastResults = [];
 
   const err = payload.detail || {};
   const rows = [
@@ -597,6 +586,8 @@ async function runSearch(query) {
   }
 
   busy = true;
+  $('demoMode').disabled = true;
+  closeDetails();
   lastQuery = q;
   el.input.value = q;
   el.form.classList.add('is-loading');
@@ -611,7 +602,7 @@ async function runSearch(query) {
     const res = await fetch('/api/recommend', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(timeOverride ? { query: q, at: timeOverride } : { query: q }),
+      body: JSON.stringify({ query: q, demo: $('demoMode').checked, ...(timeOverride ? { at: timeOverride } : {}) }),
     });
 
     const data = await res.json().catch(() => null);
@@ -637,6 +628,7 @@ async function runSearch(query) {
     setStatus('error', 'Something broke');
   } finally {
     busy = false;
+    $('demoMode').disabled = false;
     el.form.classList.remove('is-loading');
     el.submit.disabled = false;
     el.submit.querySelector('.btn-label').textContent = 'Find food';
@@ -683,6 +675,12 @@ el.modalOverlay.addEventListener('click', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !el.modalOverlay.hidden) closeDetails();
+  if (e.key === 'Tab' && !el.modalOverlay.hidden) {
+    const items = [...el.modalOverlay.querySelectorAll('button, a[href]')];
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
 });
 
 /* ------------------------------ bootstrap ------------------------------ */
@@ -705,16 +703,25 @@ setInterval(tickClock, 30_000);
 
 (async function boot() {
   try {
-    const [health, list, vocab] = await Promise.all([
+    const [health, list, vocab, coverage] = await Promise.all([
       fetch('/api/health').then((r) => r.json()),
       fetch('/api/canteens').then((r) => r.json()),
       fetch('/api/vocab').then((r) => r.json()),
+      fetch('/api/coverage').then((r) => r.json()),
     ]);
     applyVocab(vocab);
-    renderEmptyState(list.canteens);
+    renderEmptyState([]);
+    $('coverageText').innerHTML = `<p>${esc(coverage.summary)}</p><p>Not covered: ${esc(coverage.notCovered)}</p>
+      <p><a href="${esc(coverage.officialDirectory)}" target="_blank" rel="noopener noreferrer">Official HKU eatery directory</a></p>
+      ${coverage.reviewedOutlets.map((o) => `<p><a href="${esc(o.url)}" target="_blank" rel="noopener noreferrer">${esc(o.name)}</a> - reviewed ${esc(o.checkedAt)}<br />${esc(o.finding)}</p>`).join('')}`;
+    $('demoMode').addEventListener('change', () => {
+      renderEmptyState($('demoMode').checked ? list.canteens : []);
+      if (lastQuery) runSearch(lastQuery);
+    });
     if (!health.hasKey) setStatus('offline', 'No API key');
-  } catch {
-    /* the empty state is decorative; ignore */
+  } catch (err) {
+    $('coverageText').textContent = `Could not load coverage: ${err.message}`;
+    setStatus('error', 'Startup failed - reload to retry');
   }
 
   // Deep links: /?q=cheap+noodles&at=12:30 runs the query on load;

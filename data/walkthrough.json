@@ -1,0 +1,781 @@
+{
+  "createdAt": "2026-10-23T16:22:10.112Z",
+  "evaluatedAt": "2026-10-23T12:30:00+08:00",
+  "policyVersion": 3,
+  "dataHash": "69b6c26228937d9a",
+  "answers": [
+    {
+      "ok": true,
+      "query": "I need a cheap vegetarian lunch near the Main Library before 2pm.",
+      "intent": {
+        "cuisines": [
+          "vegetarian"
+        ],
+        "diets": [
+          "vegetarian"
+        ],
+        "max_price_hkd": null,
+        "price_preference": "cheap",
+        "open_now": false,
+        "arrive_by": "14:00",
+        "near": "main_library",
+        "max_walk_minutes": null,
+        "meal": "lunch",
+        "keywords": [],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [],
+      "meta": {
+        "totalMatches": 0,
+        "lowConfidence": false,
+        "bestMatch": 0,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "14:00",
+        "dayName": "Fri",
+        "evaluated": 15,
+        "demo": false
+      },
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": "no_match",
+      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+    },
+    {
+      "ok": true,
+      "query": "I need a cheap vegetarian lunch near the Main Library before 2pm.",
+      "intent": {
+        "cuisines": [
+          "vegetarian"
+        ],
+        "diets": [
+          "vegetarian"
+        ],
+        "max_price_hkd": null,
+        "price_preference": "cheap",
+        "open_now": false,
+        "arrive_by": "14:00",
+        "near": "main_library",
+        "max_walk_minutes": null,
+        "meal": "lunch",
+        "keywords": [],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [],
+      "meta": {
+        "totalMatches": 0,
+        "lowConfidence": false,
+        "bestMatch": 0,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "14:00",
+        "dayName": "Fri",
+        "evaluated": 15,
+        "demo": true
+      },
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": "no_match",
+      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+    },
+    {
+      "ok": true,
+      "query": "I want noodles near Centennial Campus.",
+      "intent": {
+        "cuisines": [
+          "noodles"
+        ],
+        "diets": [],
+        "max_price_hkd": null,
+        "price_preference": "any",
+        "open_now": true,
+        "arrive_by": null,
+        "near": "centennial_campus",
+        "max_walk_minutes": null,
+        "meal": null,
+        "keywords": [],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [],
+      "meta": {
+        "totalMatches": 0,
+        "lowConfidence": false,
+        "bestMatch": 0,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "12:30",
+        "dayName": "Fri",
+        "evaluated": 15,
+        "demo": false
+      },
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": "no_match",
+      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+    },
+    {
+      "ok": true,
+      "query": "I want noodles near Centennial Campus.",
+      "intent": {
+        "cuisines": [
+          "noodles"
+        ],
+        "diets": [],
+        "max_price_hkd": null,
+        "price_preference": "any",
+        "open_now": true,
+        "arrive_by": null,
+        "near": "centennial_campus",
+        "max_walk_minutes": null,
+        "meal": null,
+        "keywords": [],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [
+        {
+          "id": "cym-noodle-bar",
+          "name": "CYM Noodle Bar 麵軒",
+          "nameZh": "麵軒",
+          "venue": "Chong Yuet Ming Amenities Centre, G/F",
+          "zone": "Main Campus",
+          "emoji": "🍜",
+          "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=60",
+          "cuisines": [
+            "chinese",
+            "noodles"
+          ],
+          "diets": [],
+          "priceLevel": 1,
+          "avgPrice": 45,
+          "rating": 4.1,
+          "tags": [
+            "breakfast",
+            "budget",
+            "open-late",
+            "quick"
+          ],
+          "overview": "Wonton noodles and congee from breakfast onwards; served in under 10 minutes.",
+          "menu": [
+            {
+              "name": "Wonton Noodle Soup",
+              "price": 45,
+              "stall": "CYM Noodle Bar 麵軒",
+              "verified": false,
+              "cuisines": [
+                "chinese",
+                "noodles"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            },
+            {
+              "name": "Beef Chow Fun",
+              "price": 52,
+              "stall": "CYM Noodle Bar 麵軒",
+              "verified": false,
+              "cuisines": [
+                "chinese",
+                "noodles"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CEDARS — campus amenities & catering",
+              "url": "https://www.cedars.hku.hk/",
+              "checkedAt": null
+            }
+          ],
+          "verified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 21:00",
+            "closesAt": "21:00",
+            "opensAt": "07:30"
+          },
+          "walkMinutes": 4,
+          "walkFrom": {
+            "key": "centennial_campus",
+            "label": "Centennial Campus",
+            "requested": true
+          },
+          "matchPct": 77,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Noodles"
+            }
+          ]
+        },
+        {
+          "id": "pokfulam-noodle-house",
+          "name": "Pokfulam Noodle House 薄扶林麵家",
+          "nameZh": "薄扶林麵家",
+          "venue": "Pokfulam Road, G/F",
+          "zone": "West Campus",
+          "emoji": "🍲",
+          "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=60",
+          "cuisines": [
+            "chinese",
+            "noodles"
+          ],
+          "diets": [],
+          "priceLevel": 1,
+          "avgPrice": 46,
+          "rating": 4,
+          "tags": [
+            "breakfast",
+            "budget",
+            "off-campus"
+          ],
+          "overview": "Neighbourhood noodle shop just off campus; opens early for breakfast.",
+          "menu": [
+            {
+              "name": "Wonton Noodle Soup",
+              "price": 46,
+              "stall": "Pokfulam Noodle House 薄扶林麵家",
+              "verified": false,
+              "cuisines": [
+                "chinese",
+                "noodles"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            },
+            {
+              "name": "Beef Brisket Noodles",
+              "price": 56,
+              "stall": "Pokfulam Noodle House 薄扶林麵家",
+              "verified": false,
+              "cuisines": [
+                "chinese",
+                "noodles"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CEDARS — campus amenities & catering",
+              "url": "https://www.cedars.hku.hk/",
+              "checkedAt": null
+            }
+          ],
+          "verified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 20:00",
+            "closesAt": "20:00",
+            "opensAt": "07:00"
+          },
+          "walkMinutes": 4,
+          "walkFrom": {
+            "key": "centennial_campus",
+            "label": "Centennial Campus",
+            "requested": true
+          },
+          "matchPct": 76,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Noodles"
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "totalMatches": 2,
+        "lowConfidence": false,
+        "bestMatch": 77,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "12:30",
+        "dayName": "Fri",
+        "evaluated": 15,
+        "demo": true
+      },
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": null,
+      "notice": "Unverified demonstration data, not dietary recommendations."
+    },
+    {
+      "ok": true,
+      "query": "Something quick and open now for coffee and a snack.",
+      "intent": {
+        "cuisines": [
+          "coffee",
+          "snack"
+        ],
+        "diets": [],
+        "max_price_hkd": null,
+        "price_preference": "any",
+        "open_now": true,
+        "arrive_by": null,
+        "near": null,
+        "max_walk_minutes": null,
+        "meal": "snack",
+        "keywords": [
+          "quick"
+        ],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [],
+      "meta": {
+        "totalMatches": 0,
+        "lowConfidence": false,
+        "bestMatch": 0,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "12:30",
+        "dayName": "Fri",
+        "evaluated": 15,
+        "demo": false
+      },
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": "no_match",
+      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+    },
+    {
+      "ok": true,
+      "query": "Something quick and open now for coffee and a snack.",
+      "intent": {
+        "cuisines": [
+          "coffee",
+          "snack"
+        ],
+        "diets": [],
+        "max_price_hkd": null,
+        "price_preference": "any",
+        "open_now": true,
+        "arrive_by": null,
+        "near": null,
+        "max_walk_minutes": null,
+        "meal": "snack",
+        "keywords": [
+          "quick"
+        ],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [
+        {
+          "id": "starbucks-main-library",
+          "name": "Starbucks (Main Library)",
+          "nameZh": null,
+          "venue": "Main Library, G/F Extension",
+          "zone": "Main Campus",
+          "emoji": "☕",
+          "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=60",
+          "cuisines": [
+            "bakery",
+            "snack",
+            "coffee"
+          ],
+          "diets": [],
+          "priceLevel": 2,
+          "avgPrice": 28,
+          "rating": 4.2,
+          "tags": [
+            "quick",
+            "study-spot",
+            "wifi"
+          ],
+          "overview": "Directly inside the library — the obvious choice for coffee between study blocks.",
+          "menu": [
+            {
+              "name": "Butter Croissant",
+              "price": 28,
+              "stall": "Starbucks (Main Library)",
+              "verified": false,
+              "cuisines": [
+                "bakery",
+                "snack"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            },
+            {
+              "name": "Café Latte",
+              "price": 40,
+              "stall": "Starbucks (Main Library)",
+              "verified": false,
+              "cuisines": [
+                "coffee"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            },
+            {
+              "name": "Flat White",
+              "price": 42,
+              "stall": "Starbucks (Main Library)",
+              "verified": false,
+              "cuisines": [
+                "coffee"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CEDARS — campus amenities & catering",
+              "url": "https://www.cedars.hku.hk/",
+              "checkedAt": null
+            }
+          ],
+          "verified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 20:00",
+            "closesAt": "20:00",
+            "opensAt": "08:00"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "main_library",
+            "label": "Main Library",
+            "requested": false
+          },
+          "matchPct": 96,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Coffee · Snack"
+            },
+            {
+              "icon": "🏷️",
+              "text": "quick"
+            }
+          ]
+        },
+        {
+          "id": "pacific-coffee-centennial",
+          "name": "Pacific Coffee (Centennial)",
+          "nameZh": null,
+          "venue": "Centennial Campus, 3/F Run Run Shaw Tower podium",
+          "zone": "Centennial Campus",
+          "emoji": "🧋",
+          "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=60",
+          "cuisines": [
+            "bakery",
+            "snack",
+            "coffee"
+          ],
+          "diets": [],
+          "priceLevel": 2,
+          "avgPrice": 30,
+          "rating": 4,
+          "tags": [
+            "quiet",
+            "weekday-only",
+            "wifi"
+          ],
+          "overview": "Quiet seating with power sockets; closed at weekends.",
+          "menu": [
+            {
+              "name": "Pain au Chocolat",
+              "price": 30,
+              "stall": "Pacific Coffee (Centennial)",
+              "verified": false,
+              "cuisines": [
+                "bakery",
+                "snack"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            },
+            {
+              "name": "Cappuccino",
+              "price": 42,
+              "stall": "Pacific Coffee (Centennial)",
+              "verified": false,
+              "cuisines": [
+                "coffee"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            },
+            {
+              "name": "Iced Mocha",
+              "price": 48,
+              "stall": "Pacific Coffee (Centennial)",
+              "verified": false,
+              "cuisines": [
+                "coffee"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CEDARS — campus amenities & catering",
+              "url": "https://www.cedars.hku.hk/",
+              "checkedAt": null
+            }
+          ],
+          "verified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 19:00",
+            "closesAt": "19:00",
+            "opensAt": "08:00"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "centennial_campus",
+            "label": "Centennial Campus",
+            "requested": false
+          },
+          "matchPct": 86,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Coffee · Snack"
+            }
+          ]
+        },
+        {
+          "id": "knowles-cafe",
+          "name": "Knowles Café",
+          "nameZh": null,
+          "venue": "Knowles Building, G/F",
+          "zone": "Main Campus",
+          "emoji": "🥙",
+          "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=60",
+          "cuisines": [
+            "coffee"
+          ],
+          "diets": [],
+          "priceLevel": 2,
+          "avgPrice": 32,
+          "rating": 3.7,
+          "tags": [
+            "quick",
+            "takeaway",
+            "weekday-only"
+          ],
+          "overview": "Grab-and-go counter aimed at staff; closes early in the afternoon.",
+          "menu": [
+            {
+              "name": "Americano",
+              "price": 32,
+              "stall": "Knowles Café",
+              "verified": false,
+              "cuisines": [
+                "coffee"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CEDARS — campus amenities & catering",
+              "url": "https://www.cedars.hku.hk/",
+              "checkedAt": null
+            }
+          ],
+          "verified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 17:30",
+            "closesAt": "17:30",
+            "opensAt": "08:30"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "knowles_building",
+            "label": "Knowles Building",
+            "requested": false
+          },
+          "matchPct": 77,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Coffee"
+            },
+            {
+              "icon": "🏷️",
+              "text": "quick"
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "totalMatches": 4,
+        "lowConfidence": false,
+        "bestMatch": 96,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "12:30",
+        "dayName": "Fri",
+        "evaluated": 15,
+        "demo": true
+      },
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": null,
+      "notice": "Unverified demonstration data, not dietary recommendations."
+    },
+    {
+      "ok": true,
+      "query": "Halal dinner under 80 dollars with a friend.",
+      "intent": {
+        "cuisines": [],
+        "diets": [
+          "halal"
+        ],
+        "max_price_hkd": 80,
+        "price_preference": "any",
+        "open_now": false,
+        "arrive_by": null,
+        "near": null,
+        "max_walk_minutes": null,
+        "meal": "dinner",
+        "keywords": [],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [],
+      "meta": {
+        "totalMatches": 0,
+        "lowConfidence": false,
+        "bestMatch": 0,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "12:30",
+        "dayName": "Fri",
+        "evaluated": 15,
+        "demo": false
+      },
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": "no_match",
+      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+    },
+    {
+      "ok": true,
+      "query": "Halal dinner under 80 dollars with a friend.",
+      "intent": {
+        "cuisines": [],
+        "diets": [
+          "halal"
+        ],
+        "max_price_hkd": 80,
+        "price_preference": "any",
+        "open_now": false,
+        "arrive_by": null,
+        "near": null,
+        "max_walk_minutes": null,
+        "meal": "dinner",
+        "keywords": [],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [],
+      "meta": {
+        "totalMatches": 0,
+        "lowConfidence": false,
+        "bestMatch": 0,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "12:30",
+        "dayName": "Fri",
+        "evaluated": 15,
+        "demo": true
+      },
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": "no_match",
+      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+    }
+  ]
+}

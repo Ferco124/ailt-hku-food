@@ -26,13 +26,13 @@ const SCHEMA_PATH = join(__dirname, 'schema.sql');
 /**
  * Bump when schema.sql changes in a way `CREATE TABLE IF NOT EXISTS` cannot
  * apply to an existing file (new/renamed columns, new tables). db.js rebuilds
- * from scratch on the next open.
+ * from scratch on the next open, preserving the search log.
  */
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 5;
 
 const TABLES = [
   'canteen_menu', 'canteen_sources', 'canteen_hours', 'canteen_tags',
-  'canteen_diets', 'canteen_cuisines', 'canteens', 'landmarks', 'search_log',
+  'canteen_diets', 'canteen_cuisines', 'canteens', 'landmarks',
 ];
 
 const CJK_RE = /[\u3400-\u9FFF\uF900-\uFAFF]+/g;
@@ -91,7 +91,7 @@ function writeMeta(key, value) {
 
 /**
  * Bring the file in line with the JSON.
- *   - schema version differs → drop everything and rebuild (fresh search_log).
+ *   - schema version differs → rebuild data tables, preserving search_log.
  *   - data hash differs      → re-import canteen rows, keep search_log.
  */
 function syncFromJson() {
@@ -140,7 +140,7 @@ export function seedFromData(current) {
     // Order matters only because of foreign keys; CASCADE would cover it too.
     for (const table of [
       'canteen_menu', 'canteen_sources', 'canteen_hours', 'canteen_tags',
-      'canteen_diets', 'canteen_cuisines', 'canteens', 'landmarks', 'search_log',
+      'canteen_diets', 'canteen_cuisines', 'canteens', 'landmarks',
     ]) {
       database.exec(`DELETE FROM ${table}`);
     }
@@ -154,8 +154,8 @@ export function seedFromData(current) {
 
     const insCanteen = database.prepare(`
       INSERT INTO canteens
-        (id, name, name_zh, venue, zone, lat, lng, price_level, avg_price, rating, emoji, image, overview)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (id, name, name_zh, venue, zone, lat, lng, price_level, avg_price, rating, emoji, image, overview, verified)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     const insCuisine = database.prepare(
       'INSERT INTO canteen_cuisines (canteen_id, cuisine) VALUES (?, ?)'
@@ -166,7 +166,9 @@ export function seedFromData(current) {
       'INSERT INTO canteen_hours (canteen_id, day_of_week, opens_min, closes_min) VALUES (?, ?, ?, ?)'
     );
     const insMenu = database.prepare(
-      'INSERT INTO canteen_menu (canteen_id, position, name, price) VALUES (?, ?, ?, ?)'
+      `INSERT INTO canteen_menu (canteen_id, position, name, price, stall, verified,
+        is_certified_halal, is_vegetarian, ingredients_listed, dietary_tags, dietary_tags_source, sources, cuisines)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     );
     const insSource = database.prepare(
       'INSERT INTO canteen_sources (canteen_id, position, label, url, checked_at) VALUES (?, ?, ?, ?, ?)'
@@ -176,7 +178,7 @@ export function seedFromData(current) {
       const nameZh = (c.name.match(CJK_RE) ?? []).join(' ') || null;
       insCanteen.run(
         c.id, c.name, nameZh, c.venue, c.zone, c.lat, c.lng,
-        c.priceLevel, c.avgPrice, c.rating, c.emoji ?? null, c.image ?? null, c.overview ?? null
+        c.priceLevel, c.avgPrice, c.rating, c.emoji ?? null, c.image ?? null, c.overview ?? null, Number(c.verified)
       );
       for (const cuisine of c.cuisines ?? []) insCuisine.run(c.id, cuisine);
       for (const diet of c.diets ?? []) insDiet.run(c.id, diet);
@@ -190,7 +192,11 @@ export function seedFromData(current) {
         insHours.run(c.id, day, toMinutes(slot[0]), toMinutes(slot[1]));
       });
 
-      (c.menu ?? []).forEach((m, i) => insMenu.run(c.id, i, m.name, m.price));
+      (c.menu ?? []).forEach((m, i) => insMenu.run(c.id, i, m.name, m.price, m.stall, Number(m.verified),
+        m.is_certified_halal == null ? null : Number(m.is_certified_halal),
+        m.is_vegetarian == null ? null : Number(m.is_vegetarian),
+        JSON.stringify(m.ingredients_listed), JSON.stringify(m.dietary_tags),
+        JSON.stringify(m.dietary_tags_source), JSON.stringify(m.sources), JSON.stringify(m.cuisines)));
       (c.sources ?? []).forEach((s, i) =>
         insSource.run(c.id, i, s.label, s.url ?? null, s.checkedAt ?? null)
       );
@@ -223,7 +229,7 @@ export function getCanteens() {
 
   const rows = database.prepare(`
     SELECT id, name, name_zh, venue, zone, lat, lng, price_level, avg_price, rating,
-           emoji, image, overview
+           emoji, image, overview, verified
     FROM canteens ORDER BY name
   `).all();
 
@@ -250,10 +256,17 @@ export function getCanteens() {
 
   const menu = new Map();
   for (const r of database
-    .prepare('SELECT canteen_id, name, price FROM canteen_menu ORDER BY canteen_id, position')
+    .prepare('SELECT * FROM canteen_menu ORDER BY canteen_id, position')
     .all()) {
     if (!menu.has(r.canteen_id)) menu.set(r.canteen_id, []);
-    menu.get(r.canteen_id).push({ name: r.name, price: r.price });
+    menu.get(r.canteen_id).push({
+      name: r.name, price: r.price, stall: r.stall, verified: Boolean(r.verified),
+      cuisines: JSON.parse(r.cuisines),
+      is_certified_halal: r.is_certified_halal == null ? null : Boolean(r.is_certified_halal),
+      is_vegetarian: r.is_vegetarian == null ? null : Boolean(r.is_vegetarian),
+      ingredients_listed: JSON.parse(r.ingredients_listed), dietary_tags: JSON.parse(r.dietary_tags),
+      dietary_tags_source: JSON.parse(r.dietary_tags_source), sources: JSON.parse(r.sources),
+    });
   }
 
   const sources = new Map();
@@ -282,6 +295,7 @@ export function getCanteens() {
     image: r.image,
     tags: tags.get(r.id) ?? [],
     overview: r.overview,
+    verified: Boolean(r.verified),
     menu: menu.get(r.id) ?? [],
     sources: sources.get(r.id) ?? [],
   }));
@@ -315,8 +329,8 @@ export function logSearch({ query, mode, intent, resultIds, latencyMs }) {
         resultIds ? JSON.stringify(resultIds) : null,
         Math.round(latencyMs ?? 0)
       );
-  } catch {
-    // Logging must never take the search down with it.
+  } catch (err) {
+    console.error('[search-log] Cannot persist search:', err);
   }
 }
 

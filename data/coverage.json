@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-23",
+  "summary": "The shipped menu dataset contains 15 illustrative venues and 45 unverified dishes. None is a verified dietary recommendation. Verified mode excludes these records. Demonstration mode is opt-in and never establishes dietary suitability.",
+  "notCovered": "Individual source-reviewed dishes, ingredients, allergen guarantees, holiday exceptions, temporary closures and a comprehensive HKU stall inventory are not yet covered.",
+  "officialDirectory": "https://catering.hku.hk/en/eateries/",
+  "reviewedOutlets": [
+    {
+      "name": "BIJAS Vegetarian",
+      "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+      "checkedAt": "2026-10-23",
+      "finding": "The official page describes halal-certified Chinese-style vegetarian offerings at G/F Run Run Shaw Tower. It lists Monday-Saturday 11:00-21:00 and Sunday closed. It does not establish individual dish names, prices or allergen safety; no dishes have been invented from this description."
+    },
+    {
+      "name": "JuYing Tai",
+      "url": "https://catering.hku.hk/en/eateries/FSCACR/",
+      "checkedAt": "2026-10-23",
+      "finding": "The official page identifies the outlet and hours but provides no dietary certification for individual dishes. Its information has not been applied to the fictional records."
+    }
+  ]
+}
