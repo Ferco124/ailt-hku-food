@@ -16,12 +16,14 @@ evidence of safety.
 
 1. **Unzip** the release folder matching your OS and architecture. Keep its
    `runtime`, `data`, `public` and `server` folders together.
-2. **Open the launcher:** double-click `run.bat` on Windows. On macOS/Linux,
-   open `run.sh` with your system's executable-script handler. The release
-   includes Node, so no Python, Node installation or terminal commands are
-   required on Windows. macOS security prompts and Linux file-manager
-   executable policies vary; those launch paths still need platform testing.
-3. **Use the browser** at <http://127.0.0.1:5000>. Keep the launcher window open.
+2. **Open the launcher:** double-click `run.bat` on Windows, or `run.command` on
+   macOS (Finder runs `.command` files in Terminal, which is the reliable path
+   on a Mac). On Linux run `sh run.sh` in a terminal. The release includes Node,
+   so no Python or Node installation is required. Windows is the only launch
+   path verified end to end; macOS and Linux still need platform testing.
+   If a launcher reports "permission denied", the archive lost the executable
+   bit — run `chmod +x run.sh run.command` once, or start it with `sh run.sh`.
+3. **Use the browser** at <http://127.0.0.1:4173>. Keep the launcher window open.
    Try a sample query. Without an API key, exact sample queries use prominently
    labelled cached walkthroughs, not current opening status.
 
@@ -53,7 +55,8 @@ npm run cache:walkthrough
 npm run package
 ```
 
-- `npm start`: starts on port 5000, loopback only. `PORT` overrides it.
+- `npm start`: starts on port 4173, loopback only. `PORT` overrides it. Avoid
+  5000 and 7000 on macOS, where AirPlay Receiver holds both.
 - `npm test`: scoped regression tests, including HTTP, launcher lifecycle and a
   local fake model provider. No external provider calls. The explicit test glob
   prevents copied release tests from being discovered a second time.
@@ -80,7 +83,7 @@ A source checkout without Node is not a self-contained release.
 ### Provider configuration
 
 ```dotenv
-PORT=5000
+PORT=4173
 BAILIAN_API_KEY=
 BAILIAN_BASE_URL=https://api.deepseek.com/v1
 BAILIAN_MODEL=deepseek-chat
@@ -280,7 +283,8 @@ included, but no Pi Agent validation is claimed.
 - **Node.js retained instead of Python**, agreed during implementation.
 - Local structured data is projected into SQLite; no external menu API is
   used at query time. Model parsing still uses the configured provider.
-- The default port is now 5000 and the default provider is DeepSeek.
+- The default port is now 4173, because macOS AirPlay Receiver reserves 5000 and
+  7000. The default provider is DeepSeek.
 - Interactive cards and source links are implemented. Chinese cases are
   included in the benchmark; end-to-end Chinese accuracy is unverified.
 - No holiday calendar, dynamic closures, real walking routes, comprehensive

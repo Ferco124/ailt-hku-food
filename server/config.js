@@ -30,7 +30,9 @@ function loadDotEnv() {
 }
 
 loadDotEnv();
-const port = process.env.PORT === undefined ? 5000 : Number(process.env.PORT);
+// 4173 by default: macOS reserves 5000 and 7000 for AirPlay Receiver, so binding
+// either one fails with EADDRINUSE on any Mac that has that feature enabled.
+const port = process.env.PORT === undefined ? 4173 : Number(process.env.PORT);
 if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('PORT must be an integer from 0 to 65535');
 
 export const config = {
