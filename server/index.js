@@ -205,6 +205,19 @@ const server = createServer(async (req, res) => {
   json(res, 405, { ok: false, error: 'Method not allowed' });
 });
 
+server.on('error', (err) => {
+  if (err.code !== 'EADDRINUSE') throw err;
+  const airplay = process.platform === 'darwin' && (config.port === 5000 || config.port === 7000)
+    ? `\n  macOS reserves ports 5000 and 7000 for AirPlay Receiver. Turn it off in`
+      + `\n  System Settings > General > AirDrop & Handoff, or set another PORT in .env.`
+    : '';
+  const message =
+    `\n  Port ${config.port} may already be in use: another program is listening on it.`
+    + airplay
+    + `\n  Stop that program, or choose another port in .env, for example: PORT=4173\n`;
+  process.stderr.write(message, () => process.exit(1));
+});
+
 server.listen(config.port, '127.0.0.1', () => {
   const { hhmm, dayName } = nowInHK();
   const count = getCanteens().length;

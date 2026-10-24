@@ -14,13 +14,15 @@ mkdirSync(join(destination, 'data'), { recursive: true });
 for (const name of ['canteens.json', 'vocab.json', 'coverage.json', 'walkthrough.json']) {
   copyFileSync(join(ROOT, 'data', name), join(destination, 'data', name));
 }
-for (const name of ['README.md', 'package.json', '.env.example', 'run.bat', 'run.sh']) {
+for (const name of ['README.md', 'package.json', '.env.example', 'run.bat', 'run.sh', 'run.command']) {
   copyFileSync(join(ROOT, name), join(destination, name));
 }
 copyFileSync(process.execPath, join(destination, 'runtime', process.platform === 'win32' ? 'node.exe' : 'node'));
 copyFileSync(license, join(destination, 'runtime', 'LICENSE'));
-if (process.platform !== 'win32') {
-  chmodSync(join(destination, 'runtime', 'node'), 0o755);
-  chmodSync(join(destination, 'run.sh'), 0o755);
+// Set the mode on every platform: a ZIP written on Windows records Unix mode 0,
+// which strips the executable bit and makes `./run.sh` fail with "permission denied".
+for (const name of ['runtime/node', 'run.sh', 'run.command']) {
+  chmodSync(join(destination, name), 0o755);
 }
-console.log(`Created ${destination}. Runtime is bundled. No .env, database or query logs were copied. Zip this folder for your OS/architecture.`);
+console.log(`Created ${destination}. Runtime is bundled. No .env, database or query logs were copied.`);
+console.log('Ship macOS/Linux builds as .tar.gz (tar keeps the executable bit); ZIP strips it.');
