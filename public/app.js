@@ -813,7 +813,6 @@ async function runSearch(query) {
   }
 
   busy = true;
-  $('demoMode').disabled = true;
   closeDetails();
   lastQuery = q;
   el.input.value = q;
@@ -831,7 +830,6 @@ async function runSearch(query) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         query: q,
-        demo: $('demoMode').checked,
         // Ask for the whole qualifying set: sorting and "show more" then need
         // no further round trip, and the server still owns the ranking.
         limit: RESULT_LIMIT,
@@ -862,7 +860,6 @@ async function runSearch(query) {
     setStatus('error', 'Something broke');
   } finally {
     busy = false;
-    $('demoMode').disabled = false;
     el.form.classList.remove('is-loading');
     el.submit.disabled = false;
     el.submit.querySelector('.btn-label').textContent = 'Find food';
@@ -954,14 +951,12 @@ setInterval(tickClock, 30_000);
       fetch('/api/coverage').then((r) => r.json()),
     ]);
     applyVocab(vocab);
-    renderEmptyState([]);
+    // The grid is the whole outlet list, always: there is no unverified tier to
+    // switch away from, so browsing the dataset needs no toggle.
+    renderEmptyState(list.canteens);
     $('coverageText').innerHTML = `<p>${esc(coverage.summary)}</p><p>Not covered: ${esc(coverage.notCovered)}</p>
       <p><a href="${esc(coverage.officialDirectory)}" target="_blank" rel="noopener noreferrer">Official HKU eatery directory</a></p>
       ${coverage.reviewedOutlets.map((o) => `<p><a href="${esc(o.url)}" target="_blank" rel="noopener noreferrer">${esc(o.name)}</a> - reviewed ${esc(o.checkedAt)}<br />${esc(o.finding)}</p>`).join('')}`;
-    $('demoMode').addEventListener('change', () => {
-      renderEmptyState($('demoMode').checked ? list.canteens : []);
-      if (lastQuery) runSearch(lastQuery);
-    });
     if (!health.hasKey) setStatus('offline', 'No API key');
   } catch (err) {
     $('coverageText').textContent = `Could not load coverage: ${err.message}`;

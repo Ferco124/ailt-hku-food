@@ -564,14 +564,13 @@ body {
   white-space: nowrap;
 }
 
-.safety-note, .coverage-box, .demo-control {
+.safety-note, .coverage-box {
   font-size: 0.875rem;
   line-height: 1.6;
 }
 .safety-note { color: var(--amber-fg); margin: 12px 0; }
 .coverage-box { margin: 16px 0; padding: 12px; border: 1px solid var(--line); border-radius: 8px; }
 .coverage-box summary { cursor: pointer; font-weight: 600; }
-.demo-control { display: block; margin: 12px 0; }
 
 .mcard-body {
   display: flex;

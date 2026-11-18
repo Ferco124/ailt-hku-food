@@ -29,14 +29,13 @@ evidence of safety.
    Try a sample query. Without an API key, exact sample queries use prominently
    labelled cached walkthroughs, not current opening status.
 
-![Verified mode and coverage](docs/start.png)
+![Results with coverage and verification rows](docs/start.png)
 
-Verified mode returns venue-verified cards whose dishes are representative.
-**Show unverified demonstration data** additionally admits venues whose own facts
-are unverified; it never admits dishes without dietary evidence, so dietary
-searches stay empty either way.
-
-![Cached demonstration with disclaimers](docs/demo.png)
+All 23 shipped venues are verified against the official HKU catering directory;
+every dish is representative until its own source exists, and each card states
+which of the two applies. There is no unverified-data switch in the browser:
+activation is one mode, and a venue whose details are not yet checked does not
+appear in it. `demo` survives on the API only for fixtures and scripts.
 
 For live parsing, copy `.env.example` to `.env` with a text editor and insert
 your existing Week 2 DeepSeek key as `BAILIAN_API_KEY`. The key stays on the
@@ -395,7 +394,8 @@ included, but no Pi Agent validation is claimed.
   stall coverage, ordering, diagnosis or allergen guarantees.
 - Outlet photos are the outlets' own published gallery images, so they show the
   outlet and its food as the operator chose to present them — not a verified
-  current state of the premises. Prices, ratings and names in demo mode remain
-  illustrative.
+  current state of the premises. Prices, ratings and dish names remain
+  illustrative: every menu item ships `verified: false` except the six backed by
+  an outlet-level certification.
 - This is a local, single-process application with in-memory rate limiting,
   not a deployed multiuser service.
