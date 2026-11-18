@@ -1,6 +1,11 @@
 export const DISCLAIMER = 'Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.';
 export const NO_MATCH = 'No match found in the current dataset. This does not mean that suitable food is unavailable on campus.';
-export const WALKTHROUGH_VERSION = 3;
+// Bumped when retrieval semantics change, so cached snapshots are not served
+// under rules that no longer apply. 4: venue-level verification tier.
+// 5: relevance by menu share and venue identity, results show matching dishes.
+// 6: dietary answers carry a basis (dish evidence vs. outlet-level listing).
+// 7: unconfirmed vegetarian outlets are returned as hints, outside `results`.
+export const WALKTHROUGH_VERSION = 7;
 
 export function refusalFor(query) {
   if (/\b(order(?!\s+(?:by|results|the results|of\b))|purchase|deliver|checkout|payment|reserve)\b|\b(?:buy|book)\b.*\b(?:for me|this|it)\b|下單|下单|訂餐|订餐/i.test(query)) {
@@ -42,13 +47,39 @@ export function hasEvidence(item) {
       validSource(s) && typeof s.tag === 'string' && typeof s.statement === 'string' && s.statement.trim());
 }
 
+/**
+ * Does the outlet itself vouch for a diet, at the level of the whole outlet?
+ *
+ * This is weaker than `matchesDiets`: it says "the outlet is certified / lists
+ * this diet", not "this dish was reviewed". It still has to be a real claim —
+ * the venue must be verified and carry a dated HTTPS source — so demonstration
+ * data can never acquire dietary standing, with or without `demo`.
+ */
+export function venueListsDiets(canteen, diets) {
+  if (canteen.verified !== true) return false;
+  if (!Array.isArray(canteen.sources) || canteen.sources.length === 0 ||
+      !canteen.sources.every(validSource)) return false;
+  return diets.every((diet) => (canteen.diets ?? []).includes(diet));
+}
+
 export function eligibleMenu(canteen, intent, demo = false) {
+  // Venue facts (name, address, hours, service mode) are verified separately
+  // from dish facts (name, price, dietary suitability). A venue-verified record
+  // may surface its representative dishes; a dietary constraint still demands
+  // dish-level evidence, because that is a safety claim, not a description.
+  //
+  // An outlet-level listing is the exception, and it is deliberately weaker:
+  // it answers "where can I eat" for a certified outlet without claiming that
+  // any particular dish was reviewed. `search` records which of the two applied
+  // so the card can say so instead of implying a reviewed dish.
+  const venueQualifies = canteen.verified === true || demo;
   return canteen.menu.filter((item) => {
-    if ((!demo || intent.diets.length) && (!canteen.verified || !hasEvidence(item))) return false;
+    if (!venueQualifies) return false;
     if (intent.requested_stall && item.stall.toLowerCase() !== intent.requested_stall.toLowerCase() &&
         canteen.name.toLowerCase() !== intent.requested_stall.toLowerCase()) return false;
     // Demonstration records never establish religious or dietary suitability.
-    if (intent.diets.length && (!hasEvidence(item) || !matchesDiets(item, intent.diets))) return false;
+    if (intent.diets.length && !(hasEvidence(item) && matchesDiets(item, intent.diets)) &&
+        !venueListsDiets(canteen, intent.diets)) return false;
     const cuisines = intent.cuisines.filter((c) => !['vegetarian', 'vegan', 'halal', 'gluten_free'].includes(c));
     if (cuisines.length && !cuisines.some((c) => item.cuisines.includes(c))) return false;
     if (intent.max_price_hkd != null && (item.price == null || item.price > intent.max_price_hkd)) return false;

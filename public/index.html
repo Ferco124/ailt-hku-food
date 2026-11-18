@@ -5,24 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>HKU Canteen Finder</title>
 <meta name="description" content="Describe what you want to eat — get three canteens at HKU that fit." />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍜</text></svg>" />
+<link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="apple-touch-icon" href="/logo.png" />
+<script>
+/* Resolve the theme before the first paint: deferring this to app.js makes a
+   dark-mode visitor watch the light theme flash for a frame or two. */
+(() => {
+  try {
+    const saved = localStorage.getItem('hku-theme');
+    const dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  } catch {
+    document.documentElement.dataset.theme = 'light';
+  }
+})();
+</script>
 <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
 
 <header class="topbar">
   <div class="brand">
-    <div class="crest" aria-hidden="true">
-      <span>HKU</span>
-    </div>
+    <img class="brand-logo" src="/logo.png" alt="" width="44" height="44" />
     <div class="brand-text">
       <h1>Canteen Finder</h1>
       <p>Say what you want. Get three places.</p>
     </div>
   </div>
-  <div class="status-chip" id="statusChip" data-state="idle">
-    <span class="dot"></span>
-    <span id="statusText">Ready</span>
+  <div class="topbar-actions">
+    <button
+      class="theme-toggle"
+      id="themeToggle"
+      type="button"
+      role="switch"
+      aria-checked="false"
+      aria-label="Dark mode"
+      title="Switch to dark theme"
+    >
+      <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.1" />
+        <path d="M12 2.7v2.1M12 19.2v2.1M4.4 4.4l1.5 1.5M18.1 18.1l1.5 1.5M2.7 12h2.1M19.2 12h2.1M4.4 19.6l1.5-1.5M18.1 5.9l1.5-1.5" />
+      </svg>
+      <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.4 14.6A8.7 8.7 0 0 1 9.4 3.6a8.7 8.7 0 1 0 11 11Z" />
+      </svg>
+    </button>
   </div>
 </header>
 
@@ -96,7 +125,13 @@
     </div>
 
     <div class="layout" id="layout">
-      <div class="cards" id="cards"></div>
+      <div class="cards-col">
+        <div class="cards" id="cards"></div>
+        <div class="more-row" id="moreRow" hidden>
+          <button class="ghost-btn more-btn" id="moreBtn" type="button" aria-controls="cards" aria-expanded="false">Show more</button>
+          <p class="more-note" id="moreNote"></p>
+        </div>
+      </div>
 
       <aside class="intent-panel" id="intentPanel">
         <div class="panel-head">
@@ -111,19 +146,47 @@
         <p class="panel-note" id="panelNote"></p>
       </aside>
     </div>
+
+    <section class="hints" id="hints" hidden aria-labelledby="hintsTitle">
+      <div class="hints-head">
+        <h3 id="hintsTitle">May have vegetarian options</h3>
+        <span class="hints-badge">Not confirmed</span>
+      </div>
+      <p class="hints-note" id="hintsNote"></p>
+      <ul class="hints-list" id="hintsList"></ul>
+    </section>
   </section>
 
   <section class="empty-state" id="emptyState">
     <div class="empty-grid" id="emptyGrid"></div>
-    <p class="empty-caption">Verified mode is the default. The shipped 15-venue demo is unverified and excluded from real dietary recommendations. Example queries have labelled cached walkthroughs when the model is offline.</p>
+    <p class="empty-caption">Verified mode is the default: venue names, addresses and opening hours come from the official HKU catering directory. Dish names and prices are representative, so use them as examples. Example queries have labelled cached walkthroughs when the model is offline.</p>
   </section>
 
 </main>
 
 <footer class="foot">
-  <span>Prototype · demo dataset, not an official HKU directory</span>
-  <span class="foot-sep">·</span>
-  <span id="footClock"></span>
+  <div class="foot-line">
+    <span class="foot-brand">HKU Canteen Finder <span class="foot-ver">v1.0.0</span></span>
+    <span class="foot-sep">·</span>
+    <a class="foot-link" href="https://github.com/Ferco124/ailt-hku-food" target="_blank" rel="noopener noreferrer">
+      GitHub
+      <svg class="foot-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 5h5v5M19 5l-7.5 7.5" />
+        <path d="M18 14.5V18a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18V7.5A1.5 1.5 0 0 1 6 6h3.5" />
+      </svg>
+    </a>
+    <span class="foot-sep">·</span>
+    <span>Not an official HKU directory</span>
+    <span class="foot-sep">·</span>
+    <span id="footClock"></span>
+  </div>
+  <div class="foot-line">
+    <div class="status-chip" id="statusChip" data-state="idle">
+      <span class="dot"></span>
+      <span id="statusText">Ready</span>
+    </div>
+  </div>
 </footer>
 
 <div class="modal-overlay" id="detailModal" hidden>

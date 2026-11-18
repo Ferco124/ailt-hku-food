@@ -1,4 +1,4 @@
-import { CUISINES, DIETS } from './data/vocab.js';
+import { CUISINES, DIETS, facetForCue } from './data/vocab.js';
 import { landmarks } from './db.js';
 
 /**
@@ -211,6 +211,22 @@ export function validateIntent(raw) {
     .map((k) => String(k).trim().toLowerCase().slice(0, 24))
     .filter((k) => k.length > 0 && k.length <= 24)
     .slice(0, 5);
+
+  // A phrase the vocabulary can name is a supported preference, not an
+  // unsupported one. Models routinely file "many seats" under `unsupported`,
+  // and since unsupported entries block retrieval that turned an ordinary
+  // request into a guaranteed no-match. Re-home those phrases as keywords.
+  const salvaged = [];
+  intent.unsupported = intent.unsupported.filter((entry) => {
+    const facet = facetForCue(entry);
+    if (!facet) return true;
+    salvaged.push(facet);
+    return false;
+  });
+  for (const facet of salvaged) {
+    if (!intent.keywords.includes(facet)) intent.keywords.push(facet);
+  }
+  intent.keywords = intent.keywords.slice(0, 5);
 
   // --- sort ---------------------------------------------------------------
   if (typeof raw.sort === 'string' && SORTS.includes(raw.sort.trim().toLowerCase())) {

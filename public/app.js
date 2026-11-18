@@ -9,6 +9,10 @@ const el = {
   examples: $('examples'),
   results: $('results'),
   cards: $('cards'),
+  hints: $('hints'),
+  hintsTitle: $('hintsTitle'),
+  hintsNote: $('hintsNote'),
+  hintsList: $('hintsList'),
   resultsTitle: $('resultsTitle'),
   resultsSub: $('resultsSub'),
   banner: $('banner'),
@@ -29,7 +33,11 @@ const el = {
   emptyState: $('emptyState'),
   emptyGrid: $('emptyGrid'),
   footClock: $('footClock'),
+  themeToggle: $('themeToggle'),
   sortBar: $('sortBar'),
+  more: $('moreRow'),
+  moreBtn: $('moreBtn'),
+  moreNote: $('moreNote'),
   modalOverlay: $('detailModal'),
   modalBody: $('modalBody'),
   modalClose: $('modalClose'),
@@ -172,6 +180,44 @@ function setStatus(state, text) {
   el.statusText.textContent = text;
 }
 
+/* ------------------------------- theme ------------------------------- */
+
+const THEME_KEY = 'hku-theme';
+const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+// The initial value is resolved by the inline script in index.html, so this only
+// reflects it into the control and follows later system changes until the user
+// states a preference of their own.
+function applyTheme(theme, persist = false) {
+  document.documentElement.dataset.theme = theme;
+  el.themeToggle.setAttribute('aria-checked', String(theme === 'dark'));
+  const next = theme === 'dark' ? 'light' : 'dark';
+  el.themeToggle.title = `Switch to ${next} theme`;
+  if (!persist) return;
+  try {
+    localStorage.setItem(THEME_KEY, theme);
+  } catch {
+    /* private mode: the choice simply does not survive the tab */
+  }
+}
+
+const currentTheme = () => (document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+
+applyTheme(currentTheme());
+el.themeToggle.addEventListener('click', () => {
+  applyTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
+});
+
+systemDark.addEventListener('change', (event) => {
+  let chosen = null;
+  try {
+    chosen = localStorage.getItem(THEME_KEY);
+  } catch {
+    /* storage unavailable */
+  }
+  if (!chosen) applyTheme(event.matches ? 'dark' : 'light');
+});
+
 /* ------------------------------ render ------------------------------ */
 
 function renderEmptyState(list) {
@@ -184,35 +230,113 @@ function renderEmptyState(list) {
     .join('');
 }
 
+/**
+ * Hints are outlets whose *menu wording* suggests vegetarian dishes. They are
+ * never results: no percentage, no card, no dietary basis. Keeping them in a
+ * separate dashed box is the whole point — a hint must not be read as "this
+ * outlet was checked".
+ */
+function renderHints(hints) {
+  const list = hints?.results ?? [];
+  if (!list.length) {
+    el.hints.hidden = true;
+    el.hintsList.innerHTML = '';
+    return;
+  }
+  el.hintsTitle.textContent = hints.title;
+  el.hintsNote.textContent = hints.note;
+  el.hintsList.innerHTML = list
+    .map(
+      (h) => `<li class="hint">
+        <div class="hint-top">
+          <span class="hint-name">${esc(h.name)}</span>
+          <span class="hint-meta">${esc(h.venue)}${h.walkMinutes != null ? ` · ${esc(h.walkMinutes)} min walk` : ''}</span>
+        </div>
+        <p class="hint-why">Menu wording suggests: ${h.items.map((i) => `“${esc(i.name)}”`).join(', ')}</p>
+      </li>`
+    )
+    .join('');
+  el.hints.hidden = false;
+}
+
 function skeleton() {
   el.results.hidden = false;
   el.emptyState.hidden = true;
   el.errorBox.hidden = true;
   el.banner.hidden = true;
+  renderHints(null);
   el.resultsTitle.textContent = 'Searching…';
   el.resultsSub.textContent = 'Reading your request, then filtering the canteen list.';
+  el.more.hidden = true;
   el.cards.innerHTML = '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>';
 }
 
 let lastResults = [];
 let lastMeta = null;
 
-/** "Checked 15 canteens · as of Mon 12:00 HKT · Sorted by cheapest (average price)" */
+// The server returns every outlet that cleared the relevance floor; the page
+// only ever *shows* three until asked, so a different sort can surface outlets
+// outside that first page without another model call.
+const RESULTS_PAGE = 3;
+const RESULT_LIMIT = 24;
+let visibleCount = RESULTS_PAGE;
+
+const shownCount = () => Math.min(visibleCount, lastResults.length);
+// Saved walkthrough snapshots stay at three results, so they cannot expand.
+const canExpand = () => !lastMeta?.snapshotAt;
+
+/** "Checked 15 canteens · … · Showing 3 of 5 matches · Sorted by cheapest (…)" */
 function paintResultsSub() {
   const meta = lastMeta || {};
-  const n = lastResults.length;
+  const total = lastResults.length;
+  const shown = shownCount();
   const bits = [];
   if (meta.evaluated > 0) bits.push(`Checked ${meta.evaluated} canteens`);
   bits.push(meta.snapshotAt
     ? `Historical snapshot: ${meta.snapshotAt}`
     : `Schedule evaluated at ${meta.dayName ?? ''} ${meta.checkTime ?? ''} HKT`);
   if (timeOverride) bits.push('fixed test time');
-  if (meta.totalMatches > n) bits.push(`${meta.totalMatches} matched in total`);
-  if (n) {
+  if (total > shown) bits.push(`Showing ${shown} of ${total} matches`);
+  else if (meta.totalMatches > total) bits.push(`${meta.totalMatches} matched in total`);
+  if (shown) {
     const label = SORT_LABELS[meta.sort] || SORT_LABELS.best_match;
     bits.push(meta.sortBasis ? `Sorted by ${label} (${meta.sortBasis})` : `Sorted by ${label}`);
   }
   el.resultsSub.textContent = bits.join(' · ');
+}
+
+function paintTitle() {
+  const n = shownCount();
+  if (!n) return;
+  el.resultsTitle.textContent = `${n} place${n > 1 ? 's' : ''} for you`;
+}
+
+function paintMore() {
+  const total = lastResults.length;
+  if (!canExpand() || total <= RESULTS_PAGE) {
+    el.more.hidden = true;
+    return;
+  }
+  el.more.hidden = false;
+  const expanded = visibleCount >= total;
+  el.moreBtn.setAttribute('aria-expanded', String(expanded));
+  if (expanded) {
+    el.moreBtn.textContent = 'Show fewer';
+    el.moreNote.textContent = `All ${total} matches shown.`;
+    return;
+  }
+  const step = Math.min(RESULTS_PAGE, total - visibleCount);
+  const left = total - visibleCount;
+  el.moreBtn.textContent = `Show ${step} more place${step > 1 ? 's' : ''}`;
+  el.moreNote.textContent = `${left} more match${left > 1 ? 'es' : ''} passed the same checks, further down this list.`;
+}
+
+/** Repaint the visible window; `lastResults` itself is never truncated. */
+function paintCards() {
+  el.cards.innerHTML = lastResults.slice(0, shownCount()).map(cardHTML).join('');
+  paintMore();
+  paintTitle();
+  paintResultsSub();
 }
 
 function paintSortBar() {
@@ -228,26 +352,34 @@ function paintSortBar() {
 }
 
 /**
- * Re-order the results already on screen. The ordering a user asks for after
- * the fact should not cost another model call, so this simply re-sorts the same
- * result set with the same rules the server uses.
+ * Re-order the whole result set, not just the page on screen. The ordering a
+ * user asks for after the fact should not cost another model call, so this
+ * re-sorts the same results with the same rules the server uses. `rank` is the
+ * server's best-match position, which keeps switching back exact.
  */
 function resortLocal(sort) {
   if (!lastResults.length) return;
+  const byRank = (a, b) => (a.rank ?? 999) - (b.rank ?? 999);
   const cmp = {
     cheapest: (a, b) => (a.avgPrice ?? Infinity) - (b.avgPrice ?? Infinity) || b.matchPct - a.matchPct || a.walkMinutes - b.walkMinutes,
     closest: (a, b) => a.walkMinutes - b.walkMinutes || b.matchPct - a.matchPct,
-    top_rated: (a, b) => b.rating - a.rating || b.matchPct - a.matchPct,
-    best_match: (a, b) => b.matchPct - a.matchPct || a.walkMinutes - b.walkMinutes || b.rating - a.rating,
+    top_rated: (a, b) => (b.rating ?? 0) - (a.rating ?? 0) || b.matchPct - a.matchPct,
+    best_match: byRank,
   }[sort];
+  if (!cmp) return;
 
-  lastMeta = { ...lastMeta, sort };
+  const knownBasis = { cheapest: 'lowest matching dish price', top_rated: 'rating' }[sort];
+  const walkBasis = typeof lastMeta?.sortBasis === 'string' && lastMeta.sortBasis.startsWith('walk from')
+    ? lastMeta.sortBasis
+    : null;
   // sortBasis only describes an intent-derived basis; a manual override has none.
-  lastMeta.sortBasis = sort === 'cheapest' ? 'lowest matching dish price'
-    : sort === 'top_rated' ? 'rating' : null;
+  lastMeta = {
+    ...lastMeta,
+    sort,
+    sortBasis: sort === 'best_match' ? null : (knownBasis ?? (sort === 'closest' ? walkBasis : null)),
+  };
   lastResults = [...lastResults].sort(cmp);
-  el.cards.innerHTML = lastResults.map(cardHTML).join('');
-  paintResultsSub();
+  paintCards();
   paintSortBar();
 }
 
@@ -259,8 +391,14 @@ function cardHTML(r, i) {
   const cuisine = r.cuisines.find((c) => !GENERIC.has(c)) || r.cuisines[0];
   const cuisineLabel = CUISINE_LABEL[cuisine] || titleCase(cuisine || 'Canteen');
   // The server returns only eligible items; never fabricate a fallback dish.
-  const dish = r.menu[0];
-  const image = r.image || photoFor(r);
+  const dish = r.menu[0] ?? null;
+  // An outlet-level dietary match answers "where", not "which dish": quoting one
+  // dish as the match would imply that dish itself was reviewed.
+  const outletDiet = r.dietBasis === 'venue';
+  // Records point at a local photo of the outlet; the cuisine shot stays as the
+  // fallback if a file is missing, so a broken image never reaches the card.
+  const fallbackImage = photoFor(r);
+  const image = r.image || fallbackImage;
   const c1 = TAG_COLOR[cuisine] || 't-blue';
   const tags = [
     { text: cuisineLabel, cls: c1 },
@@ -274,26 +412,24 @@ function cardHTML(r, i) {
     <article class="mcard">
       <div class="mcard-photo">
         <img src="${esc(image)}" alt="" loading="lazy"
-             onerror="this.onerror=null;this.src='https://picsum.photos/seed/${esc(r.id)}/900/520'">
+             onerror="this.onerror=null;this.src='${esc(fallbackImage)}'">
         <span class="mstatus ${r.status.open ? 'open' : 'closed'}">${esc(statusText)}</span>
         <span class="mloc">📍 ${esc(r.venue)}</span>
       </div>
       <div class="mcard-body">
-        <p class="safety-note">${r.verified ? 'Source-reviewed snapshot; verify current availability.' : 'UNVERIFIED DEMONSTRATION - not a dietary recommendation.'}</p>
         <h3>${esc(r.name)}</h3>
         <p class="msub">${esc(r.zone)} • ${esc(cuisineLabel)}</p>
         <div class="mtags">
           ${tags.map((t) => `<span class="mtag ${t.cls}">${esc(t.text)}</span>`).join('')}
         </div>
         <div class="mfoot">
-          <span class="mdish">⭐ ${esc(dish.name)} (${dish.price == null ? 'price unknown' : `HK$${dish.price}`})</span>
+          ${outletDiet || !dish
+            ? '<span class="mdish">🏷️ Outlet-level dietary listing</span>'
+            : `<span class="mdish">⭐ ${esc(dish.name)} (${dish.price == null ? 'price unknown' : `HK$${dish.price}`})</span>`}
           <button class="mdetails" type="button" data-idx="${i}"
                   aria-label="Show details for ${esc(r.name)}">Details <span aria-hidden="true">→</span></button>
         </div>
-        <p class="msub">Stall: ${esc(dish.stall)}</p>
-        <p class="safety-note">Informational only, not a safety guarantee. Confirm ingredients and dietary status with staff.</p>
-        ${(dish.sources || []).map((s) => `<p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a> - checked ${esc(s.checkedAt)}</p>`).join('')}
-        ${r.sources.map((s) => `<p><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a> - ${s.checkedAt ? `checked ${esc(s.checkedAt)}` : 'not verified'}</p>`).join('')}
+        ${dish ? `<p class="msub">Stall: ${esc(dish.stall)}</p>` : ''}
       </div>
     </article>`;
 }
@@ -302,25 +438,73 @@ function cardHTML(r, i) {
 
 let modalTrigger = null;
 
-function openDetails(r, trigger = null) {
-  modalTrigger = trigger;
-  const menu = r.menu;
+/**
+ * Every verification claim and caveat lives here, at the bottom of the detail
+ * view — one section a curious user can read, instead of four grey paragraphs
+ * repeated on every card. Each row states what was checked, on what basis, and
+ * what that basis does *not* cover.
+ */
+function verificationHTML(r) {
   const sources = r.sources ?? [];
-  const hours = r.status.opensAt && r.status.closesAt
-    ? `${to12h(r.status.opensAt)} – ${to12h(r.status.closesAt)}`
-    : 'Hours unavailable today';
+  const checked = sources.map((s) => s.checkedAt).filter(Boolean).sort().at(-1);
+  const when = [lastMeta?.dayName, lastMeta?.checkTime].filter(Boolean).join(' ');
 
-  const reasons = r.reasons.length
-    ? `<div class="modal-reasons">${r.reasons
-        .map((x) => `<span class="mini-tag neutral">${esc(x.icon)} ${esc(x.text)}</span>`)
-        .join('')}</div>`
-    : '';
+  const rows = [
+    {
+      key: 'Venue & hours',
+      state: r.venueVerified ? 'ok' : 'none',
+      value: r.venueVerified ? 'Verified' : 'Not verified',
+      note: r.venueVerified
+        ? `Address and opening hours match the official HKU catering directory${checked ? `, last checked ${checked}` : ''}.`
+        : 'Prototype data — not checked against any official directory.',
+    },
+    {
+      key: 'Dishes & prices',
+      state: r.menuVerified ? 'ok' : 'partial',
+      value: r.menuVerified ? 'Item-verified' : 'Representative',
+      note: r.menuVerified
+        ? 'Dish names and prices were reviewed on the outlet page.'
+        : 'Names and prices show what the outlet serves; no dish was reviewed line by line.',
+    },
+    r.dietBasis === 'dish'
+      ? {
+          key: 'Dietary',
+          state: 'ok',
+          value: 'Dish evidence',
+          note: 'The listed dishes carry their own dietary evidence; see the item sources above.',
+        }
+      : r.dietBasis === 'venue'
+        ? {
+            key: 'Dietary',
+            state: 'partial',
+            value: 'Outlet-level only',
+            note: 'The outlet is listed or certified for this diet; the dishes shown were not individually reviewed. Ask staff which dishes qualify.',
+          }
+        : {
+            key: 'Dietary',
+            state: 'neutral',
+            value: 'Not assessed',
+            note: 'This search did not ask about dietary needs, so nothing was checked for them.',
+          },
+    lastMeta?.snapshotAt
+      ? {
+          key: 'Availability',
+          state: 'partial',
+          value: 'Historic snapshot',
+          note: 'A saved walkthrough — not current opening status.',
+        }
+      : {
+          key: 'Availability',
+          state: r.status.open ? 'ok' : 'partial',
+          value: r.status.open ? `Evaluated ${when} HKT`.trim() : 'Closed now',
+          note: r.status.open
+            ? 'Opening times checked against the published schedule for this day.'
+            : `${r.status.reason} — from the published schedule, not a temporary closure notice.`,
+        },
+  ];
 
-  // Real provenance when the record carries it; an honest placeholder only when
-  // it does not, rather than a hand-waved note on every card.
-  const sourceHTML = sources.length
-    ? `<h4 class="modal-h">Sources</h4>
-       <ul class="modal-sources">
+  const sourceList = sources.length
+    ? `<ul class="modal-sources">
          ${sources
            .map(
              (s) =>
@@ -331,38 +515,78 @@ function openDetails(r, trigger = null) {
                }${s.checkedAt ? ` <span class="checked">checked ${esc(s.checkedAt)}</span>` : ''}</li>`
            )
            .join('')}
-       </ul>
-       <p class="modal-note">${r.verified ? 'Source-reviewed schedule and menu snapshot; confirm current details with staff.' : 'Unverified demonstration: hours and prices are approximations.'}</p>`
+       </ul>`
     : `<div class="source-box">
-         ⚠️ <span><strong>Source Verification:</strong> Placeholder data for this prototype —
-         not yet verified against an official HKU catering directory.</span>
+         ⚠️ <span><strong>No source recorded:</strong> this outlet has not been checked
+         against an official HKU catering directory.</span>
        </div>`;
+
+  return `<section class="modal-verify" aria-label="Verification and disclaimer">
+    <h4 class="modal-h">Verification</h4>
+    <div class="verify-rows">
+      ${rows
+        .map(
+          (row) => `<div class="verify-row">
+            <span class="verify-key">${esc(row.key)}</span>
+            <div class="verify-val">
+              <span class="verify-state ${row.state}"><span class="verify-dot" aria-hidden="true"></span>${esc(row.value)}</span>
+              <p class="verify-note">${esc(row.note)}</p>
+            </div>
+          </div>`
+        )
+        .join('')}
+    </div>
+    <h4 class="modal-h">Sources</h4>
+    ${sourceList}
+    <p class="modal-disclaimer">Informational only — not a safety guarantee. Confirm
+    ingredients, allergens and dietary status with staff before ordering.</p>
+  </section>`;
+}
+
+function openDetails(r, trigger = null) {
+  modalTrigger = trigger;
+  // An outlet-level dietary match has no reviewed dish to show; the outlet's
+  // representative offerings are listed for context only.
+  const menu = r.dietBasis === 'venue' ? (r.representativeMenu ?? []) : r.menu;
+  const hours = r.status.opensAt && r.status.closesAt
+    ? `${to12h(r.status.opensAt)} – ${to12h(r.status.closesAt)}`
+    : 'Hours unavailable today';
+
+  const reasons = r.reasons.length
+    ? `<div class="modal-reasons">${r.reasons
+        .map((x) => `<span class="mini-tag neutral">${esc(x.icon)} ${esc(x.text)}</span>`)
+        .join('')}</div>`
+    : '';
+
+  // Some venue strings already end with the campus ("..., Centennial Campus");
+  // appending the zone again printed the campus name twice.
+  const location = r.venue.toLowerCase().includes(r.zone.toLowerCase())
+    ? r.venue
+    : `${r.venue}, ${r.zone}`;
 
   el.modalBody.innerHTML = `
     <h2 id="modalTitle">${esc(r.name)}</h2>
     ${r.nameZh ? `<p class="modal-zh">${esc(r.nameZh)}</p>` : ''}
     <div class="modal-meta">
-      <div>📍 ${esc(r.venue)}, ${esc(r.zone)}</div>
+      <div>📍 ${esc(location)}</div>
       <div>⏰ ${esc(hours)}</div>
     </div>
-    ${lastMeta?.snapshotAt ? `<p class="safety-note">Historical snapshot: ${esc(lastMeta.snapshotAt)}. Not current availability.</p>` : ''}
     ${reasons}
     <h4 class="modal-h">Overview</h4>
     <p class="modal-p">${esc(r.overview || r.note || '')}</p>
-    <p class="safety-note">Informational only, not a safety guarantee. Confirm with canteen staff. ${r.verified ? '' : 'Unverified demonstration data.'}</p>
-    <h4 class="modal-h">Matching menu items</h4>
+    <h4 class="modal-h">${r.dietBasis === 'venue' ? 'Representative dishes (not reviewed for this diet)' : 'Matching menu items'}</h4>
     <div class="modal-menu">
       ${menu
         .map(
           (m) =>
-            `<div class="menu-row"><span>${esc(m.name)} - ${esc(m.stall)}<br />Ingredients: ${m.ingredients_listed === null ? 'unknown' : esc(m.ingredients_listed.join(', '))}
-            ${m.sources.map((s) => `<br /><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a> (checked ${esc(s.checkedAt)})`).join('')}
+            `<div class="menu-row"><span>${esc(m.name)} - ${esc(m.stall)}${m.ingredients_listed?.length ? `<br />Ingredients: ${esc(m.ingredients_listed.join(', '))}` : ''}
+            ${(m.sources ?? []).map((s) => `<br /><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.label)}</a> (checked ${esc(s.checkedAt)})`).join('')}
             ${(m.dietary_tags_source || []).map((s) => `<br /><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.tag)}: ${esc(s.statement)}</a> (checked ${esc(s.checkedAt)})`).join('')}
             </span><strong>${m.price == null ? 'Price unknown' : `HK$${m.price}`}</strong></div>`
         )
         .join('')}
     </div>
-    ${sourceHTML}`;
+    ${verificationHTML(r)}`;
 
   el.modalOverlay.hidden = false;
   document.body.classList.add('modal-open');
@@ -496,18 +720,15 @@ function render(data) {
   const n = results.length;
   const noPrefs = data.reason === 'no_preferences';
 
-  el.resultsTitle.textContent = n
-    ? `${n} place${n > 1 ? 's' : ''} for you`
-    : data.reason?.endsWith('_refused') ? 'Information-only service' : noPrefs
-      ? 'Nothing to search for'
-      : 'Nothing matched';
-
   lastMeta = data.meta || {};
   lastResults = results;
-  paintResultsSub();
-  paintSortBar();
+  visibleCount = RESULTS_PAGE;
 
   if (!n) {
+    el.resultsTitle.textContent = data.reason?.endsWith('_refused') ? 'Information-only service' : noPrefs
+      ? 'Nothing to search for'
+      : 'Nothing matched';
+    el.more.hidden = true;
     el.cards.innerHTML = `<article class="mcard blank">
       <div class="mcard-body">
         <div class="blank-emoji" aria-hidden="true">${noPrefs ? '💭' : '🤔'}</div>
@@ -520,10 +741,13 @@ function render(data) {
           }
         </p>
       </div></article>`;
+    paintResultsSub();
   } else {
-    el.cards.innerHTML = results.map(cardHTML).join('');
+    paintCards();
   }
 
+  paintSortBar();
+  renderHints(data.hints);
   renderPanel(data);
   renderBanner(data);
   setStatus(data.mode === 'cached' ? 'offline' : 'live',
@@ -543,10 +767,13 @@ function renderOffline(payload) {
 
   el.resultsTitle.textContent = 'Offline';
   el.resultsSub.textContent = 'No results — search needs the language model.';
+  renderHints(null);
   el.toggleIntent.hidden = true; // there is no intent panel to toggle
   el.sortBar.hidden = true; // nothing to sort
+  el.more.hidden = true; // nothing to reveal
   lastMeta = null;
   lastResults = [];
+  visibleCount = RESULTS_PAGE;
 
   const err = payload.detail || {};
   const rows = [
@@ -602,7 +829,14 @@ async function runSearch(query) {
     const res = await fetch('/api/recommend', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: q, demo: $('demoMode').checked, ...(timeOverride ? { at: timeOverride } : {}) }),
+      body: JSON.stringify({
+        query: q,
+        demo: $('demoMode').checked,
+        // Ask for the whole qualifying set: sorting and "show more" then need
+        // no further round trip, and the server still owns the ranking.
+        limit: RESULT_LIMIT,
+        ...(timeOverride ? { at: timeOverride } : {}),
+      }),
     });
 
     const data = await res.json().catch(() => null);
@@ -651,6 +885,16 @@ el.retry.addEventListener('click', () => runSearch(lastQuery));
 el.sortBar.addEventListener('click', (e) => {
   const btn = e.target.closest('.sortbtn');
   if (btn) resortLocal(btn.dataset.sort);
+});
+
+el.moreBtn.addEventListener('click', () => {
+  const total = lastResults.length;
+  if (!total) return;
+  visibleCount = visibleCount >= total
+    ? RESULTS_PAGE
+    : Math.min(total, visibleCount + RESULTS_PAGE);
+  paintCards();
+  el.moreBtn.focus();
 });
 
 el.toggleIntent.addEventListener('click', () => {
@@ -733,6 +977,13 @@ setInterval(tickClock, 30_000);
     const sort = params.get('sort');
     if (sort && SORT_LABELS[sort]) resortLocal(sort);
     const d = Number(params.get('details'));
-    if (params.get('details') !== null && Number.isInteger(d) && lastResults[d]) openDetails(lastResults[d]);
+    if (params.get('details') !== null && Number.isInteger(d) && lastResults[d]) {
+      // Reveal the card before opening it: the link may point past the first page.
+      if (d >= visibleCount) {
+        visibleCount = Math.min(lastResults.length, d + 1);
+        paintCards();
+      }
+      openDetails(lastResults[d]);
+    }
   }
 })();

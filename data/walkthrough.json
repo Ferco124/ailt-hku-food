@@ -1,8 +1,8 @@
 {
-  "createdAt": "2026-10-23T16:22:10.112Z",
+  "createdAt": "2026-11-18T08:46:55.754Z",
   "evaluatedAt": "2026-10-23T12:30:00+08:00",
-  "policyVersion": 3,
-  "dataHash": "69b6c26228937d9a",
+  "policyVersion": 7,
+  "dataHash": "edabb8670275b3a8",
   "answers": [
     {
       "ok": true,
@@ -29,22 +29,390 @@
         "unsupported": [],
         "refusal": null
       },
-      "results": [],
+      "results": [
+        {
+          "id": "bijas-vegetarian",
+          "name": "BIJAS Vegetarian",
+          "nameZh": null,
+          "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+          "zone": "Centennial Campus",
+          "emoji": "🥬",
+          "image": "/img/outlets/bijas-vegetarian.jpg",
+          "cuisines": [
+            "vegetarian",
+            "chinese",
+            "noodles"
+          ],
+          "diets": [
+            "vegetarian",
+            "halal"
+          ],
+          "priceLevel": 1,
+          "avgPrice": 28,
+          "rating": 4.4,
+          "tags": [
+            "budget",
+            "buffet-style",
+            "open-late"
+          ],
+          "overview": "Self-serviced buffet-style (collect-and-pay, charge by weight). Halal-certified Chinese-style vegetarian food, noodles, coffee and fresh juice. Closed Sundays. Contact: 2964 9011.",
+          "menu": [
+            {
+              "name": "Fresh Fruit Juice",
+              "price": 28,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Vegetarian Noodle Soup",
+              "price": 42,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "chinese",
+                "noodles",
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Vegetarian Buffet (Pay-by-Weight, 300g)",
+              "price": 45,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "chinese",
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": true,
+          "venueVerified": true,
+          "menuVerified": true,
+          "status": {
+            "open": true,
+            "reason": "Open until 21:00",
+            "closesAt": "21:00",
+            "opensAt": "11:00"
+          },
+          "walkMinutes": 5,
+          "walkFrom": {
+            "key": "main_library",
+            "label": "Main Library",
+            "requested": true
+          },
+          "matchPct": 97,
+          "dietBasis": "dish",
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Vegetarian"
+            },
+            {
+              "icon": "🎯",
+              "text": "Name matches \"Vegetarian\""
+            },
+            {
+              "icon": "🌿",
+              "text": "Vegetarian · dish evidence"
+            },
+            {
+              "icon": "💸",
+              "text": "Cheapest tier on campus"
+            }
+          ]
+        }
+      ],
       "meta": {
-        "totalMatches": 0,
+        "totalMatches": 1,
         "lowConfidence": false,
-        "bestMatch": 0,
+        "bestMatch": 97,
         "relaxed": [],
         "sort": "best_match",
         "sortBasis": null,
         "checkTime": "14:00",
         "dayName": "Fri",
-        "evaluated": 15,
+        "evaluated": 23,
         "demo": false
       },
+      "hints": {
+        "diet": "vegetarian",
+        "title": "May have vegetarian options",
+        "note": "These outlets do not state that they are vegetarian. Their menu wording suggests plant-based dishes, so treat them as places to ask about — not as confirmed options.",
+        "results": [
+          {
+            "id": "tamjai-samgor",
+            "name": "TamJai SamGor 譚仔三哥",
+            "nameZh": "譚仔三哥",
+            "venue": "G/F, The Jockey Club Tower, Centennial Campus",
+            "zone": "Centennial Campus",
+            "emoji": "🍜",
+            "rating": 4.3,
+            "walkMinutes": 4,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 21:30",
+              "closesAt": "21:30",
+              "opensAt": "07:45"
+            },
+            "items": [
+              {
+                "name": "Vegetarian Mixian",
+                "price": 48,
+                "stall": "TamJai SamGor 譚仔三哥"
+              }
+            ]
+          },
+          {
+            "id": "restaurant-1887",
+            "name": "Restaurant 1887",
+            "nameZh": null,
+            "venue": "7/F, William M.W. Mong Block",
+            "zone": "Sassoon Road",
+            "emoji": "🍷",
+            "rating": 4.3,
+            "walkMinutes": 26,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 21:00",
+              "closesAt": "21:00",
+              "opensAt": "11:00"
+            },
+            "items": [
+              {
+                "name": "Vegetarian Risotto",
+                "price": 108,
+                "stall": "Restaurant 1887"
+              }
+            ]
+          },
+          {
+            "id": "urban-coffee-roaster",
+            "name": "Urban Coffee Roaster",
+            "nameZh": null,
+            "venue": "G/F, Library Building (Old Wing)",
+            "zone": "Main Campus",
+            "emoji": "☕",
+            "rating": 4.2,
+            "walkMinutes": 1,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 20:30",
+              "closesAt": "20:30",
+              "opensAt": "07:30"
+            },
+            "items": [
+              {
+                "name": "Fresh Garden Salad",
+                "price": 62,
+                "stall": "Urban Coffee Roaster"
+              }
+            ]
+          },
+          {
+            "id": "alfafa-bistro",
+            "name": "alfafa bistro",
+            "nameZh": null,
+            "venue": "LG/F, The Jockey Club Tower [Online Order Takeaway ONLY]",
+            "zone": "Centennial Campus",
+            "emoji": "🥪",
+            "rating": 4.1,
+            "walkMinutes": 5,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 20:30",
+              "closesAt": "20:30",
+              "opensAt": "07:30"
+            },
+            "items": [
+              {
+                "name": "Garden Salad Bowl",
+                "price": 58,
+                "stall": "alfafa bistro"
+              }
+            ]
+          },
+          {
+            "id": "grove",
+            "name": "Grove",
+            "nameZh": null,
+            "venue": "2/F Academic Building, 3 Sassoon Road",
+            "zone": "Sassoon Road",
+            "emoji": "🥗",
+            "rating": 4.1,
+            "walkMinutes": 27,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 19:00",
+              "closesAt": "19:00",
+              "opensAt": "08:00"
+            },
+            "items": [
+              {
+                "name": "Quinoa Salad Bowl",
+                "price": 58,
+                "stall": "Grove"
+              }
+            ]
+          },
+          {
+            "id": "subway-rrs",
+            "name": "Subway (Run Run Shaw Podium)",
+            "nameZh": null,
+            "venue": "Run Run Shaw Podium",
+            "zone": "Main Campus",
+            "emoji": "🥪",
+            "rating": 3.8,
+            "walkMinutes": 1,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 20:30",
+              "closesAt": "20:30",
+              "opensAt": "08:00"
+            },
+            "items": [
+              {
+                "name": "Veggie Delite 6-inch Sub",
+                "price": 38,
+                "stall": "Subway"
+              }
+            ]
+          }
+        ]
+      },
       "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
-      "reason": "no_match",
-      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+      "reason": null,
+      "notice": "Venue details verified against the HKU catering directory; dish names and prices are representative."
     },
     {
       "ok": true,
@@ -71,62 +439,390 @@
         "unsupported": [],
         "refusal": null
       },
-      "results": [],
+      "results": [
+        {
+          "id": "bijas-vegetarian",
+          "name": "BIJAS Vegetarian",
+          "nameZh": null,
+          "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+          "zone": "Centennial Campus",
+          "emoji": "🥬",
+          "image": "/img/outlets/bijas-vegetarian.jpg",
+          "cuisines": [
+            "vegetarian",
+            "chinese",
+            "noodles"
+          ],
+          "diets": [
+            "vegetarian",
+            "halal"
+          ],
+          "priceLevel": 1,
+          "avgPrice": 28,
+          "rating": 4.4,
+          "tags": [
+            "budget",
+            "buffet-style",
+            "open-late"
+          ],
+          "overview": "Self-serviced buffet-style (collect-and-pay, charge by weight). Halal-certified Chinese-style vegetarian food, noodles, coffee and fresh juice. Closed Sundays. Contact: 2964 9011.",
+          "menu": [
+            {
+              "name": "Fresh Fruit Juice",
+              "price": 28,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Vegetarian Noodle Soup",
+              "price": 42,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "chinese",
+                "noodles",
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Vegetarian Buffet (Pay-by-Weight, 300g)",
+              "price": 45,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "chinese",
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": true,
+          "venueVerified": true,
+          "menuVerified": true,
+          "status": {
+            "open": true,
+            "reason": "Open until 21:00",
+            "closesAt": "21:00",
+            "opensAt": "11:00"
+          },
+          "walkMinutes": 5,
+          "walkFrom": {
+            "key": "main_library",
+            "label": "Main Library",
+            "requested": true
+          },
+          "matchPct": 97,
+          "dietBasis": "dish",
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Vegetarian"
+            },
+            {
+              "icon": "🎯",
+              "text": "Name matches \"Vegetarian\""
+            },
+            {
+              "icon": "🌿",
+              "text": "Vegetarian · dish evidence"
+            },
+            {
+              "icon": "💸",
+              "text": "Cheapest tier on campus"
+            }
+          ]
+        }
+      ],
       "meta": {
-        "totalMatches": 0,
+        "totalMatches": 1,
         "lowConfidence": false,
-        "bestMatch": 0,
+        "bestMatch": 97,
         "relaxed": [],
         "sort": "best_match",
         "sortBasis": null,
         "checkTime": "14:00",
         "dayName": "Fri",
-        "evaluated": 15,
+        "evaluated": 23,
         "demo": true
       },
-      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
-      "reason": "no_match",
-      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
-    },
-    {
-      "ok": true,
-      "query": "I want noodles near Centennial Campus.",
-      "intent": {
-        "cuisines": [
-          "noodles"
-        ],
-        "diets": [],
-        "max_price_hkd": null,
-        "price_preference": "any",
-        "open_now": true,
-        "arrive_by": null,
-        "near": "centennial_campus",
-        "max_walk_minutes": null,
-        "meal": null,
-        "keywords": [],
-        "sort": "best_match",
-        "confidence": 0.5,
-        "requested_stall": null,
-        "zone": null,
-        "unsupported": [],
-        "refusal": null
+      "hints": {
+        "diet": "vegetarian",
+        "title": "May have vegetarian options",
+        "note": "These outlets do not state that they are vegetarian. Their menu wording suggests plant-based dishes, so treat them as places to ask about — not as confirmed options.",
+        "results": [
+          {
+            "id": "tamjai-samgor",
+            "name": "TamJai SamGor 譚仔三哥",
+            "nameZh": "譚仔三哥",
+            "venue": "G/F, The Jockey Club Tower, Centennial Campus",
+            "zone": "Centennial Campus",
+            "emoji": "🍜",
+            "rating": 4.3,
+            "walkMinutes": 4,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 21:30",
+              "closesAt": "21:30",
+              "opensAt": "07:45"
+            },
+            "items": [
+              {
+                "name": "Vegetarian Mixian",
+                "price": 48,
+                "stall": "TamJai SamGor 譚仔三哥"
+              }
+            ]
+          },
+          {
+            "id": "restaurant-1887",
+            "name": "Restaurant 1887",
+            "nameZh": null,
+            "venue": "7/F, William M.W. Mong Block",
+            "zone": "Sassoon Road",
+            "emoji": "🍷",
+            "rating": 4.3,
+            "walkMinutes": 26,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 21:00",
+              "closesAt": "21:00",
+              "opensAt": "11:00"
+            },
+            "items": [
+              {
+                "name": "Vegetarian Risotto",
+                "price": 108,
+                "stall": "Restaurant 1887"
+              }
+            ]
+          },
+          {
+            "id": "urban-coffee-roaster",
+            "name": "Urban Coffee Roaster",
+            "nameZh": null,
+            "venue": "G/F, Library Building (Old Wing)",
+            "zone": "Main Campus",
+            "emoji": "☕",
+            "rating": 4.2,
+            "walkMinutes": 1,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 20:30",
+              "closesAt": "20:30",
+              "opensAt": "07:30"
+            },
+            "items": [
+              {
+                "name": "Fresh Garden Salad",
+                "price": 62,
+                "stall": "Urban Coffee Roaster"
+              }
+            ]
+          },
+          {
+            "id": "alfafa-bistro",
+            "name": "alfafa bistro",
+            "nameZh": null,
+            "venue": "LG/F, The Jockey Club Tower [Online Order Takeaway ONLY]",
+            "zone": "Centennial Campus",
+            "emoji": "🥪",
+            "rating": 4.1,
+            "walkMinutes": 5,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 20:30",
+              "closesAt": "20:30",
+              "opensAt": "07:30"
+            },
+            "items": [
+              {
+                "name": "Garden Salad Bowl",
+                "price": 58,
+                "stall": "alfafa bistro"
+              }
+            ]
+          },
+          {
+            "id": "grove",
+            "name": "Grove",
+            "nameZh": null,
+            "venue": "2/F Academic Building, 3 Sassoon Road",
+            "zone": "Sassoon Road",
+            "emoji": "🥗",
+            "rating": 4.1,
+            "walkMinutes": 27,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 19:00",
+              "closesAt": "19:00",
+              "opensAt": "08:00"
+            },
+            "items": [
+              {
+                "name": "Quinoa Salad Bowl",
+                "price": 58,
+                "stall": "Grove"
+              }
+            ]
+          },
+          {
+            "id": "subway-rrs",
+            "name": "Subway (Run Run Shaw Podium)",
+            "nameZh": null,
+            "venue": "Run Run Shaw Podium",
+            "zone": "Main Campus",
+            "emoji": "🥪",
+            "rating": 3.8,
+            "walkMinutes": 1,
+            "walkFrom": {
+              "key": "main_library",
+              "label": "Main Library",
+              "requested": true
+            },
+            "status": {
+              "open": true,
+              "reason": "Open until 20:30",
+              "closesAt": "20:30",
+              "opensAt": "08:00"
+            },
+            "items": [
+              {
+                "name": "Veggie Delite 6-inch Sub",
+                "price": 38,
+                "stall": "Subway"
+              }
+            ]
+          }
+        ]
       },
-      "results": [],
-      "meta": {
-        "totalMatches": 0,
-        "lowConfidence": false,
-        "bestMatch": 0,
-        "relaxed": [],
-        "sort": "best_match",
-        "sortBasis": null,
-        "checkTime": "12:30",
-        "dayName": "Fri",
-        "evaluated": 15,
-        "demo": false
-      },
       "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
-      "reason": "no_match",
-      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+      "reason": null,
+      "notice": "Unverified demonstration data, not dietary recommendations."
     },
     {
       "ok": true,
@@ -153,33 +849,34 @@
       },
       "results": [
         {
-          "id": "cym-noodle-bar",
-          "name": "CYM Noodle Bar 麵軒",
-          "nameZh": "麵軒",
-          "venue": "Chong Yuet Ming Amenities Centre, G/F",
-          "zone": "Main Campus",
+          "id": "tamjai-samgor",
+          "name": "TamJai SamGor 譚仔三哥",
+          "nameZh": "譚仔三哥",
+          "venue": "G/F, The Jockey Club Tower, Centennial Campus",
+          "zone": "Centennial Campus",
           "emoji": "🍜",
-          "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=60",
+          "image": "/img/outlets/tamjai-samgor.jpg",
           "cuisines": [
             "chinese",
             "noodles"
           ],
           "diets": [],
           "priceLevel": 1,
-          "avgPrice": 45,
-          "rating": 4.1,
+          "avgPrice": 48,
+          "rating": 4.3,
           "tags": [
-            "breakfast",
             "budget",
+            "customisable",
             "open-late",
-            "quick"
+            "quick",
+            "spicy"
           ],
-          "overview": "Wonton noodles and congee from breakfast onwards; served in under 10 minutes.",
+          "overview": "Table-serviced Yunnan mixian noodle shop. Customisable broth spice levels, rice dishes, snacks and drinks. Open 7 days.",
           "menu": [
             {
-              "name": "Wonton Noodle Soup",
-              "price": 45,
-              "stall": "CYM Noodle Bar 麵軒",
+              "name": "Vegetarian Mixian",
+              "price": 48,
+              "stall": "TamJai SamGor 譚仔三哥",
               "verified": false,
               "cuisines": [
                 "chinese",
@@ -193,9 +890,9 @@
               "sources": []
             },
             {
-              "name": "Beef Chow Fun",
+              "name": "Signature Mixian (Medium Spicy)",
               "price": 52,
-              "stall": "CYM Noodle Bar 麵軒",
+              "stall": "TamJai SamGor 譚仔三哥",
               "verified": false,
               "cuisines": [
                 "chinese",
@@ -209,27 +906,31 @@
               "sources": []
             }
           ],
+          "representativeMenu": null,
           "sources": [
             {
-              "label": "HKU CEDARS — campus amenities & catering",
-              "url": "https://www.cedars.hku.hk/",
-              "checkedAt": null
+              "label": "HKU CSO Catering — TamJai SamGor outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletB/",
+              "checkedAt": "2026-11-15"
             }
           ],
           "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
           "status": {
             "open": true,
-            "reason": "Open until 21:00",
-            "closesAt": "21:00",
-            "opensAt": "07:30"
+            "reason": "Open until 21:30",
+            "closesAt": "21:30",
+            "opensAt": "07:45"
           },
-          "walkMinutes": 4,
+          "walkMinutes": 1,
           "walkFrom": {
             "key": "centennial_campus",
             "label": "Centennial Campus",
             "requested": true
           },
-          "matchPct": 77,
+          "matchPct": 73,
+          "dietBasis": null,
           "reasons": [
             {
               "icon": "✓",
@@ -238,82 +939,170 @@
           ]
         },
         {
-          "id": "pokfulam-noodle-house",
-          "name": "Pokfulam Noodle House 薄扶林麵家",
-          "nameZh": "薄扶林麵家",
-          "venue": "Pokfulam Road, G/F",
-          "zone": "West Campus",
-          "emoji": "🍲",
-          "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=60",
+          "id": "bijas-vegetarian",
+          "name": "BIJAS Vegetarian",
+          "nameZh": null,
+          "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+          "zone": "Centennial Campus",
+          "emoji": "🥬",
+          "image": "/img/outlets/bijas-vegetarian.jpg",
           "cuisines": [
             "chinese",
-            "noodles"
+            "noodles",
+            "vegetarian"
           ],
-          "diets": [],
+          "diets": [
+            "vegetarian",
+            "halal"
+          ],
           "priceLevel": 1,
-          "avgPrice": 46,
-          "rating": 4,
+          "avgPrice": 42,
+          "rating": 4.4,
           "tags": [
-            "breakfast",
             "budget",
-            "off-campus"
+            "buffet-style",
+            "open-late"
           ],
-          "overview": "Neighbourhood noodle shop just off campus; opens early for breakfast.",
+          "overview": "Self-serviced buffet-style (collect-and-pay, charge by weight). Halal-certified Chinese-style vegetarian food, noodles, coffee and fresh juice. Closed Sundays. Contact: 2964 9011.",
           "menu": [
             {
-              "name": "Wonton Noodle Soup",
-              "price": 46,
-              "stall": "Pokfulam Noodle House 薄扶林麵家",
-              "verified": false,
+              "name": "Vegetarian Noodle Soup",
+              "price": 42,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
               "cuisines": [
                 "chinese",
-                "noodles"
+                "noodles",
+                "vegetarian"
               ],
-              "is_certified_halal": null,
-              "is_vegetarian": null,
+              "is_certified_halal": true,
+              "is_vegetarian": true,
               "ingredients_listed": null,
-              "dietary_tags": [],
-              "dietary_tags_source": [],
-              "sources": []
-            },
-            {
-              "name": "Beef Brisket Noodles",
-              "price": 56,
-              "stall": "Pokfulam Noodle House 薄扶林麵家",
-              "verified": false,
-              "cuisines": [
-                "chinese",
-                "noodles"
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
               ],
-              "is_certified_halal": null,
-              "is_vegetarian": null,
-              "ingredients_listed": null,
-              "dietary_tags": [],
-              "dietary_tags_source": [],
-              "sources": []
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
             }
           ],
+          "representativeMenu": null,
           "sources": [
             {
-              "label": "HKU CEDARS — campus amenities & catering",
-              "url": "https://www.cedars.hku.hk/",
-              "checkedAt": null
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-15"
             }
           ],
-          "verified": false,
+          "verified": true,
+          "venueVerified": true,
+          "menuVerified": true,
           "status": {
             "open": true,
-            "reason": "Open until 20:00",
-            "closesAt": "20:00",
-            "opensAt": "07:00"
+            "reason": "Open until 21:00",
+            "closesAt": "21:00",
+            "opensAt": "11:00"
           },
-          "walkMinutes": 4,
+          "walkMinutes": 2,
           "walkFrom": {
             "key": "centennial_campus",
             "label": "Centennial Campus",
             "requested": true
           },
-          "matchPct": 76,
+          "matchPct": 69,
+          "dietBasis": null,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Noodles"
+            }
+          ]
+        },
+        {
+          "id": "asian-gourmet",
+          "name": "Asian Gourmet",
+          "nameZh": null,
+          "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+          "zone": "Centennial Campus",
+          "emoji": "🍛",
+          "image": "/img/outlets/asian-gourmet.jpg",
+          "cuisines": [
+            "asian",
+            "noodles"
+          ],
+          "diets": [],
+          "priceLevel": 1,
+          "avgPrice": 55,
+          "rating": 3.9,
+          "tags": [
+            "budget",
+            "quick"
+          ],
+          "overview": "Table-serviced South-east Asian cuisine with rice dishes and noodles. Closed Sundays and public holidays.",
+          "menu": [
+            {
+              "name": "Singapore Laksa",
+              "price": 55,
+              "stall": "Asian Gourmet",
+              "verified": false,
+              "cuisines": [
+                "asian",
+                "noodles"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — Asian Gourmet outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletC/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 20:00",
+            "closesAt": "20:00",
+            "opensAt": "08:00"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "centennial_campus",
+            "label": "Centennial Campus",
+            "requested": true
+          },
+          "matchPct": 65,
+          "dietBasis": null,
           "reasons": [
             {
               "icon": "✓",
@@ -323,17 +1112,322 @@
         }
       ],
       "meta": {
-        "totalMatches": 2,
+        "totalMatches": 5,
         "lowConfidence": false,
-        "bestMatch": 77,
+        "bestMatch": 73,
         "relaxed": [],
         "sort": "best_match",
         "sortBasis": null,
         "checkTime": "12:30",
         "dayName": "Fri",
-        "evaluated": 15,
+        "evaluated": 23,
+        "demo": false
+      },
+      "hints": null,
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": null,
+      "notice": "Venue details verified against the HKU catering directory; dish names and prices are representative."
+    },
+    {
+      "ok": true,
+      "query": "I want noodles near Centennial Campus.",
+      "intent": {
+        "cuisines": [
+          "noodles"
+        ],
+        "diets": [],
+        "max_price_hkd": null,
+        "price_preference": "any",
+        "open_now": true,
+        "arrive_by": null,
+        "near": "centennial_campus",
+        "max_walk_minutes": null,
+        "meal": null,
+        "keywords": [],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [
+        {
+          "id": "tamjai-samgor",
+          "name": "TamJai SamGor 譚仔三哥",
+          "nameZh": "譚仔三哥",
+          "venue": "G/F, The Jockey Club Tower, Centennial Campus",
+          "zone": "Centennial Campus",
+          "emoji": "🍜",
+          "image": "/img/outlets/tamjai-samgor.jpg",
+          "cuisines": [
+            "chinese",
+            "noodles"
+          ],
+          "diets": [],
+          "priceLevel": 1,
+          "avgPrice": 48,
+          "rating": 4.3,
+          "tags": [
+            "budget",
+            "customisable",
+            "open-late",
+            "quick",
+            "spicy"
+          ],
+          "overview": "Table-serviced Yunnan mixian noodle shop. Customisable broth spice levels, rice dishes, snacks and drinks. Open 7 days.",
+          "menu": [
+            {
+              "name": "Vegetarian Mixian",
+              "price": 48,
+              "stall": "TamJai SamGor 譚仔三哥",
+              "verified": false,
+              "cuisines": [
+                "chinese",
+                "noodles"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            },
+            {
+              "name": "Signature Mixian (Medium Spicy)",
+              "price": 52,
+              "stall": "TamJai SamGor 譚仔三哥",
+              "verified": false,
+              "cuisines": [
+                "chinese",
+                "noodles"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — TamJai SamGor outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletB/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 21:30",
+            "closesAt": "21:30",
+            "opensAt": "07:45"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "centennial_campus",
+            "label": "Centennial Campus",
+            "requested": true
+          },
+          "matchPct": 73,
+          "dietBasis": null,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Noodles"
+            }
+          ]
+        },
+        {
+          "id": "bijas-vegetarian",
+          "name": "BIJAS Vegetarian",
+          "nameZh": null,
+          "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+          "zone": "Centennial Campus",
+          "emoji": "🥬",
+          "image": "/img/outlets/bijas-vegetarian.jpg",
+          "cuisines": [
+            "chinese",
+            "noodles",
+            "vegetarian"
+          ],
+          "diets": [
+            "vegetarian",
+            "halal"
+          ],
+          "priceLevel": 1,
+          "avgPrice": 42,
+          "rating": 4.4,
+          "tags": [
+            "budget",
+            "buffet-style",
+            "open-late"
+          ],
+          "overview": "Self-serviced buffet-style (collect-and-pay, charge by weight). Halal-certified Chinese-style vegetarian food, noodles, coffee and fresh juice. Closed Sundays. Contact: 2964 9011.",
+          "menu": [
+            {
+              "name": "Vegetarian Noodle Soup",
+              "price": 42,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "chinese",
+                "noodles",
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": true,
+          "venueVerified": true,
+          "menuVerified": true,
+          "status": {
+            "open": true,
+            "reason": "Open until 21:00",
+            "closesAt": "21:00",
+            "opensAt": "11:00"
+          },
+          "walkMinutes": 2,
+          "walkFrom": {
+            "key": "centennial_campus",
+            "label": "Centennial Campus",
+            "requested": true
+          },
+          "matchPct": 69,
+          "dietBasis": null,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Noodles"
+            }
+          ]
+        },
+        {
+          "id": "asian-gourmet",
+          "name": "Asian Gourmet",
+          "nameZh": null,
+          "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+          "zone": "Centennial Campus",
+          "emoji": "🍛",
+          "image": "/img/outlets/asian-gourmet.jpg",
+          "cuisines": [
+            "asian",
+            "noodles"
+          ],
+          "diets": [],
+          "priceLevel": 1,
+          "avgPrice": 55,
+          "rating": 3.9,
+          "tags": [
+            "budget",
+            "quick"
+          ],
+          "overview": "Table-serviced South-east Asian cuisine with rice dishes and noodles. Closed Sundays and public holidays.",
+          "menu": [
+            {
+              "name": "Singapore Laksa",
+              "price": 55,
+              "stall": "Asian Gourmet",
+              "verified": false,
+              "cuisines": [
+                "asian",
+                "noodles"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — Asian Gourmet outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletC/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 20:00",
+            "closesAt": "20:00",
+            "opensAt": "08:00"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "centennial_campus",
+            "label": "Centennial Campus",
+            "requested": true
+          },
+          "matchPct": 65,
+          "dietBasis": null,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Noodles"
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "totalMatches": 5,
+        "lowConfidence": false,
+        "bestMatch": 73,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "12:30",
+        "dayName": "Fri",
+        "evaluated": 23,
         "demo": true
       },
+      "hints": null,
       "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
       "reason": null,
       "notice": "Unverified demonstration data, not dietary recommendations."
@@ -364,109 +1458,33 @@
         "unsupported": [],
         "refusal": null
       },
-      "results": [],
-      "meta": {
-        "totalMatches": 0,
-        "lowConfidence": false,
-        "bestMatch": 0,
-        "relaxed": [],
-        "sort": "best_match",
-        "sortBasis": null,
-        "checkTime": "12:30",
-        "dayName": "Fri",
-        "evaluated": 15,
-        "demo": false
-      },
-      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
-      "reason": "no_match",
-      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
-    },
-    {
-      "ok": true,
-      "query": "Something quick and open now for coffee and a snack.",
-      "intent": {
-        "cuisines": [
-          "coffee",
-          "snack"
-        ],
-        "diets": [],
-        "max_price_hkd": null,
-        "price_preference": "any",
-        "open_now": true,
-        "arrive_by": null,
-        "near": null,
-        "max_walk_minutes": null,
-        "meal": "snack",
-        "keywords": [
-          "quick"
-        ],
-        "sort": "best_match",
-        "confidence": 0.5,
-        "requested_stall": null,
-        "zone": null,
-        "unsupported": [],
-        "refusal": null
-      },
       "results": [
         {
-          "id": "starbucks-main-library",
-          "name": "Starbucks (Main Library)",
+          "id": "urban-coffee-roaster",
+          "name": "Urban Coffee Roaster",
           "nameZh": null,
-          "venue": "Main Library, G/F Extension",
+          "venue": "G/F, Library Building (Old Wing)",
           "zone": "Main Campus",
           "emoji": "☕",
-          "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=60",
+          "image": "/img/outlets/urban-coffee-roaster.jpg",
           "cuisines": [
-            "bakery",
-            "snack",
             "coffee"
           ],
           "diets": [],
           "priceLevel": 2,
-          "avgPrice": 28,
+          "avgPrice": 42,
           "rating": 4.2,
           "tags": [
+            "breakfast",
             "quick",
-            "study-spot",
-            "wifi"
+            "study-spot"
           ],
-          "overview": "Directly inside the library — the obvious choice for coffee between study blocks.",
+          "overview": "Fresh bakery — breads, sourdough, cakes, pastries & pizza, salads and coffee. Self-serviced, open 7 days.",
           "menu": [
-            {
-              "name": "Butter Croissant",
-              "price": 28,
-              "stall": "Starbucks (Main Library)",
-              "verified": false,
-              "cuisines": [
-                "bakery",
-                "snack"
-              ],
-              "is_certified_halal": null,
-              "is_vegetarian": null,
-              "ingredients_listed": null,
-              "dietary_tags": [],
-              "dietary_tags_source": [],
-              "sources": []
-            },
-            {
-              "name": "Café Latte",
-              "price": 40,
-              "stall": "Starbucks (Main Library)",
-              "verified": false,
-              "cuisines": [
-                "coffee"
-              ],
-              "is_certified_halal": null,
-              "is_vegetarian": null,
-              "ingredients_listed": null,
-              "dietary_tags": [],
-              "dietary_tags_source": [],
-              "sources": []
-            },
             {
               "name": "Flat White",
               "price": 42,
-              "stall": "Starbucks (Main Library)",
+              "stall": "Urban Coffee Roaster",
               "verified": false,
               "cuisines": [
                 "coffee"
@@ -479,19 +1497,22 @@
               "sources": []
             }
           ],
+          "representativeMenu": null,
           "sources": [
             {
-              "label": "HKU CEDARS — campus amenities & catering",
-              "url": "https://www.cedars.hku.hk/",
-              "checkedAt": null
+              "label": "HKU CSO Catering — Urban Coffee Roaster outlet page",
+              "url": "https://catering.hku.hk/en/eateries/mlc/",
+              "checkedAt": "2026-11-15"
             }
           ],
           "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
           "status": {
             "open": true,
-            "reason": "Open until 20:00",
-            "closesAt": "20:00",
-            "opensAt": "08:00"
+            "reason": "Open until 20:30",
+            "closesAt": "20:30",
+            "opensAt": "07:30"
           },
           "walkMinutes": 1,
           "walkFrom": {
@@ -499,11 +1520,16 @@
             "label": "Main Library",
             "requested": false
           },
-          "matchPct": 96,
+          "matchPct": 93,
+          "dietBasis": null,
           "reasons": [
             {
               "icon": "✓",
-              "text": "Serves Coffee · Snack"
+              "text": "Serves Coffee"
+            },
+            {
+              "icon": "🎯",
+              "text": "Name matches \"Coffee\""
             },
             {
               "icon": "🏷️",
@@ -512,64 +1538,32 @@
           ]
         },
         {
-          "id": "pacific-coffee-centennial",
-          "name": "Pacific Coffee (Centennial)",
+          "id": "starbucks-composite",
+          "name": "Starbucks Coffee (Composite Building)",
           "nameZh": null,
-          "venue": "Centennial Campus, 3/F Run Run Shaw Tower podium",
-          "zone": "Centennial Campus",
-          "emoji": "🧋",
-          "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=60",
+          "venue": "Shop G.03, G/F, Composite Building, Main Campus",
+          "zone": "Main Campus",
+          "emoji": "☕",
+          "image": "/img/outlets/starbucks-composite.jpg",
           "cuisines": [
-            "bakery",
-            "snack",
             "coffee"
           ],
           "diets": [],
           "priceLevel": 2,
-          "avgPrice": 30,
-          "rating": 4,
+          "avgPrice": 42,
+          "rating": 4.1,
           "tags": [
-            "quiet",
-            "weekday-only",
-            "wifi"
+            "breakfast",
+            "open-late",
+            "quick",
+            "study-spot"
           ],
-          "overview": "Quiet seating with power sockets; closed at weekends.",
+          "overview": "Self-serviced Starbucks with salads, sandwiches, bakery, dessert, coffee and grab-n-go. Contact: 2559 5028.",
           "menu": [
             {
-              "name": "Pain au Chocolat",
-              "price": 30,
-              "stall": "Pacific Coffee (Centennial)",
-              "verified": false,
-              "cuisines": [
-                "bakery",
-                "snack"
-              ],
-              "is_certified_halal": null,
-              "is_vegetarian": null,
-              "ingredients_listed": null,
-              "dietary_tags": [],
-              "dietary_tags_source": [],
-              "sources": []
-            },
-            {
-              "name": "Cappuccino",
+              "name": "Caffè Latte",
               "price": 42,
-              "stall": "Pacific Coffee (Centennial)",
-              "verified": false,
-              "cuisines": [
-                "coffee"
-              ],
-              "is_certified_halal": null,
-              "is_vegetarian": null,
-              "ingredients_listed": null,
-              "dietary_tags": [],
-              "dietary_tags_source": [],
-              "sources": []
-            },
-            {
-              "name": "Iced Mocha",
-              "price": 48,
-              "stall": "Pacific Coffee (Centennial)",
+              "stall": "Starbucks Coffee (Composite Building)",
               "verified": false,
               "cuisines": [
                 "coffee"
@@ -582,60 +1576,73 @@
               "sources": []
             }
           ],
+          "representativeMenu": null,
           "sources": [
             {
-              "label": "HKU CEDARS — campus amenities & catering",
-              "url": "https://www.cedars.hku.hk/",
-              "checkedAt": null
+              "label": "HKU CSO Catering — Starbucks Coffee outlet page",
+              "url": "https://catering.hku.hk/en/eateries/COBG03/",
+              "checkedAt": "2026-11-15"
             }
           ],
           "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
           "status": {
             "open": true,
-            "reason": "Open until 19:00",
-            "closesAt": "19:00",
-            "opensAt": "08:00"
+            "reason": "Open until 21:00",
+            "closesAt": "21:00",
+            "opensAt": "07:30"
           },
           "walkMinutes": 1,
           "walkFrom": {
-            "key": "centennial_campus",
-            "label": "Centennial Campus",
+            "key": "main_building",
+            "label": "Main Building",
             "requested": false
           },
-          "matchPct": 86,
+          "matchPct": 92,
+          "dietBasis": null,
           "reasons": [
             {
               "icon": "✓",
-              "text": "Serves Coffee · Snack"
+              "text": "Serves Coffee"
+            },
+            {
+              "icon": "🎯",
+              "text": "Name matches \"Coffee\""
+            },
+            {
+              "icon": "🏷️",
+              "text": "quick"
             }
           ]
         },
         {
-          "id": "knowles-cafe",
-          "name": "Knowles Café",
+          "id": "starbucks-kiosk-sassoon",
+          "name": "Coffee Kiosk by Starbucks (Sassoon Road)",
           "nameZh": null,
-          "venue": "Knowles Building, G/F",
-          "zone": "Main Campus",
-          "emoji": "🥙",
-          "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=60",
+          "venue": "G/F Lobby, William M.W. Mong Block, Faculty of Medicine Building, 21 Sassoon Road",
+          "zone": "Sassoon Road",
+          "emoji": "☕",
+          "image": "/img/outlets/starbucks-kiosk-sassoon.jpg",
           "cuisines": [
             "coffee"
           ],
           "diets": [],
           "priceLevel": 2,
-          "avgPrice": 32,
-          "rating": 3.7,
+          "avgPrice": 40,
+          "rating": 3.9,
           "tags": [
             "quick",
+            "study-spot",
             "takeaway",
             "weekday-only"
           ],
-          "overview": "Grab-and-go counter aimed at staff; closes early in the afternoon.",
+          "overview": "Over-the-counter grab-n-go Starbucks kiosk with salads, sandwiches, bakery, dessert, coffee and grab-n-go. Weekdays only. Contact: 6695 3598.",
           "menu": [
             {
-              "name": "Americano",
-              "price": 32,
-              "stall": "Knowles Café",
+              "name": "Cappuccino",
+              "price": 40,
+              "stall": "Coffee Kiosk by Starbucks (Sassoon Road)",
               "verified": false,
               "cuisines": [
                 "coffee"
@@ -648,14 +1655,17 @@
               "sources": []
             }
           ],
+          "representativeMenu": null,
           "sources": [
             {
-              "label": "HKU CEDARS — campus amenities & catering",
-              "url": "https://www.cedars.hku.hk/",
-              "checkedAt": null
+              "label": "HKU CSO Catering — Coffee Kiosk by Starbucks outlet page",
+              "url": "https://catering.hku.hk/en/eateries/FOMBCK/",
+              "checkedAt": "2026-11-15"
             }
           ],
           "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
           "status": {
             "open": true,
             "reason": "Open until 17:30",
@@ -664,15 +1674,20 @@
           },
           "walkMinutes": 1,
           "walkFrom": {
-            "key": "knowles_building",
-            "label": "Knowles Building",
+            "key": "sassoon_road",
+            "label": "Sassoon Road (Faculty of Medicine)",
             "requested": false
           },
-          "matchPct": 77,
+          "matchPct": 90,
+          "dietBasis": null,
           "reasons": [
             {
               "icon": "✓",
               "text": "Serves Coffee"
+            },
+            {
+              "icon": "🎯",
+              "text": "Name matches \"Coffee\""
             },
             {
               "icon": "🏷️",
@@ -682,17 +1697,299 @@
         }
       ],
       "meta": {
-        "totalMatches": 4,
+        "totalMatches": 6,
         "lowConfidence": false,
-        "bestMatch": 96,
+        "bestMatch": 93,
         "relaxed": [],
         "sort": "best_match",
         "sortBasis": null,
         "checkTime": "12:30",
         "dayName": "Fri",
-        "evaluated": 15,
+        "evaluated": 23,
+        "demo": false
+      },
+      "hints": null,
+      "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
+      "reason": null,
+      "notice": "Venue details verified against the HKU catering directory; dish names and prices are representative."
+    },
+    {
+      "ok": true,
+      "query": "Something quick and open now for coffee and a snack.",
+      "intent": {
+        "cuisines": [
+          "coffee",
+          "snack"
+        ],
+        "diets": [],
+        "max_price_hkd": null,
+        "price_preference": "any",
+        "open_now": true,
+        "arrive_by": null,
+        "near": null,
+        "max_walk_minutes": null,
+        "meal": "snack",
+        "keywords": [
+          "quick"
+        ],
+        "sort": "best_match",
+        "confidence": 0.5,
+        "requested_stall": null,
+        "zone": null,
+        "unsupported": [],
+        "refusal": null
+      },
+      "results": [
+        {
+          "id": "urban-coffee-roaster",
+          "name": "Urban Coffee Roaster",
+          "nameZh": null,
+          "venue": "G/F, Library Building (Old Wing)",
+          "zone": "Main Campus",
+          "emoji": "☕",
+          "image": "/img/outlets/urban-coffee-roaster.jpg",
+          "cuisines": [
+            "coffee"
+          ],
+          "diets": [],
+          "priceLevel": 2,
+          "avgPrice": 42,
+          "rating": 4.2,
+          "tags": [
+            "breakfast",
+            "quick",
+            "study-spot"
+          ],
+          "overview": "Fresh bakery — breads, sourdough, cakes, pastries & pizza, salads and coffee. Self-serviced, open 7 days.",
+          "menu": [
+            {
+              "name": "Flat White",
+              "price": 42,
+              "stall": "Urban Coffee Roaster",
+              "verified": false,
+              "cuisines": [
+                "coffee"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — Urban Coffee Roaster outlet page",
+              "url": "https://catering.hku.hk/en/eateries/mlc/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 20:30",
+            "closesAt": "20:30",
+            "opensAt": "07:30"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "main_library",
+            "label": "Main Library",
+            "requested": false
+          },
+          "matchPct": 93,
+          "dietBasis": null,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Coffee"
+            },
+            {
+              "icon": "🎯",
+              "text": "Name matches \"Coffee\""
+            },
+            {
+              "icon": "🏷️",
+              "text": "quick"
+            }
+          ]
+        },
+        {
+          "id": "starbucks-composite",
+          "name": "Starbucks Coffee (Composite Building)",
+          "nameZh": null,
+          "venue": "Shop G.03, G/F, Composite Building, Main Campus",
+          "zone": "Main Campus",
+          "emoji": "☕",
+          "image": "/img/outlets/starbucks-composite.jpg",
+          "cuisines": [
+            "coffee"
+          ],
+          "diets": [],
+          "priceLevel": 2,
+          "avgPrice": 42,
+          "rating": 4.1,
+          "tags": [
+            "breakfast",
+            "open-late",
+            "quick",
+            "study-spot"
+          ],
+          "overview": "Self-serviced Starbucks with salads, sandwiches, bakery, dessert, coffee and grab-n-go. Contact: 2559 5028.",
+          "menu": [
+            {
+              "name": "Caffè Latte",
+              "price": 42,
+              "stall": "Starbucks Coffee (Composite Building)",
+              "verified": false,
+              "cuisines": [
+                "coffee"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — Starbucks Coffee outlet page",
+              "url": "https://catering.hku.hk/en/eateries/COBG03/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 21:00",
+            "closesAt": "21:00",
+            "opensAt": "07:30"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "main_building",
+            "label": "Main Building",
+            "requested": false
+          },
+          "matchPct": 92,
+          "dietBasis": null,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Coffee"
+            },
+            {
+              "icon": "🎯",
+              "text": "Name matches \"Coffee\""
+            },
+            {
+              "icon": "🏷️",
+              "text": "quick"
+            }
+          ]
+        },
+        {
+          "id": "starbucks-kiosk-sassoon",
+          "name": "Coffee Kiosk by Starbucks (Sassoon Road)",
+          "nameZh": null,
+          "venue": "G/F Lobby, William M.W. Mong Block, Faculty of Medicine Building, 21 Sassoon Road",
+          "zone": "Sassoon Road",
+          "emoji": "☕",
+          "image": "/img/outlets/starbucks-kiosk-sassoon.jpg",
+          "cuisines": [
+            "coffee"
+          ],
+          "diets": [],
+          "priceLevel": 2,
+          "avgPrice": 40,
+          "rating": 3.9,
+          "tags": [
+            "quick",
+            "study-spot",
+            "takeaway",
+            "weekday-only"
+          ],
+          "overview": "Over-the-counter grab-n-go Starbucks kiosk with salads, sandwiches, bakery, dessert, coffee and grab-n-go. Weekdays only. Contact: 6695 3598.",
+          "menu": [
+            {
+              "name": "Cappuccino",
+              "price": 40,
+              "stall": "Coffee Kiosk by Starbucks (Sassoon Road)",
+              "verified": false,
+              "cuisines": [
+                "coffee"
+              ],
+              "is_certified_halal": null,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [],
+              "dietary_tags_source": [],
+              "sources": []
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — Coffee Kiosk by Starbucks outlet page",
+              "url": "https://catering.hku.hk/en/eateries/FOMBCK/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": false,
+          "venueVerified": true,
+          "menuVerified": false,
+          "status": {
+            "open": true,
+            "reason": "Open until 17:30",
+            "closesAt": "17:30",
+            "opensAt": "08:30"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "sassoon_road",
+            "label": "Sassoon Road (Faculty of Medicine)",
+            "requested": false
+          },
+          "matchPct": 90,
+          "dietBasis": null,
+          "reasons": [
+            {
+              "icon": "✓",
+              "text": "Serves Coffee"
+            },
+            {
+              "icon": "🎯",
+              "text": "Name matches \"Coffee\""
+            },
+            {
+              "icon": "🏷️",
+              "text": "quick"
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "totalMatches": 6,
+        "lowConfidence": false,
+        "bestMatch": 93,
+        "relaxed": [],
+        "sort": "best_match",
+        "sortBasis": null,
+        "checkTime": "12:30",
+        "dayName": "Fri",
+        "evaluated": 23,
         "demo": true
       },
+      "hints": null,
       "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
       "reason": null,
       "notice": "Unverified demonstration data, not dietary recommendations."
@@ -720,22 +2017,373 @@
         "unsupported": [],
         "refusal": null
       },
-      "results": [],
+      "results": [
+        {
+          "id": "bijas-vegetarian",
+          "name": "BIJAS Vegetarian",
+          "nameZh": null,
+          "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+          "zone": "Centennial Campus",
+          "emoji": "🥬",
+          "image": "/img/outlets/bijas-vegetarian.jpg",
+          "cuisines": [
+            "vegetarian",
+            "chinese",
+            "noodles"
+          ],
+          "diets": [
+            "vegetarian",
+            "halal"
+          ],
+          "priceLevel": 1,
+          "avgPrice": 28,
+          "rating": 4.4,
+          "tags": [
+            "budget",
+            "buffet-style",
+            "open-late"
+          ],
+          "overview": "Self-serviced buffet-style (collect-and-pay, charge by weight). Halal-certified Chinese-style vegetarian food, noodles, coffee and fresh juice. Closed Sundays. Contact: 2964 9011.",
+          "menu": [
+            {
+              "name": "Fresh Fruit Juice",
+              "price": 28,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Vegetarian Noodle Soup",
+              "price": 42,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "chinese",
+                "noodles",
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Vegetarian Buffet (Pay-by-Weight, 300g)",
+              "price": 45,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "chinese",
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": true,
+          "venueVerified": true,
+          "menuVerified": true,
+          "status": {
+            "open": true,
+            "reason": "Open until 21:00",
+            "closesAt": "21:00",
+            "opensAt": "11:00"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "run_run_shaw",
+            "label": "Run Run Shaw Tower",
+            "requested": false
+          },
+          "matchPct": 98,
+          "dietBasis": "dish",
+          "reasons": [
+            {
+              "icon": "🌿",
+              "text": "Halal · dish evidence"
+            },
+            {
+              "icon": "💸",
+              "text": "Fits your HK$80 budget"
+            },
+            {
+              "icon": "🌙",
+              "text": "Serves dinner until 21:00"
+            }
+          ]
+        },
+        {
+          "id": "27-kebab-house",
+          "name": "27 Kebab House",
+          "nameZh": null,
+          "venue": "1/F, Fong Shu Chuen Amenities Centre",
+          "zone": "Main Campus",
+          "emoji": "🥙",
+          "image": "/img/outlets/27-kebab-house.jpg",
+          "cuisines": [
+            "western",
+            "asian",
+            "rice"
+          ],
+          "diets": [
+            "halal"
+          ],
+          "priceLevel": 1,
+          "avgPrice": 35,
+          "rating": 4,
+          "tags": [
+            "budget",
+            "quick"
+          ],
+          "overview": "Self-serviced fast food with halal food: kebabs, pizza, biryani rice and snacks. Closed Sundays and public holidays.",
+          "menu": [
+            {
+              "name": "Pepperoni Pizza Slice",
+              "price": 35,
+              "stall": "27 Kebab House",
+              "verified": true,
+              "cuisines": [
+                "western"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page lists 27 Kebab House under \"Halal Food (Kebabs, Pizza, Biryani Rice, Snack)\"; the outlet certifies its whole menu as halal."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Chicken Kebab Wrap",
+              "price": 50,
+              "stall": "27 Kebab House",
+              "verified": true,
+              "cuisines": [
+                "asian",
+                "western"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page lists 27 Kebab House under \"Halal Food (Kebabs, Pizza, Biryani Rice, Snack)\"; the outlet certifies its whole menu as halal."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Chicken Biryani Rice",
+              "price": 58,
+              "stall": "27 Kebab House",
+              "verified": true,
+              "cuisines": [
+                "asian",
+                "rice"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page lists 27 Kebab House under \"Halal Food (Kebabs, Pizza, Biryani Rice, Snack)\"; the outlet certifies its whole menu as halal."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — 27 Kebab House outlet page",
+              "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": true,
+          "venueVerified": true,
+          "menuVerified": true,
+          "status": {
+            "open": true,
+            "reason": "Open until 20:00",
+            "closesAt": "20:00",
+            "opensAt": "10:00"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "main_library",
+            "label": "Main Library",
+            "requested": false
+          },
+          "matchPct": 93,
+          "dietBasis": "dish",
+          "reasons": [
+            {
+              "icon": "🌿",
+              "text": "Halal · dish evidence"
+            },
+            {
+              "icon": "💸",
+              "text": "Fits your HK$80 budget"
+            },
+            {
+              "icon": "🌙",
+              "text": "Serves dinner until 20:00"
+            }
+          ]
+        }
+      ],
       "meta": {
-        "totalMatches": 0,
+        "totalMatches": 2,
         "lowConfidence": false,
-        "bestMatch": 0,
+        "bestMatch": 98,
         "relaxed": [],
         "sort": "best_match",
         "sortBasis": null,
         "checkTime": "12:30",
         "dayName": "Fri",
-        "evaluated": 15,
+        "evaluated": 23,
         "demo": false
       },
+      "hints": null,
       "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
-      "reason": "no_match",
-      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+      "reason": null,
+      "notice": "Venue details verified against the HKU catering directory; dish names and prices are representative."
     },
     {
       "ok": true,
@@ -760,22 +2408,373 @@
         "unsupported": [],
         "refusal": null
       },
-      "results": [],
+      "results": [
+        {
+          "id": "bijas-vegetarian",
+          "name": "BIJAS Vegetarian",
+          "nameZh": null,
+          "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+          "zone": "Centennial Campus",
+          "emoji": "🥬",
+          "image": "/img/outlets/bijas-vegetarian.jpg",
+          "cuisines": [
+            "vegetarian",
+            "chinese",
+            "noodles"
+          ],
+          "diets": [
+            "vegetarian",
+            "halal"
+          ],
+          "priceLevel": 1,
+          "avgPrice": 28,
+          "rating": 4.4,
+          "tags": [
+            "budget",
+            "buffet-style",
+            "open-late"
+          ],
+          "overview": "Self-serviced buffet-style (collect-and-pay, charge by weight). Halal-certified Chinese-style vegetarian food, noodles, coffee and fresh juice. Closed Sundays. Contact: 2964 9011.",
+          "menu": [
+            {
+              "name": "Fresh Fruit Juice",
+              "price": 28,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Vegetarian Noodle Soup",
+              "price": 42,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "chinese",
+                "noodles",
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Vegetarian Buffet (Pay-by-Weight, 300g)",
+              "price": 45,
+              "stall": "BIJAS Vegetarian",
+              "verified": true,
+              "cuisines": [
+                "chinese",
+                "vegetarian"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": true,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "vegetarian",
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "vegetarian",
+                  "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+                },
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": true,
+          "venueVerified": true,
+          "menuVerified": true,
+          "status": {
+            "open": true,
+            "reason": "Open until 21:00",
+            "closesAt": "21:00",
+            "opensAt": "11:00"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "run_run_shaw",
+            "label": "Run Run Shaw Tower",
+            "requested": false
+          },
+          "matchPct": 98,
+          "dietBasis": "dish",
+          "reasons": [
+            {
+              "icon": "🌿",
+              "text": "Halal · dish evidence"
+            },
+            {
+              "icon": "💸",
+              "text": "Fits your HK$80 budget"
+            },
+            {
+              "icon": "🌙",
+              "text": "Serves dinner until 21:00"
+            }
+          ]
+        },
+        {
+          "id": "27-kebab-house",
+          "name": "27 Kebab House",
+          "nameZh": null,
+          "venue": "1/F, Fong Shu Chuen Amenities Centre",
+          "zone": "Main Campus",
+          "emoji": "🥙",
+          "image": "/img/outlets/27-kebab-house.jpg",
+          "cuisines": [
+            "western",
+            "asian",
+            "rice"
+          ],
+          "diets": [
+            "halal"
+          ],
+          "priceLevel": 1,
+          "avgPrice": 35,
+          "rating": 4,
+          "tags": [
+            "budget",
+            "quick"
+          ],
+          "overview": "Self-serviced fast food with halal food: kebabs, pizza, biryani rice and snacks. Closed Sundays and public holidays.",
+          "menu": [
+            {
+              "name": "Pepperoni Pizza Slice",
+              "price": 35,
+              "stall": "27 Kebab House",
+              "verified": true,
+              "cuisines": [
+                "western"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page lists 27 Kebab House under \"Halal Food (Kebabs, Pizza, Biryani Rice, Snack)\"; the outlet certifies its whole menu as halal."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Chicken Kebab Wrap",
+              "price": 50,
+              "stall": "27 Kebab House",
+              "verified": true,
+              "cuisines": [
+                "asian",
+                "western"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page lists 27 Kebab House under \"Halal Food (Kebabs, Pizza, Biryani Rice, Snack)\"; the outlet certifies its whole menu as halal."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            },
+            {
+              "name": "Chicken Biryani Rice",
+              "price": 58,
+              "stall": "27 Kebab House",
+              "verified": true,
+              "cuisines": [
+                "asian",
+                "rice"
+              ],
+              "is_certified_halal": true,
+              "is_vegetarian": null,
+              "ingredients_listed": null,
+              "dietary_tags": [
+                "halal"
+              ],
+              "dietary_tags_source": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18",
+                  "tag": "halal",
+                  "statement": "Outlet page lists 27 Kebab House under \"Halal Food (Kebabs, Pizza, Biryani Rice, Snack)\"; the outlet certifies its whole menu as halal."
+                }
+              ],
+              "sources": [
+                {
+                  "label": "HKU CSO Catering — 27 Kebab House outlet page",
+                  "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+                  "checkedAt": "2026-11-18"
+                }
+              ]
+            }
+          ],
+          "representativeMenu": null,
+          "sources": [
+            {
+              "label": "HKU CSO Catering — 27 Kebab House outlet page",
+              "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+              "checkedAt": "2026-11-15"
+            }
+          ],
+          "verified": true,
+          "venueVerified": true,
+          "menuVerified": true,
+          "status": {
+            "open": true,
+            "reason": "Open until 20:00",
+            "closesAt": "20:00",
+            "opensAt": "10:00"
+          },
+          "walkMinutes": 1,
+          "walkFrom": {
+            "key": "main_library",
+            "label": "Main Library",
+            "requested": false
+          },
+          "matchPct": 93,
+          "dietBasis": "dish",
+          "reasons": [
+            {
+              "icon": "🌿",
+              "text": "Halal · dish evidence"
+            },
+            {
+              "icon": "💸",
+              "text": "Fits your HK$80 budget"
+            },
+            {
+              "icon": "🌙",
+              "text": "Serves dinner until 20:00"
+            }
+          ]
+        }
+      ],
       "meta": {
-        "totalMatches": 0,
+        "totalMatches": 2,
         "lowConfidence": false,
-        "bestMatch": 0,
+        "bestMatch": 98,
         "relaxed": [],
         "sort": "best_match",
         "sortBasis": null,
         "checkTime": "12:30",
         "dayName": "Fri",
-        "evaluated": 15,
+        "evaluated": 23,
         "demo": true
       },
+      "hints": null,
       "disclaimer": "Informational only, not a safety guarantee. Confirm dietary status, ingredients and cross-contamination risks with canteen staff.",
-      "reason": "no_match",
-      "notice": "No match found in the current dataset. This does not mean that suitable food is unavailable on campus."
+      "reason": null,
+      "notice": "Unverified demonstration data, not dietary recommendations."
     }
   ]
 }

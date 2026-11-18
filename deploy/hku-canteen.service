@@ -1,0 +1,33 @@
+[Unit]
+Description=HKU Canteen Finder
+Documentation=file:///srv/hku-canteen-finder/docs/SELF_HOST.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=hku
+Group=hku
+WorkingDirectory=/srv/hku-canteen-finder
+Environment=NODE_ENV=production
+# .env in the working directory supplies the provider key and the hosting
+# switches; it must stay mode 600 and owned by this user.
+ExecStart=/usr/bin/node --disable-warning=ExperimentalWarning server/index.js
+Restart=always
+RestartSec=3s
+
+# The SQLite database is the only path this process may write to.
+ProtectSystem=strict
+ReadWritePaths=/srv/hku-canteen-finder/data
+ProtectHome=yes
+PrivateTmp=yes
+NoNewPrivileges=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target

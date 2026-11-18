@@ -13,6 +13,19 @@ export function toHHMM(minutes) {
   return `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
 }
 
+/**
+ * Calendar date in Hong Kong as `YYYY-MM-DD`, independent of the server's own
+ * timezone. Used as the key for anything that has to reset at local midnight.
+ */
+export function hkDateKey(date = new Date()) {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: HK_TZ,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date);
+}
+
 /** Current wall-clock time in Hong Kong, independent of server timezone. */
 export function nowInHK(date = new Date()) {
   const fmt = new Intl.DateTimeFormat('en-GB', {

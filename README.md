@@ -4,9 +4,11 @@ A local information-only dining app. It does **not** place or modify orders,
 provide medical advice, diagnose allergies or guarantee allergen safety.
 
 **Readiness: not ready for real dietary recommendations.** The shipped dataset
-has 15 illustrative venues and 45 unverified menu items, not 50 source-reviewed
-items. Verified mode excludes them. An empty answer means **"No match found in
-the current dataset"**, not that suitable food does not exist on campus.
+has 23 venues transcribed from the official HKU catering directory with 69
+representative menu items. Venue names, addresses, hours and service modes are
+source-reviewed; dish names and prices are not, so dietary constraints still
+return no results. An empty answer means **"No match found in the current
+dataset"**, not that suitable food does not exist on campus.
 
 Informational only, not a safety guarantee. Confirm dietary status, ingredients
 and cross-contamination risks with canteen staff. An absent ingredient is not
@@ -29,9 +31,10 @@ evidence of safety.
 
 ![Verified mode and coverage](docs/start.png)
 
-To see illustrative cards, explicitly select **Show unverified demonstration
-data**, then select the noodles example. Dietary searches still exclude
-unverified dishes, even in demonstration mode.
+Verified mode returns venue-verified cards whose dishes are representative.
+**Show unverified demonstration data** additionally admits venues whose own facts
+are unverified; it never admits dishes without dietary evidence, so dietary
+searches stay empty either way.
 
 ![Cached demonstration with disclaimers](docs/demo.png)
 
@@ -52,6 +55,7 @@ npm run migrate
 npm run evaluate
 npm run evaluate -- --live
 npm run cache:walkthrough
+npm run photos
 npm run package
 ```
 
@@ -69,6 +73,14 @@ npm run package
   queries in verified and demo modes), using Friday 23 October 2026 at 12:30
   HKT as the explicit walkthrough clock. These are authored walkthroughs,
   not captured successful live-model answers. Actual save time is separate.
+- `npm run photos`: downloads the outlet galleries from `catering.hku.hk` into
+  `public/img/outlets/` (one photo per outlet, 900 px, re-encoded) and points
+  each record's `image` at the local file. Provenance for every pick is written
+  to `data/outlet-photos.json`. `--force` refetches, `--only=<id>` and
+  `--candidate=<n>` re-pick a single outlet, and `--crop=top,left,height,width`
+  trims a gallery image that arrives letterboxed on a white canvas (used once,
+  for Wholesome Hub). Needs `sips` (macOS) to resize; elsewhere the original
+  download is kept.
 - `npm run package`: creates `dist/hku-food-<platform>-<architecture>` with
   the running Node binary and its LICENSE. Use an official Node distribution
   with LICENSE beside the executable. Zip the output folder for distribution.
@@ -94,6 +106,27 @@ The `BAILIAN_*` variable names are retained for compatibility. Existing
 OpenAI-compatible providers remain supported; set their base URL and model
 together. `npm run check-key` makes a real diagnostic provider call.
 
+### Hosting a public copy
+
+`npm start` binds `127.0.0.1`, so nothing outside the machine can reach it. A
+public copy belongs behind a tunnel rather than an open port:
+[docs/SELF_HOST.md](docs/SELF_HOST.md) is the Ubuntu + `cloudflared` runbook,
+with `deploy/hku-canteen.service` and `deploy/cloudflared.service`.
+
+Three switches matter once strangers can reach the server:
+
+```dotenv
+TRUST_PROXY=1              # visitor address from CF-Connecting-IP
+DAILY_REQUEST_BUDGET=300   # whole-process fuse on model spend per HK day
+STATS_TOKEN=<random>       # /api/stats is a 404 without it
+```
+
+`HOST` stays `127.0.0.1` even in production: the tunnel connects from the same
+host. Without `TRUST_PROXY` every visitor appears as `127.0.0.1`, so the
+30/minute limit becomes one shared bucket and the first busy minute locks
+everyone out. `/api/health` drops the provider endpoint and database path when
+`TRUST_PROXY=1`.
+
 ## Pipeline and safety contract
 
 ```text
@@ -102,9 +135,11 @@ query
   -> model parses intent (English or Chinese)
   -> validate known values; preserve unsupported requirements
   -> restore explicitly stated dietary requirements
-  -> verified item retrieval + strict time / location / budget filtering
-  -> rank qualifying venues; return only qualifying menu items
-  -> cards with stall, sources, check dates and safety disclaimer
+  -> venue-verified retrieval + strict time / location / budget filtering
+  -> rank by share of the menu that is the requested food, plus venue-name match
+  -> return only the dishes that answer the query
+  -> cards showing venue, stall, dish and price only
+  -> detail view carrying the verification rows, source links and disclaimer
 ```
 
 The model never supplies menu records, prices or hours. Recommendations come
@@ -121,6 +156,15 @@ food court. Cheapest ordering uses the lowest matching dish price; the API's
 legacy `avgPrice` field now carries this matching-item price for compatibility.
 Unknown prices cannot satisfy a hard budget and sort after known prices.
 A walking limit without a starting landmark is reported as unsupported.
+
+Relevance filtering decides membership, `sort` decides order. The API defaults
+to three results but returns the whole qualifying set on request (`limit`, max
+24), each result carrying its `rank` in the default best-match order. The page
+therefore sorts every match, not just the three on screen, and "show more"
+reveals the remaining outlets without another model call. The relevance floor
+is never relaxed to fill that list. Saved walkthrough snapshots stay at three
+results and never offer expansion, because a snapshot cannot honestly answer
+for outlets it never recorded.
 
 Explicit eating times are checked even when `open_now` is false; closing time
 is exclusive. "After 8 PM" is evaluated at 20:00, not as an all-evening
@@ -151,6 +195,18 @@ Source of truth:
 - `data/coverage.json`: reviewed official pages and known omissions.
 - `data/walkthrough.json`: labelled example snapshots.
 
+Verification is two-tier. `venue.verified` covers identity, address, hours and
+service mode. A menu item is `verified: true` only when a dated source supports
+its name, price and any dietary claim; the shipped dishes are representative and
+remain `false`, so dietary searches return nothing until item-level evidence
+exists.
+
+Dataset updates arrive as three plain JSON files:
+`npm run import:data -- --from ~/Desktop --write`. The importer validates against
+the loader, restates the counts quoted in `coverage.json`, and reconciles every
+`hours` array with the schedule stated in that outlet's coverage finding. Without
+`--write` it only reports.
+
 Each venue has `verified: boolean` and dated `sources` supporting its identity
 and hours. Each menu item has:
 
@@ -178,30 +234,72 @@ just to fit a demo schema. Source URLs must parse as HTTPS URLs, dates must be
 real calendar dates no later than today, and dietary tags cannot contradict
 their corresponding boolean fields.
 
+`image` points at a local file in `public/img/outlets/`, downloaded from that
+outlet's own page on the HKU catering site (HKU Campus Services Office, Catering
+and Hospitality) and re-encoded to 900 px. `data/outlet-photos.json` records the
+page URL, the original photo URL and the fetch date for every file, so a card
+image can be traced back the same way a dish claim can. Cards therefore show the
+outlet itself rather than a name-matched stock photo; if a file is missing the
+card falls back to a cuisine photograph instead of presenting an unrelated
+picture as the outlet.
+
 ### Curation procedure
 
 1. Review a current official outlet/menu source, including the actual stall,
    dish, price, hours and any explicitly stated dietary certification.
 2. Record precise source URLs and the real review date. Do not use a general
    homepage as evidence for a particular dish.
-3. Record dietary evidence at the item level. Outlet-level certification must
-   not be applied to an individual dish without checking its actual scope.
+3. Record dietary evidence at the item level. Outlet-level certification may
+   back an individual dish only after checking its actual scope: BIJAS is a
+   vegetarian-only outlet, and 27 Kebab House lists its whole offering as halal
+   food, so the certification covers everything they serve. Even then the card
+   labels the match `outlet-level`, because the page never reviews the dish.
 4. Mark the venue and item verified only after that review. Unknown ingredients
    remain null; do not infer safety from names, cuisine or missing ingredients.
-5. Restart, run migration checks and regenerate walkthrough snapshots.
-6. Recheck source changes and temporary closures before relying on results.
+5. Check the campus against the location filter on the official outlet list, not
+   against the outlet's name. `Run Run Shaw Podium` looks like the Centennial
+   `Run Run Shaw Tower`, but HKU files it under Main Campus; two outlets were
+   mis-filed that way, and both `zone` and lat/lng had to move. A test now
+   requires every outlet's coordinates to fall inside its campus rectangle.
+6. Restart, run migration checks and regenerate walkthrough snapshots.
+7. Recheck source changes and temporary closures before relying on results.
    A schema-valid source object is not automated proof that its claims are true.
 
-Official pages reviewed on 23 October 2026:
+Official pages reviewed on 23 October 2026, dietary claims rechecked 18 November
+2026:
 
 - [BIJAS Vegetarian](https://catering.hku.hk/en/eateries/CCOutletD/):
-  outlet-level halal-certified vegetarian offerings and opening hours.
+  "Halal Certified Chinese Style Vegetarian" and opening hours. The page lists
+  food categories only, so no dish price is claimed from it.
+- [27 Kebab House](https://catering.hku.hk/en/eateries/halalcorner/): listed
+  under "Halal Food (Kebabs, Pizza, Biryani Rice, Snack)" with hours and
+  location; again categories only, no dish prices.
 - [JuYing Tai](https://catering.hku.hk/en/eateries/FSCACR/):
   outlet identity, offerings and opening hours.
 
-These pages do not establish 50 individually verified dishes with prices and
-dietary evidence. Their findings are listed in coverage; they have **not** been
-used to relabel fictional records as real.
+`diets` holds only what an official page states. Labels inferred from offering
+text — a café that happens to serve salads, a brand commonly assumed to be halal
+— are not stored, because they would answer a dietary query without evidence.
+
+The one place name-level evidence is allowed is the `hints` block, and it is
+deliberately outside `results`. A vegetarian query therefore answers in three
+layers: reviewed dishes, outlets that state the diet, and then up to six outlets
+whose *menu wording* suggests plant-based food ("Vegetarian Mixian", "Quinoa
+Salad Bowl"). Hints carry no match percentage, no dietary basis and never count
+towards `meta.totalMatches`; the UI shows them in a dashed "Not confirmed" box
+that reads as a list of places to ask. A dish name has to carry a plant cue and
+no meat or fish cue, so "Chicken Caesar Salad" raises nothing rather than
+surfacing chicken to someone looking for vegetarian food.
+
+No official page publishes individual dishes or prices, so all 69 menu items are
+transcribed as representative of each outlet's stated offerings. Six of them
+(BIJAS and 27 Kebab House) carry item-level dietary evidence whose scope is the
+outlet's entire menu; every other item stays `verified: false`. Dietary answers
+therefore come in two tiers — `dietBasis: "dish"` for a reviewed item,
+`dietBasis: "venue"` for an outlet that is certified or lists the diet — and only
+the first is a per-dish claim. Two outlets (Wholesome Hub, Restaurant 1887) state
+no hours on their official page, so their schedules remain as delivered and are
+not source-backed.
 
 The database `data/canteens.db` is generated and gitignored. Schema version and
 content hash trigger reimport; search logs are preserved. Item evidence is
@@ -255,13 +353,19 @@ accuracy or real menu completeness is claimed by these tests.
 
 ## API
 
-- `POST /api/recommend`: `{ "query": "...", "demo": false, "at": "12:30" }`.
-  `at` is an optional test-time override for today's HK day.
+- `POST /api/recommend`: `{ "query": "...", "demo": false, "at": "12:30", "limit": 3 }`.
+  `at` is an optional test-time override for today's HK day. `limit` is an
+  optional page size from 1 to 24: three by default, larger when the browser
+  wants the whole qualifying set so it can sort and reveal more locally.
+  `meta.totalMatches` reports the true number of matches even when the page is
+  smaller.
 - `GET /api/coverage`: what is and is not covered, plus official source links.
 - `GET /api/health`: runtime model configuration and HK clock (never the key).
 - `GET /api/vocab`: vocabulary for the UI.
-- `GET /api/canteens`: illustrative venue summaries for opt-in browsing.
-- `GET /api/stats`: local query counts and recent queries.
+- `GET /api/canteens`: venue summaries for the browser list.
+- `GET /api/stats`: local query counts and recent queries. A public deployment
+  (`TRUST_PROXY=1`) returns 404 unless `Authorization: Bearer <STATS_TOKEN>`
+  matches, because the response includes the raw text of recent queries.
 
 Responses include `reason`, `notice`, `disclaimer`, `coverage`, `mode`, `intent`,
 `results` and `meta`. Modes are `local` (guard), `live` or `cached`. Refusal
@@ -289,6 +393,9 @@ included, but no Pi Agent validation is claimed.
   included in the benchmark; end-to-end Chinese accuracy is unverified.
 - No holiday calendar, dynamic closures, real walking routes, comprehensive
   stall coverage, ordering, diagnosis or allergen guarantees.
-- Photos, prices, ratings and names in demo mode remain illustrative.
+- Outlet photos are the outlets' own published gallery images, so they show the
+  outlet and its food as the operator chose to present them — not a verified
+  current state of the premises. Prices, ratings and names in demo mode remain
+  illustrative.
 - This is a local, single-process application with in-memory rate limiting,
   not a deployed multiuser service.

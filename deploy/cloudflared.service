@@ -1,0 +1,29 @@
+[Unit]
+Description=Cloudflare tunnel for HKU Canteen Finder
+Documentation=https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Prefer `sudo cloudflared service install <token>` from the Zero Trust
+# dashboard: it writes and owns this unit itself, and the tunnel can be revoked
+# in the dashboard without touching the machine. This file is the self-managed
+# alternative described in docs/SELF_HOST.md, where the tunnel credentials stay
+# in the local user's home and the token never leaves the host.
+Type=notify
+User=cloudflared
+Group=cloudflared
+ExecStart=/usr/bin/cloudflared --no-autoupdate tunnel run hku-canteen
+Restart=always
+RestartSec=5s
+TimeoutStopSec=30s
+
+# The tunnel only needs loopback:4173 and outbound access to Cloudflare.
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+NoNewPrivileges=yes
+MemoryMax=256M
+
+[Install]
+WantedBy=multi-user.target

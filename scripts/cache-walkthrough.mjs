@@ -18,7 +18,11 @@ const answers = samples.flatMap(([query, raw]) => [false, true].map((demo) => {
   return {
     ok: true, query, intent, ...result, disclaimer: DISCLAIMER,
     reason: result.results.length ? null : 'no_match',
-    notice: result.results.length ? 'Unverified demonstration data, not dietary recommendations.' : NO_MATCH,
+    notice: result.results.length
+      ? (demo
+        ? 'Unverified demonstration data, not dietary recommendations.'
+        : 'Venue details verified against the HKU catering directory; dish names and prices are representative.')
+      : NO_MATCH,
   };
 }));
 writeFileSync(new URL('../data/walkthrough.json', import.meta.url), JSON.stringify({

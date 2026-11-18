@@ -1,5 +1,5 @@
 {
-  "note": "Illustrative demo data for a prototype, not an official HKU catering directory. Venue names are plausible; prices, hours, positions, menus and images are approximations used to exercise the ranking logic. The single source link per canteen points at the real HKU CEDARS site, but no individual record has been verified against it.",
+  "note": "Data sourced from the official HKU Campus Services Office Catering directory (https://catering.hku.hk/en/eateries/) on 2026-11-15. Venue names, locations, hours, food offerings and service modes are transcribed from official outlet pages. Individual menu items are representative of each outlet's stated food offerings; prices are approximate and not officially verified (verified: false). Where an official page explicitly states a dietary certification (e.g. BIJAS = halal-certified vegetarian), that is reflected in the diets and menu tags.",
   "landmarks": {
     "main_library": {
       "label": "Main Library",
@@ -50,298 +50,81 @@
       "label": "Haking Wong Building",
       "lat": 22.28418,
       "lng": 114.13761
+    },
+    "composite_building": {
+      "label": "Composite Building",
+      "lat": 22.28388,
+      "lng": 114.13815
+    },
+    "fong_shu_chuen": {
+      "label": "Fong Shu Chuen Amenities Centre",
+      "lat": 22.2834,
+      "lng": 114.1371
+    },
+    "sassoon_road": {
+      "label": "Sassoon Road (Faculty of Medicine)",
+      "lat": 22.27035,
+      "lng": 114.13128
     }
   },
   "canteens": [
     {
-      "id": "cym-green-kitchen",
-      "name": "Green Kitchen 素食小廚",
-      "venue": "Chong Yuet Ming Amenities Centre, 1/F",
+      "id": "juying-tai",
+      "name": "JuYing Tai 聚英臺",
+      "venue": "2/F, Fong Shu Chuen Amenities Centre, Swire Building",
       "zone": "Main Campus",
-      "lat": 22.28365,
-      "lng": 114.13662,
+      "lat": 22.2834,
+      "lng": 114.1371,
       "cuisines": [
-        "vegetarian",
-        "vegan",
         "chinese",
-        "rice"
-      ],
-      "diets": [
-        "vegetarian",
-        "vegan"
-      ],
-      "priceLevel": 1,
-      "avgPrice": 42,
-      "rating": 4.3,
-      "hours": [
-        [
-          "11:00",
-          "19:00"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:00",
-          "19:00"
-        ]
-      ],
-      "emoji": "🥬",
-      "image": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "budget",
-        "buffet-style",
-        "many-seats"
-      ],
-      "overview": "Pay-by-weight vegetarian buffet; the cheapest reliable veggie lunch on campus.",
-      "menu": [
-        {
-          "name": "Veggie Set Meal",
-          "price": 42,
-          "stall": "Green Kitchen 素食小廚",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        },
-        {
-          "name": "Buddha's Delight Rice",
-          "price": 46,
-          "stall": "Green Kitchen 素食小廚",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        },
-        {
-          "name": "Tofu & Mushroom Bowl",
-          "price": 38,
-          "stall": "Green Kitchen 素食小廚",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "cym-noodle-bar",
-      "name": "CYM Noodle Bar 麵軒",
-      "venue": "Chong Yuet Ming Amenities Centre, G/F",
-      "zone": "Main Campus",
-      "lat": 22.28359,
-      "lng": 114.13671,
-      "cuisines": [
         "noodles",
-        "chinese",
-        "rice"
+        "rice",
+        "hotpot"
       ],
       "diets": [],
       "priceLevel": 1,
-      "avgPrice": 45,
-      "rating": 4.1,
-      "hours": [
-        [
-          "08:30",
-          "20:00"
-        ],
-        [
-          "07:30",
-          "21:00"
-        ],
-        [
-          "07:30",
-          "21:00"
-        ],
-        [
-          "07:30",
-          "21:00"
-        ],
-        [
-          "07:30",
-          "21:00"
-        ],
-        [
-          "07:30",
-          "21:00"
-        ],
-        [
-          "08:30",
-          "20:00"
-        ]
-      ],
-      "emoji": "🍜",
-      "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "quick",
-        "breakfast",
-        "budget"
-      ],
-      "overview": "Wonton noodles and congee from breakfast onwards; served in under 10 minutes.",
-      "menu": [
-        {
-          "name": "Wonton Noodle Soup",
-          "price": 45,
-          "stall": "CYM Noodle Bar 麵軒",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "noodles"
-          ]
-        },
-        {
-          "name": "Beef Chow Fun",
-          "price": 52,
-          "stall": "CYM Noodle Bar 麵軒",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "noodles"
-          ]
-        },
-        {
-          "name": "Congee Set",
-          "price": 34,
-          "stall": "CYM Noodle Bar 麵軒",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "cym-chinese-restaurant",
-      "name": "Chong Yuet Ming Chinese Restaurant",
-      "venue": "Chong Yuet Ming Amenities Centre, 2/F",
-      "zone": "Main Campus",
-      "lat": 22.2837,
-      "lng": 114.13655,
-      "cuisines": [
-        "chinese",
-        "dimsum",
-        "rice"
-      ],
-      "diets": [],
-      "priceLevel": 3,
-      "avgPrice": 128,
+      "avgPrice": 50,
       "rating": 4,
       "hours": [
+        null,
         [
-          "10:30",
-          "22:00"
+          "07:30",
+          "21:00"
         ],
         [
-          "11:00",
-          "22:00"
+          "07:30",
+          "21:00"
         ],
         [
-          "11:00",
-          "22:00"
+          "07:30",
+          "21:00"
         ],
         [
-          "11:00",
-          "22:00"
+          "07:30",
+          "21:00"
         ],
         [
-          "11:00",
-          "22:00"
+          "07:30",
+          "21:00"
         ],
         [
-          "11:00",
-          "22:00"
-        ],
-        [
-          "10:30",
-          "22:00"
+          "07:30",
+          "14:30"
         ]
       ],
-      "emoji": "🥢",
-      "image": "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=60",
+      "emoji": "🍲",
+      "image": "/img/outlets/juying-tai.jpg",
       "tags": [
-        "sit-down",
-        "group-dining",
+        "budget",
+        "many-seats",
         "dinner"
       ],
-      "overview": "Full-service Cantonese restaurant; better for a sit-down dinner than a quick bite.",
+      "overview": "Pick-and-weight Chinese dishes, authentic noodle dishes, provincial rice dishes, malatang (numb-and-spicy broth), and hot pot in the evenings. Self-serviced; last orders 30 min before closing, hot pot last orders 60 min before closing.",
       "menu": [
         {
-          "name": "Roast Pork Rice",
-          "price": 98,
-          "stall": "Chong Yuet Ming Chinese Restaurant",
+          "name": "Pick & Weight Rice Set (2 dishes)",
+          "price": 42,
+          "stall": "JuYing Tai 聚英臺",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -355,9 +138,9 @@
           ]
         },
         {
-          "name": "Steamed Fish Set",
-          "price": 138,
-          "stall": "Chong Yuet Ming Chinese Restaurant",
+          "name": "Authentic Noodle Soup",
+          "price": 48,
+          "stall": "JuYing Tai 聚英臺",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -366,13 +149,14 @@
           "dietary_tags_source": [],
           "sources": [],
           "cuisines": [
-            "chinese"
+            "chinese",
+            "noodles"
           ]
         },
         {
-          "name": "Vegetable Stir-Fry",
-          "price": 88,
-          "stall": "Chong Yuet Ming Chinese Restaurant",
+          "name": "Malatang (Numb-and-Spicy Broth)",
+          "price": 55,
+          "stall": "JuYing Tai 聚英臺",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -381,196 +165,81 @@
           "dietary_tags_source": [],
           "sources": [],
           "cuisines": [
-            "chinese"
+            "chinese",
+            "noodles",
+            "hotpot"
           ]
         }
       ],
       "sources": [
         {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
+          "label": "HKU CSO Catering — JuYing Tai outlet page",
+          "url": "https://catering.hku.hk/en/eateries/FSCACR/",
+          "checkedAt": "2026-11-15"
         }
       ],
-      "verified": false
+      "verified": true
     },
     {
-      "id": "subway-cym",
-      "name": "Subway",
-      "venue": "Chong Yuet Ming Amenities Centre, G/F",
+      "id": "urban-coffee-roaster",
+      "name": "Urban Coffee Roaster",
+      "venue": "G/F, Library Building (Old Wing)",
       "zone": "Main Campus",
-      "lat": 22.28348,
-      "lng": 114.1368,
-      "cuisines": [
-        "sandwich",
-        "salad",
-        "western"
-      ],
-      "diets": [
-        "vegetarian"
-      ],
-      "priceLevel": 1,
-      "avgPrice": 52,
-      "rating": 3.9,
-      "hours": [
-        [
-          "09:00",
-          "20:00"
-        ],
-        [
-          "08:00",
-          "21:00"
-        ],
-        [
-          "08:00",
-          "21:00"
-        ],
-        [
-          "08:00",
-          "21:00"
-        ],
-        [
-          "08:00",
-          "21:00"
-        ],
-        [
-          "08:00",
-          "21:00"
-        ],
-        [
-          "09:00",
-          "20:00"
-        ]
-      ],
-      "emoji": "🥪",
-      "image": "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "quick",
-        "takeaway",
-        "customisable"
-      ],
-      "overview": "Made-to-order subs; veggie options available, queues move fast at noon.",
-      "menu": [
-        {
-          "name": "Grilled Chicken Sub",
-          "price": 52,
-          "stall": "Subway",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "sandwich",
-            "western"
-          ]
-        },
-        {
-          "name": "Veggie Delite Sub",
-          "price": 42,
-          "stall": "Subway",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "sandwich",
-            "western"
-          ]
-        },
-        {
-          "name": "Tuna Melt",
-          "price": 58,
-          "stall": "Subway",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "sandwich",
-            "western"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "starbucks-main-library",
-      "name": "Starbucks (Main Library)",
-      "venue": "Main Library, G/F Extension",
-      "zone": "Main Campus",
-      "lat": 22.28309,
-      "lng": 114.13731,
+      "lat": 22.28308,
+      "lng": 114.13728,
       "cuisines": [
         "coffee",
-        "snack",
         "bakery",
+        "salad",
         "sandwich"
       ],
-      "diets": [
-        "vegetarian"
-      ],
+      "diets": [],
       "priceLevel": 2,
-      "avgPrice": 46,
+      "avgPrice": 55,
       "rating": 4.2,
       "hours": [
         [
-          "09:00",
+          "08:00",
           "18:00"
         ],
         [
-          "08:00",
-          "20:00"
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
         ],
         [
           "08:00",
-          "20:00"
-        ],
-        [
-          "08:00",
-          "20:00"
-        ],
-        [
-          "08:00",
-          "20:00"
-        ],
-        [
-          "08:00",
-          "20:00"
-        ],
-        [
-          "09:00",
           "18:00"
         ]
       ],
       "emoji": "☕",
-      "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=60",
+      "image": "/img/outlets/urban-coffee-roaster.jpg",
       "tags": [
         "study-spot",
-        "wifi",
-        "quick"
+        "quick",
+        "breakfast"
       ],
-      "overview": "Directly inside the library — the obvious choice for coffee between study blocks.",
+      "overview": "Fresh bakery — breads, sourdough, cakes, pastries & pizza, salads and coffee. Self-serviced, open 7 days.",
       "menu": [
         {
           "name": "Flat White",
           "price": 42,
-          "stall": "Starbucks (Main Library)",
+          "stall": "Urban Coffee Roaster",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -583,9 +252,2224 @@
           ]
         },
         {
-          "name": "Café Latte",
+          "name": "Sourdough Sandwich",
+          "price": 58,
+          "stall": "Urban Coffee Roaster",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "bakery"
+          ]
+        },
+        {
+          "name": "Fresh Garden Salad",
+          "price": 62,
+          "stall": "Urban Coffee Roaster",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "salad"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Urban Coffee Roaster outlet page",
+          "url": "https://catering.hku.hk/en/eateries/mlc/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "tamjai-samgor",
+      "name": "TamJai SamGor 譚仔三哥",
+      "venue": "G/F, The Jockey Club Tower, Centennial Campus",
+      "zone": "Centennial Campus",
+      "lat": 22.282,
+      "lng": 114.1351,
+      "cuisines": [
+        "noodles",
+        "chinese",
+        "rice"
+      ],
+      "diets": [],
+      "priceLevel": 1,
+      "avgPrice": 55,
+      "rating": 4.3,
+      "hours": [
+        [
+          "07:45",
+          "20:30"
+        ],
+        [
+          "07:45",
+          "21:30"
+        ],
+        [
+          "07:45",
+          "21:30"
+        ],
+        [
+          "07:45",
+          "21:30"
+        ],
+        [
+          "07:45",
+          "21:30"
+        ],
+        [
+          "07:45",
+          "21:30"
+        ],
+        [
+          "07:45",
+          "20:30"
+        ]
+      ],
+      "emoji": "🍜",
+      "image": "/img/outlets/tamjai-samgor.jpg",
+      "tags": [
+        "quick",
+        "spicy",
+        "budget",
+        "customisable"
+      ],
+      "overview": "Table-serviced Yunnan mixian noodle shop. Customisable broth spice levels, rice dishes, snacks and drinks. Open 7 days.",
+      "menu": [
+        {
+          "name": "Signature Mixian (Medium Spicy)",
+          "price": 52,
+          "stall": "TamJai SamGor 譚仔三哥",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "chinese",
+            "noodles"
+          ]
+        },
+        {
+          "name": "Vegetarian Mixian",
+          "price": 48,
+          "stall": "TamJai SamGor 譚仔三哥",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "chinese",
+            "noodles"
+          ]
+        },
+        {
+          "name": "Chicken Rice Set",
+          "price": 58,
+          "stall": "TamJai SamGor 譚仔三哥",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "chinese",
+            "rice"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — TamJai SamGor outlet page",
+          "url": "https://catering.hku.hk/en/eateries/CCOutletB/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "so330",
+      "name": "so330",
+      "venue": "2/F, Chong Yuet Ming Amenities Centre",
+      "zone": "Main Campus",
+      "lat": 22.28368,
+      "lng": 114.1366,
+      "cuisines": [
+        "salad",
+        "sandwich",
+        "western",
+        "coffee"
+      ],
+      "diets": [],
+      "priceLevel": 2,
+      "avgPrice": 60,
+      "rating": 4,
+      "hours": [
+        null,
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "10:00",
+          "18:00"
+        ]
+      ],
+      "emoji": "🥗",
+      "image": "/img/outlets/so330.jpg",
+      "tags": [
+        "study-spot",
+        "breakfast",
+        "quick"
+      ],
+      "overview": "Self-serviced café with salads, sandwiches, lunch hot meals, coffee and grab-n-go items. Saturday hours 10:00-18:00, closed Sundays.",
+      "menu": [
+        {
+          "name": "Grilled Chicken Salad",
+          "price": 62,
+          "stall": "so330",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "salad",
+            "western"
+          ]
+        },
+        {
+          "name": "Turkey & Cheese Sandwich",
+          "price": 52,
+          "stall": "so330",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "western"
+          ]
+        },
+        {
+          "name": "Latte",
+          "price": 38,
+          "stall": "so330",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "coffee"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — so330 outlet page",
+          "url": "https://catering.hku.hk/en/eateries/cymc/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "asian-gourmet",
+      "name": "Asian Gourmet",
+      "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+      "zone": "Centennial Campus",
+      "lat": 22.28248,
+      "lng": 114.13488,
+      "cuisines": [
+        "asian",
+        "chinese",
+        "rice",
+        "noodles"
+      ],
+      "diets": [],
+      "priceLevel": 1,
+      "avgPrice": 52,
+      "rating": 3.9,
+      "hours": [
+        null,
+        [
+          "08:00",
+          "20:00"
+        ],
+        [
+          "08:00",
+          "20:00"
+        ],
+        [
+          "08:00",
+          "20:00"
+        ],
+        [
+          "08:00",
+          "20:00"
+        ],
+        [
+          "08:00",
+          "20:00"
+        ],
+        [
+          "08:00",
+          "20:00"
+        ]
+      ],
+      "emoji": "🍛",
+      "image": "/img/outlets/asian-gourmet.jpg",
+      "tags": [
+        "budget",
+        "quick"
+      ],
+      "overview": "Table-serviced South-east Asian cuisine with rice dishes and noodles. Closed Sundays and public holidays.",
+      "menu": [
+        {
+          "name": "Hainanese Chicken Rice",
+          "price": 52,
+          "stall": "Asian Gourmet",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "asian",
+            "rice"
+          ]
+        },
+        {
+          "name": "Singapore Laksa",
+          "price": 55,
+          "stall": "Asian Gourmet",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "asian",
+            "noodles"
+          ]
+        },
+        {
+          "name": "Thai Basil Pork Rice",
+          "price": 58,
+          "stall": "Asian Gourmet",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "asian",
+            "rice"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Asian Gourmet outlet page",
+          "url": "https://catering.hku.hk/en/eateries/CCOutletC/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "alfafa-bistro",
+      "name": "alfafa bistro",
+      "venue": "LG/F, The Jockey Club Tower [Online Order Takeaway ONLY]",
+      "zone": "Centennial Campus",
+      "lat": 22.28195,
+      "lng": 114.13503,
+      "cuisines": [
+        "western",
+        "sandwich",
+        "salad",
+        "bakery"
+      ],
+      "diets": [],
+      "priceLevel": 2,
+      "avgPrice": 65,
+      "rating": 4.1,
+      "hours": [
+        [
+          "08:00",
+          "20:00"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "07:30",
+          "20:30"
+        ],
+        [
+          "08:00",
+          "20:00"
+        ]
+      ],
+      "emoji": "🥪",
+      "image": "/img/outlets/alfafa-bistro.jpg",
+      "tags": [
+        "takeaway",
+        "quick",
+        "breakfast"
+      ],
+      "overview": "Self-serviced takeaway-only bistro offering pasta, sandwiches, salads, bakery and dessert. Open 7 days.",
+      "menu": [
+        {
+          "name": "Pasta of the Day",
+          "price": 68,
+          "stall": "alfafa bistro",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "western"
+          ]
+        },
+        {
+          "name": "Turkey Avocado Sandwich",
+          "price": 55,
+          "stall": "alfafa bistro",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "western"
+          ]
+        },
+        {
+          "name": "Garden Salad Bowl",
+          "price": 58,
+          "stall": "alfafa bistro",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "salad",
+            "western"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — alfafa bistro outlet page",
+          "url": "https://catering.hku.hk/en/eateries/CCOutletA/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "cym-canteen",
+      "name": "CYM Canteen",
+      "venue": "4/F, Chong Yuet Ming Cultural Centre",
+      "zone": "Main Campus",
+      "lat": 22.28372,
+      "lng": 114.13655,
+      "cuisines": [
+        "chinese",
+        "noodles",
+        "rice",
+        "asian",
+        "western"
+      ],
+      "diets": [],
+      "priceLevel": 1,
+      "avgPrice": 48,
+      "rating": 3.8,
+      "hours": [
+        [
+          "07:30",
+          "21:30"
+        ],
+        [
+          "07:30",
+          "21:30"
+        ],
+        [
+          "07:30",
+          "21:30"
+        ],
+        [
+          "07:30",
+          "21:30"
+        ],
+        [
+          "07:30",
+          "21:30"
+        ],
+        [
+          "07:30",
+          "21:30"
+        ],
+        [
+          "07:30",
+          "21:30"
+        ]
+      ],
+      "emoji": "🍱",
+      "image": "/img/outlets/cym-canteen.jpg",
+      "tags": [
+        "budget",
+        "many-seats",
+        "breakfast",
+        "open-late"
+      ],
+      "overview": "Self-serviced fast food canteen with multiple stalls: local fast food, noodles, Chinese BBQ, SE Asian food, and sizzling plates. Open 7 days, including public holidays.",
+      "menu": [
+        {
+          "name": "Two-Dish Rice Set",
+          "price": 42,
+          "stall": "CYM Canteen",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "chinese",
+            "rice"
+          ]
+        },
+        {
+          "name": "Chinese BBQ Rice Plate",
+          "price": 55,
+          "stall": "CYM Canteen",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "chinese",
+            "rice"
+          ]
+        },
+        {
+          "name": "Sizzling Plate Chicken",
+          "price": 58,
+          "stall": "CYM Canteen",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "asian",
+            "western"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — CYM Canteen outlet page",
+          "url": "https://catering.hku.hk/en/eateries/cymr/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "hong-kong-daily",
+      "name": "Hong Kong Daily 香江冰室",
+      "venue": "4/F, Chong Yuet Ming Cultural Centre",
+      "zone": "Main Campus",
+      "lat": 22.28374,
+      "lng": 114.13657,
+      "cuisines": [
+        "chinese",
+        "western",
+        "rice",
+        "noodles"
+      ],
+      "diets": [],
+      "priceLevel": 1,
+      "avgPrice": 50,
+      "rating": 3.9,
+      "hours": [
+        null,
+        [
+          "07:30",
+          "20:00"
+        ],
+        [
+          "07:30",
+          "20:00"
+        ],
+        [
+          "07:30",
+          "20:00"
+        ],
+        [
+          "07:30",
+          "20:00"
+        ],
+        [
+          "07:30",
+          "20:00"
+        ],
+        [
+          "07:30",
+          "20:00"
+        ]
+      ],
+      "emoji": "🍽️",
+      "image": "/img/outlets/hong-kong-daily.jpg",
+      "tags": [
+        "budget",
+        "breakfast",
+        "sit-down"
+      ],
+      "overview": "Table-serviced local cha chaan teng (Hong Kong-style diner). Closed Sundays and public holidays.",
+      "menu": [
+        {
+          "name": "Pineapple Bun with Butter",
+          "price": 28,
+          "stall": "Hong Kong Daily 香江冰室",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "chinese",
+            "western"
+          ]
+        },
+        {
+          "name": "Satay Beef Noodle Soup",
+          "price": 52,
+          "stall": "Hong Kong Daily 香江冰室",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "chinese",
+            "noodles"
+          ]
+        },
+        {
+          "name": "Baked Pork Chop Rice",
+          "price": 58,
+          "stall": "Hong Kong Daily 香江冰室",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "chinese",
+            "rice"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Hong Kong Daily outlet page",
+          "url": "https://catering.hku.hk/en/eateries/hkdaily/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "subway-rrs",
+      "name": "Subway (Run Run Shaw Podium)",
+      "venue": "Run Run Shaw Podium",
+      "zone": "Main Campus",
+      "lat": 22.282565,
+      "lng": 114.138036,
+      "cuisines": [
+        "sandwich",
+        "western",
+        "salad"
+      ],
+      "diets": [],
+      "priceLevel": 1,
+      "avgPrice": 50,
+      "rating": 3.8,
+      "hours": [
+        [
+          "09:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "20:30"
+        ],
+        [
+          "08:00",
+          "20:30"
+        ],
+        [
+          "08:00",
+          "20:30"
+        ],
+        [
+          "08:00",
+          "20:30"
+        ],
+        [
+          "08:00",
+          "20:30"
+        ],
+        [
+          "09:00",
+          "19:00"
+        ]
+      ],
+      "emoji": "🥪",
+      "image": "/img/outlets/subway-rrs.jpg",
+      "tags": [
+        "quick",
+        "takeaway",
+        "customisable",
+        "budget"
+      ],
+      "overview": "Over-the-counter grab-n-go sandwiches, cookies, and catering options. Open 7 days.",
+      "menu": [
+        {
+          "name": "Grilled Chicken 6-inch Sub",
+          "price": 45,
+          "stall": "Subway",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "western"
+          ]
+        },
+        {
+          "name": "Veggie Delite 6-inch Sub",
+          "price": 38,
+          "stall": "Subway",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "western"
+          ]
+        },
+        {
+          "name": "Tuna Salad Bowl",
+          "price": 52,
+          "stall": "Subway",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "salad",
+            "western"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Subway (RRS Podium) outlet page",
+          "url": "https://catering.hku.hk/en/eateries/COII/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "kiosk-sandwich-club",
+      "name": "Kiosk by The Sandwich Club",
+      "venue": "Run Run Shaw Podium",
+      "zone": "Main Campus",
+      "lat": 22.282546,
+      "lng": 114.138007,
+      "cuisines": [
+        "sandwich",
+        "salad",
+        "western",
+        "snack"
+      ],
+      "diets": [],
+      "priceLevel": 2,
+      "avgPrice": 55,
+      "rating": 4,
+      "hours": [
+        null,
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        null
+      ],
+      "emoji": "🥙",
+      "image": "/img/outlets/kiosk-sandwich-club.jpg",
+      "tags": [
+        "quick",
+        "takeaway"
+      ],
+      "overview": "Over-counter grab-n-go with bento boxes, pastries, sandwiches and salads. Weekdays only.",
+      "menu": [
+        {
+          "name": "Bento Box of the Day",
+          "price": 55,
+          "stall": "Kiosk by The Sandwich Club",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "western",
+            "rice"
+          ]
+        },
+        {
+          "name": "Club Sandwich",
+          "price": 48,
+          "stall": "Kiosk by The Sandwich Club",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "western"
+          ]
+        },
+        {
+          "name": "Chicken Caesar Salad",
+          "price": 52,
+          "stall": "Kiosk by The Sandwich Club",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "salad",
+            "western"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Kiosk by The Sandwich Club outlet page",
+          "url": "https://catering.hku.hk/en/eateries/COIII/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "bijas-vegetarian",
+      "name": "BIJAS Vegetarian",
+      "venue": "G/F, Run Run Shaw Tower, Centennial Campus",
+      "zone": "Centennial Campus",
+      "lat": 22.28252,
+      "lng": 114.1348,
+      "cuisines": [
+        "vegetarian",
+        "vegan",
+        "chinese",
+        "noodles"
+      ],
+      "diets": [
+        "vegetarian",
+        "halal"
+      ],
+      "priceLevel": 1,
+      "avgPrice": 45,
+      "rating": 4.4,
+      "hours": [
+        null,
+        [
+          "11:00",
+          "21:00"
+        ],
+        [
+          "11:00",
+          "21:00"
+        ],
+        [
+          "11:00",
+          "21:00"
+        ],
+        [
+          "11:00",
+          "21:00"
+        ],
+        [
+          "11:00",
+          "21:00"
+        ],
+        [
+          "11:00",
+          "21:00"
+        ]
+      ],
+      "emoji": "🥬",
+      "image": "/img/outlets/bijas-vegetarian.jpg",
+      "tags": [
+        "budget",
+        "buffet-style",
+        "halal"
+      ],
+      "overview": "Self-serviced buffet-style (collect-and-pay, charge by weight). Halal-certified Chinese-style vegetarian food, noodles, coffee and fresh juice. Closed Sundays. Contact: 2964 9011.",
+      "menu": [
+        {
+          "name": "Vegetarian Buffet (Pay-by-Weight, 300g)",
+          "price": 45,
+          "stall": "BIJAS Vegetarian",
+          "verified": true,
+          "is_certified_halal": true,
+          "is_vegetarian": true,
+          "ingredients_listed": null,
+          "dietary_tags": [
+            "vegetarian",
+            "halal"
+          ],
+          "dietary_tags_source": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-18",
+              "tag": "vegetarian",
+              "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+            },
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-18",
+              "tag": "halal",
+              "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-18"
+            }
+          ],
+          "cuisines": [
+            "chinese",
+            "vegetarian"
+          ]
+        },
+        {
+          "name": "Vegetarian Noodle Soup",
+          "price": 42,
+          "stall": "BIJAS Vegetarian",
+          "verified": true,
+          "is_certified_halal": true,
+          "is_vegetarian": true,
+          "ingredients_listed": null,
+          "dietary_tags": [
+            "vegetarian",
+            "halal"
+          ],
+          "dietary_tags_source": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-18",
+              "tag": "vegetarian",
+              "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+            },
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-18",
+              "tag": "halal",
+              "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-18"
+            }
+          ],
+          "cuisines": [
+            "chinese",
+            "noodles",
+            "vegetarian"
+          ]
+        },
+        {
+          "name": "Fresh Fruit Juice",
+          "price": 28,
+          "stall": "BIJAS Vegetarian",
+          "verified": true,
+          "is_certified_halal": true,
+          "is_vegetarian": true,
+          "ingredients_listed": null,
+          "dietary_tags": [
+            "vegetarian",
+            "halal"
+          ],
+          "dietary_tags_source": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-18",
+              "tag": "vegetarian",
+              "statement": "Outlet page describes BIJAS as \"Halal Certified Chinese Style Vegetarian\". The outlet serves only vegetarian food, so this item is vegetarian; its name and price are representative."
+            },
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-18",
+              "tag": "halal",
+              "statement": "Outlet page states \"Halal Certified Chinese Style Vegetarian\"."
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+              "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+              "checkedAt": "2026-11-18"
+            }
+          ],
+          "cuisines": [
+            "vegetarian"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — BIJAS Vegetarian outlet page",
+          "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "27-kebab-house",
+      "name": "27 Kebab House",
+      "venue": "1/F, Fong Shu Chuen Amenities Centre",
+      "zone": "Main Campus",
+      "lat": 22.28342,
+      "lng": 114.13712,
+      "cuisines": [
+        "asian",
+        "rice",
+        "western"
+      ],
+      "diets": [
+        "halal"
+      ],
+      "priceLevel": 1,
+      "avgPrice": 55,
+      "rating": 4,
+      "hours": [
+        null,
+        [
+          "10:00",
+          "20:00"
+        ],
+        [
+          "10:00",
+          "20:00"
+        ],
+        [
+          "10:00",
+          "20:00"
+        ],
+        [
+          "10:00",
+          "20:00"
+        ],
+        [
+          "10:00",
+          "20:00"
+        ],
+        [
+          "10:00",
+          "20:00"
+        ]
+      ],
+      "emoji": "🥙",
+      "image": "/img/outlets/27-kebab-house.jpg",
+      "tags": [
+        "halal",
+        "quick",
+        "budget"
+      ],
+      "overview": "Self-serviced fast food with halal food: kebabs, pizza, biryani rice and snacks. Closed Sundays and public holidays.",
+      "menu": [
+        {
+          "name": "Chicken Kebab Wrap",
+          "price": 50,
+          "stall": "27 Kebab House",
+          "verified": true,
+          "is_certified_halal": true,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [
+            "halal"
+          ],
+          "dietary_tags_source": [
+            {
+              "label": "HKU CSO Catering — 27 Kebab House outlet page",
+              "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+              "checkedAt": "2026-11-18",
+              "tag": "halal",
+              "statement": "Outlet page lists 27 Kebab House under \"Halal Food (Kebabs, Pizza, Biryani Rice, Snack)\"; the outlet certifies its whole menu as halal."
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CSO Catering — 27 Kebab House outlet page",
+              "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+              "checkedAt": "2026-11-18"
+            }
+          ],
+          "cuisines": [
+            "asian",
+            "western"
+          ]
+        },
+        {
+          "name": "Chicken Biryani Rice",
+          "price": 58,
+          "stall": "27 Kebab House",
+          "verified": true,
+          "is_certified_halal": true,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [
+            "halal"
+          ],
+          "dietary_tags_source": [
+            {
+              "label": "HKU CSO Catering — 27 Kebab House outlet page",
+              "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+              "checkedAt": "2026-11-18",
+              "tag": "halal",
+              "statement": "Outlet page lists 27 Kebab House under \"Halal Food (Kebabs, Pizza, Biryani Rice, Snack)\"; the outlet certifies its whole menu as halal."
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CSO Catering — 27 Kebab House outlet page",
+              "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+              "checkedAt": "2026-11-18"
+            }
+          ],
+          "cuisines": [
+            "asian",
+            "rice"
+          ]
+        },
+        {
+          "name": "Pepperoni Pizza Slice",
+          "price": 35,
+          "stall": "27 Kebab House",
+          "verified": true,
+          "is_certified_halal": true,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [
+            "halal"
+          ],
+          "dietary_tags_source": [
+            {
+              "label": "HKU CSO Catering — 27 Kebab House outlet page",
+              "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+              "checkedAt": "2026-11-18",
+              "tag": "halal",
+              "statement": "Outlet page lists 27 Kebab House under \"Halal Food (Kebabs, Pizza, Biryani Rice, Snack)\"; the outlet certifies its whole menu as halal."
+            }
+          ],
+          "sources": [
+            {
+              "label": "HKU CSO Catering — 27 Kebab House outlet page",
+              "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+              "checkedAt": "2026-11-18"
+            }
+          ],
+          "cuisines": [
+            "western"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — 27 Kebab House outlet page",
+          "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "union-restaurant",
+      "name": "Union Restaurant",
+      "venue": "4/F, Haking Wong Building (Podium)",
+      "zone": "Main Campus",
+      "lat": 22.28418,
+      "lng": 114.13761,
+      "cuisines": [
+        "chinese",
+        "asian",
+        "western",
+        "rice"
+      ],
+      "diets": [],
+      "priceLevel": 1,
+      "avgPrice": 48,
+      "rating": 3.7,
+      "hours": [
+        [
+          "07:30",
+          "20:00"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "20:00"
+        ]
+      ],
+      "emoji": "🍽️",
+      "image": "/img/outlets/union-restaurant.jpg",
+      "tags": [
+        "budget",
+        "many-seats",
+        "breakfast"
+      ],
+      "overview": "Self-serviced fast food with local and multinational dishes. Open 7 days. Contact: 2175 7718.",
+      "menu": [
+        {
+          "name": "Fried Rice with Chicken",
+          "price": 45,
+          "stall": "Union Restaurant",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "chinese",
+            "rice"
+          ]
+        },
+        {
+          "name": "Curry Chicken with Rice",
+          "price": 52,
+          "stall": "Union Restaurant",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "asian",
+            "rice"
+          ]
+        },
+        {
+          "name": "Fish & Chips",
+          "price": 55,
+          "stall": "Union Restaurant",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "western"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Union Restaurant outlet page",
+          "url": "https://catering.hku.hk/en/eateries/UR/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "starbucks-composite",
+      "name": "Starbucks Coffee (Composite Building)",
+      "venue": "Shop G.03, G/F, Composite Building, Main Campus",
+      "zone": "Main Campus",
+      "lat": 22.28388,
+      "lng": 114.13815,
+      "cuisines": [
+        "coffee",
+        "bakery",
+        "sandwich",
+        "salad"
+      ],
+      "diets": [],
+      "priceLevel": 2,
+      "avgPrice": 50,
+      "rating": 4.1,
+      "hours": [
+        [
+          "11:00",
+          "18:30"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "21:00"
+        ],
+        [
+          "07:30",
+          "20:00"
+        ]
+      ],
+      "emoji": "☕",
+      "image": "/img/outlets/starbucks-composite.jpg",
+      "tags": [
+        "study-spot",
+        "quick",
+        "breakfast"
+      ],
+      "overview": "Self-serviced Starbucks with salads, sandwiches, bakery, dessert, coffee and grab-n-go. Contact: 2559 5028.",
+      "menu": [
+        {
+          "name": "Caffè Latte",
+          "price": 42,
+          "stall": "Starbucks Coffee (Composite Building)",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "coffee"
+          ]
+        },
+        {
+          "name": "Ham & Cheese Croissant",
+          "price": 38,
+          "stall": "Starbucks Coffee (Composite Building)",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "bakery",
+            "sandwich"
+          ]
+        },
+        {
+          "name": "Chicken Caesar Salad",
+          "price": 58,
+          "stall": "Starbucks Coffee (Composite Building)",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "salad",
+            "sandwich"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Starbucks Coffee outlet page",
+          "url": "https://catering.hku.hk/en/eateries/COBG03/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "tai-tai-foodtopia",
+      "name": "TAI TAI FOODTOPIA 台台果腹",
+      "venue": "Shop G.02, G/F, Composite Building",
+      "zone": "Main Campus",
+      "lat": 22.28386,
+      "lng": 114.13812,
+      "cuisines": [
+        "taiwanese",
+        "noodles",
+        "snack"
+      ],
+      "diets": [],
+      "priceLevel": 1,
+      "avgPrice": 45,
+      "rating": 4,
+      "hours": [
+        null,
+        [
+          "09:00",
+          "20:00"
+        ],
+        [
+          "09:00",
+          "20:00"
+        ],
+        [
+          "09:00",
+          "20:00"
+        ],
+        [
+          "09:00",
+          "20:00"
+        ],
+        [
+          "09:00",
+          "20:00"
+        ],
+        [
+          "10:00",
+          "19:00"
+        ]
+      ],
+      "emoji": "🧋",
+      "image": "/img/outlets/tai-tai-foodtopia.jpg",
+      "tags": [
+        "quick",
+        "takeaway",
+        "budget"
+      ],
+      "overview": "Takeaway Taiwanese beverages, hot meals, noodles, snacks and dessert. Online ordering via mobile device only. Closed Sundays and public holidays.",
+      "menu": [
+        {
+          "name": "Boba Milk Tea",
+          "price": 28,
+          "stall": "TAI TAI FOODTOPIA 台台果腹",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "taiwanese",
+            "snack"
+          ]
+        },
+        {
+          "name": "Taiwanese Braised Pork Rice",
+          "price": 48,
+          "stall": "TAI TAI FOODTOPIA 台台果腹",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "taiwanese",
+            "rice"
+          ]
+        },
+        {
+          "name": "Taiwanese Fried Chicken Cutlet",
+          "price": 42,
+          "stall": "TAI TAI FOODTOPIA 台台果腹",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "taiwanese",
+            "snack"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — TAI TAI FOODTOPIA outlet page",
+          "url": "https://catering.hku.hk/en/eateries/COBG02/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "oori-hansik",
+      "name": "OORI HANSIK",
+      "venue": "Shop G.01, G/F, Composite Building, Main Campus",
+      "zone": "Main Campus",
+      "lat": 22.2839,
+      "lng": 114.13818,
+      "cuisines": [
+        "korean",
+        "rice",
+        "western"
+      ],
+      "diets": [],
+      "priceLevel": 2,
+      "avgPrice": 68,
+      "rating": 4.2,
+      "hours": [
+        [
+          "11:00",
+          "20:00"
+        ],
+        [
+          "10:30",
+          "21:30"
+        ],
+        [
+          "10:30",
+          "21:30"
+        ],
+        [
+          "10:30",
+          "21:30"
+        ],
+        [
+          "10:30",
+          "21:30"
+        ],
+        [
+          "10:30",
+          "21:30"
+        ],
+        [
+          "11:00",
+          "20:00"
+        ]
+      ],
+      "emoji": "🍗",
+      "image": "/img/outlets/oori-hansik.jpg",
+      "tags": [
+        "sit-down",
+        "dinner",
+        "spicy"
+      ],
+      "overview": "Self-serviced dine-in & takeaway Korean food: hot meals, fried chicken, snacks, beverages and coffee. Closed on public holidays.",
+      "menu": [
+        {
+          "name": "Korean Fried Chicken (Half)",
+          "price": 78,
+          "stall": "OORI HANSIK",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "korean"
+          ]
+        },
+        {
+          "name": "Bibimbap (Beef)",
+          "price": 68,
+          "stall": "OORI HANSIK",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "korean",
+            "rice"
+          ]
+        },
+        {
+          "name": "Tteokbokki (Spicy Rice Cakes)",
+          "price": 52,
+          "stall": "OORI HANSIK",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "korean",
+            "snack"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — OORI HANSIK outlet page",
+          "url": "https://catering.hku.hk/en/eateries/COBG01/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "grove",
+      "name": "Grove",
+      "venue": "2/F Academic Building, 3 Sassoon Road",
+      "zone": "Sassoon Road",
+      "lat": 22.27035,
+      "lng": 114.13128,
+      "cuisines": [
+        "western",
+        "sandwich",
+        "salad",
+        "bakery",
+        "coffee"
+      ],
+      "diets": [],
+      "priceLevel": 2,
+      "avgPrice": 62,
+      "rating": 4.1,
+      "hours": [
+        null,
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        null
+      ],
+      "emoji": "🥗",
+      "image": "/img/outlets/grove.jpg",
+      "tags": [
+        "quiet",
+        "study-spot",
+        "weekday-only",
+        "takeaway"
+      ],
+      "overview": "Self-serviced café with pasta, sandwiches, salads, pastries and beverages. Weekdays only.",
+      "menu": [
+        {
+          "name": "Pasta of the Day",
+          "price": 68,
+          "stall": "Grove",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "western"
+          ]
+        },
+        {
+          "name": "Gourmet Sandwich",
+          "price": 55,
+          "stall": "Grove",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "western"
+          ]
+        },
+        {
+          "name": "Quinoa Salad Bowl",
+          "price": 58,
+          "stall": "Grove",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "salad",
+            "western"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Grove outlet page",
+          "url": "https://catering.hku.hk/en/eateries/3SRC/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "sandwich-club-kiosk-6sr",
+      "name": "Sandwich Club Kiosk (6 Sassoon Road)",
+      "venue": "G/F, 6 Sassoon Road (nearby Lee Hysan Hall)",
+      "zone": "Sassoon Road",
+      "lat": 22.2715,
+      "lng": 114.1315,
+      "cuisines": [
+        "sandwich",
+        "salad",
+        "western",
+        "coffee"
+      ],
+      "diets": [],
+      "priceLevel": 2,
+      "avgPrice": 50,
+      "rating": 3.8,
+      "hours": [
+        null,
+        [
+          "08:00",
+          "16:00"
+        ],
+        [
+          "08:00",
+          "16:00"
+        ],
+        [
+          "08:00",
+          "16:00"
+        ],
+        [
+          "08:00",
+          "16:00"
+        ],
+        [
+          "08:00",
+          "16:00"
+        ],
+        null
+      ],
+      "emoji": "🥪",
+      "image": "/img/outlets/sandwich-club-kiosk-6sr.jpg",
+      "tags": [
+        "quick",
+        "takeaway",
+        "weekday-only",
+        "budget"
+      ],
+      "overview": "Over-counter takeaway (limited seats in Assembly Hall during 11:00-15:00). Daily hot meals, salad, sandwiches, snacks, panini and coffee. Weekdays only.",
+      "menu": [
+        {
+          "name": "Daily Hot Meal Set",
+          "price": 48,
+          "stall": "Sandwich Club Kiosk",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "western",
+            "rice"
+          ]
+        },
+        {
+          "name": "Grilled Panini",
+          "price": 42,
+          "stall": "Sandwich Club Kiosk",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "western"
+          ]
+        },
+        {
+          "name": "American Coffee",
+          "price": 30,
+          "stall": "Sandwich Club Kiosk",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "coffee"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Sandwich Club Kiosk (6SR) outlet page",
+          "url": "https://catering.hku.hk/en/eateries/6SRKiosk/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "ebeneezers-5sr",
+      "name": "Ebeneezer's Kebabs & Pizzeria Express",
+      "venue": "G/F, HKJCBIR, 5 Sassoon Road",
+      "zone": "Sassoon Road",
+      "lat": 22.2722,
+      "lng": 114.1311,
+      "cuisines": [
+        "asian",
+        "western",
+        "rice"
+      ],
+      "diets": [],
+      "priceLevel": 1,
+      "avgPrice": 55,
+      "rating": 3.9,
+      "hours": [
+        null,
+        [
+          "10:00",
+          "19:00"
+        ],
+        [
+          "10:00",
+          "19:00"
+        ],
+        [
+          "10:00",
+          "19:00"
+        ],
+        [
+          "10:00",
+          "19:00"
+        ],
+        [
+          "10:00",
+          "19:00"
+        ],
+        [
+          "10:00",
+          "19:00"
+        ]
+      ],
+      "emoji": "🍕",
+      "image": "/img/outlets/ebeneezers-5sr.jpg",
+      "tags": [
+        "takeaway",
+        "quick"
+      ],
+      "overview": "Over-counter takeaway with kebabs, pizza, rice dishes, snacks, salad and beverage. Closed Sundays and public holidays. Contact: 2787 3511.",
+      "menu": [
+        {
+          "name": "Chicken Doner Kebab",
+          "price": 52,
+          "stall": "Ebeneezer's Kebabs & Pizzeria Express",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "asian",
+            "western"
+          ]
+        },
+        {
+          "name": "Pepperoni Pizza (8-inch)",
+          "price": 68,
+          "stall": "Ebeneezer's Kebabs & Pizzeria Express",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "western"
+          ]
+        },
+        {
+          "name": "Chicken Biryani Rice",
+          "price": 55,
+          "stall": "Ebeneezer's Kebabs & Pizzeria Express",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "asian",
+            "rice"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Ebeneezer's outlet page",
+          "url": "https://catering.hku.hk/en/eateries/5SRKiosk/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "subway-sassoon",
+      "name": "Subway (Sassoon Road)",
+      "venue": "Fan Pui Garden, LG/F, Laboratory Block, 21 Sassoon Road",
+      "zone": "Sassoon Road",
+      "lat": 22.2704,
+      "lng": 114.1313,
+      "cuisines": [
+        "sandwich",
+        "western"
+      ],
+      "diets": [],
+      "priceLevel": 1,
+      "avgPrice": 48,
+      "rating": 3.7,
+      "hours": [
+        null,
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "19:00"
+        ],
+        [
+          "08:00",
+          "18:00"
+        ]
+      ],
+      "emoji": "🥪",
+      "image": "/img/outlets/subway-sassoon.jpg",
+      "tags": [
+        "quick",
+        "takeaway",
+        "budget",
+        "customisable"
+      ],
+      "overview": "Over-counter takeaway sandwiches, cookies and grab-n-go. Closed Sundays and public holidays. Contact: 2577 1008.",
+      "menu": [
+        {
+          "name": "Italian B.M.T. 6-inch Sub",
+          "price": 48,
+          "stall": "Subway (Sassoon Road)",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "western"
+          ]
+        },
+        {
+          "name": "Veggie Delite 6-inch Sub",
+          "price": 38,
+          "stall": "Subway (Sassoon Road)",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich",
+            "western"
+          ]
+        },
+        {
+          "name": "Chocolate Chip Cookie",
+          "price": 12,
+          "stall": "Subway (Sassoon Road)",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "western",
+            "snack"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "label": "HKU CSO Catering — Subway (Sassoon Road) outlet page",
+          "url": "https://catering.hku.hk/en/eateries/FanPuiOutpost/",
+          "checkedAt": "2026-11-15"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "starbucks-kiosk-sassoon",
+      "name": "Coffee Kiosk by Starbucks (Sassoon Road)",
+      "venue": "G/F Lobby, William M.W. Mong Block, Faculty of Medicine Building, 21 Sassoon Road",
+      "zone": "Sassoon Road",
+      "lat": 22.27045,
+      "lng": 114.13125,
+      "cuisines": [
+        "coffee",
+        "bakery",
+        "sandwich",
+        "salad"
+      ],
+      "diets": [],
+      "priceLevel": 2,
+      "avgPrice": 45,
+      "rating": 3.9,
+      "hours": [
+        null,
+        [
+          "08:30",
+          "17:30"
+        ],
+        [
+          "08:30",
+          "17:30"
+        ],
+        [
+          "08:30",
+          "17:30"
+        ],
+        [
+          "08:30",
+          "17:30"
+        ],
+        [
+          "08:30",
+          "17:30"
+        ],
+        null
+      ],
+      "emoji": "☕",
+      "image": "/img/outlets/starbucks-kiosk-sassoon.jpg",
+      "tags": [
+        "quick",
+        "takeaway",
+        "weekday-only",
+        "study-spot"
+      ],
+      "overview": "Over-the-counter grab-n-go Starbucks kiosk with salads, sandwiches, bakery, dessert, coffee and grab-n-go. Weekdays only. Contact: 6695 3598.",
+      "menu": [
+        {
+          "name": "Cappuccino",
           "price": 40,
-          "stall": "Starbucks (Main Library)",
+          "stall": "Coffee Kiosk by Starbucks (Sassoon Road)",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -600,7 +2484,7 @@
         {
           "name": "Butter Croissant",
           "price": 28,
-          "stall": "Starbucks (Main Library)",
+          "stall": "Coffee Kiosk by Starbucks (Sassoon Road)",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -609,299 +2493,85 @@
           "dietary_tags_source": [],
           "sources": [],
           "cuisines": [
-            "bakery",
-            "snack"
+            "bakery"
+          ]
+        },
+        {
+          "name": "Egg Sandwich",
+          "price": 35,
+          "stall": "Coffee Kiosk by Starbucks (Sassoon Road)",
+          "verified": false,
+          "is_certified_halal": null,
+          "is_vegetarian": null,
+          "ingredients_listed": null,
+          "dietary_tags": [],
+          "dietary_tags_source": [],
+          "sources": [],
+          "cuisines": [
+            "sandwich"
           ]
         }
       ],
       "sources": [
         {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
+          "label": "HKU CSO Catering — Coffee Kiosk by Starbucks outlet page",
+          "url": "https://catering.hku.hk/en/eateries/FOMBCK/",
+          "checkedAt": "2026-11-15"
         }
       ],
-      "verified": false
+      "verified": true
     },
     {
-      "id": "pacific-coffee-centennial",
-      "name": "Pacific Coffee (Centennial)",
-      "venue": "Centennial Campus, 3/F Run Run Shaw Tower podium",
-      "zone": "Centennial Campus",
-      "lat": 22.28195,
-      "lng": 114.13503,
+      "id": "wholesome-hub",
+      "name": "Wholesome Hub",
+      "venue": "G/F Lift Lobby, Laboratory Block, 21 Sassoon Road",
+      "zone": "Sassoon Road",
+      "lat": 22.27042,
+      "lng": 114.13132,
       "cuisines": [
-        "coffee",
-        "snack",
-        "bakery"
+        "western",
+        "sandwich",
+        "salad",
+        "coffee"
       ],
-      "diets": [
-        "vegetarian"
-      ],
+      "diets": [],
       "priceLevel": 2,
-      "avgPrice": 48,
+      "avgPrice": 58,
       "rating": 4,
       "hours": [
         null,
         [
           "08:00",
-          "19:00"
+          "18:00"
         ],
         [
           "08:00",
-          "19:00"
+          "18:00"
         ],
         [
           "08:00",
-          "19:00"
+          "18:00"
         ],
         [
           "08:00",
-          "19:00"
+          "18:00"
         ],
-        [
-          "08:00",
-          "19:00"
-        ],
-        null
-      ],
-      "emoji": "🧋",
-      "image": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "wifi",
-        "quiet"
-      ],
-      "overview": "Quiet seating with power sockets; closed at weekends.",
-      "menu": [
-        {
-          "name": "Cappuccino",
-          "price": 42,
-          "stall": "Pacific Coffee (Centennial)",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "coffee"
-          ]
-        },
-        {
-          "name": "Iced Mocha",
-          "price": 48,
-          "stall": "Pacific Coffee (Centennial)",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "coffee"
-          ]
-        },
-        {
-          "name": "Pain au Chocolat",
-          "price": 30,
-          "stall": "Pacific Coffee (Centennial)",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "bakery",
-            "snack"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "centennial-food-court",
-      "name": "Centennial Food Court",
-      "venue": "Centennial Campus, LG/F",
-      "zone": "Centennial Campus",
-      "lat": 22.28172,
-      "lng": 114.13544,
-      "cuisines": [
-        "chinese",
-        "asian",
-        "rice",
-        "noodles",
-        "western"
-      ],
-      "diets": [
-        "vegetarian",
-        "halal"
-      ],
-      "priceLevel": 1,
-      "avgPrice": 48,
-      "rating": 3.8,
-      "hours": [
-        [
-          "11:00",
-          "19:00"
-        ],
-        [
-          "11:00",
-          "20:00"
-        ],
-        [
-          "11:00",
-          "20:00"
-        ],
-        [
-          "11:00",
-          "20:00"
-        ],
-        [
-          "11:00",
-          "20:00"
-        ],
-        [
-          "11:00",
-          "20:00"
-        ],
-        [
-          "11:00",
-          "19:00"
-        ]
-      ],
-      "emoji": "🍱",
-      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "many-seats",
-        "halal",
-        "budget"
-      ],
-      "overview": "Six stalls under one roof, including a halal counter and a veggie set-meal stall.",
-      "menu": [
-        {
-          "name": "Two-Dish Rice Set",
-          "price": 48,
-          "stall": "Centennial Food Court",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        },
-        {
-          "name": "Hainanese Chicken Rice",
-          "price": 52,
-          "stall": "Centennial Food Court",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "asian",
-            "rice"
-          ]
-        },
-        {
-          "name": "Veggie Set Meal",
-          "price": 44,
-          "stall": "Centennial Food Court",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "global-cafe",
-      "name": "Global Café",
-      "venue": "Global Lounge, UG/F Chong Yuet Ming",
-      "zone": "Main Campus",
-      "lat": 22.28382,
-      "lng": 114.13642,
-      "cuisines": [
-        "western",
-        "sandwich",
-        "coffee",
-        "salad"
-      ],
-      "diets": [
-        "vegetarian"
-      ],
-      "priceLevel": 2,
-      "avgPrice": 72,
-      "rating": 4.1,
-      "hours": [
         null,
-        [
-          "10:00",
-          "18:00"
-        ],
-        [
-          "10:00",
-          "18:00"
-        ],
-        [
-          "10:00",
-          "18:00"
-        ],
-        [
-          "10:00",
-          "18:00"
-        ],
-        [
-          "10:00",
-          "18:00"
-        ],
         null
       ],
-      "emoji": "🥗",
-      "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=60",
+      "emoji": "🥙",
+      "image": "/img/outlets/wholesome-hub.jpg",
       "tags": [
-        "quiet",
-        "international"
+        "quick",
+        "weekday-only",
+        "healthy"
       ],
-      "overview": "Relaxed lounge seating; popular with exchange students, limited weekend hours.",
+      "overview": "Healthy grab-n-go options at the Sassoon Road medical campus. Weekdays only.",
       "menu": [
         {
-          "name": "Grilled Sandwich",
-          "price": 68,
-          "stall": "Global Café",
+          "name": "Avocado Toast",
+          "price": 52,
+          "stall": "Wholesome Hub",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -910,14 +2580,14 @@
           "dietary_tags_source": [],
           "sources": [],
           "cuisines": [
-            "sandwich",
-            "western"
+            "western",
+            "sandwich"
           ]
         },
         {
-          "name": "Caesar Salad",
+          "name": "Quinoa Power Salad",
           "price": 62,
-          "stall": "Global Café",
+          "stall": "Wholesome Hub",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -933,7 +2603,7 @@
         {
           "name": "Flat White",
           "price": 38,
-          "stall": "Global Café",
+          "stall": "Wholesome Hub",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -948,512 +2618,66 @@
       ],
       "sources": [
         {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
+          "label": "HKU CSO Catering — Wholesome Hub outlet page",
+          "url": "https://catering.hku.hk/en/eateries/LabBlockGF/",
+          "checkedAt": "2026-11-15"
         }
       ],
-      "verified": false
+      "verified": true
     },
     {
-      "id": "indian-kitchen-rrs",
-      "name": "Indian Kitchen",
-      "venue": "Run Run Shaw Tower, 1/F",
-      "zone": "Centennial Campus",
-      "lat": 22.28252,
-      "lng": 114.13488,
+      "id": "restaurant-1887",
+      "name": "Restaurant 1887",
+      "venue": "7/F, William M.W. Mong Block",
+      "zone": "Sassoon Road",
+      "lat": 22.2705,
+      "lng": 114.1312,
       "cuisines": [
-        "indian",
-        "curry",
-        "rice"
+        "western",
+        "chinese",
+        "asian"
       ],
-      "diets": [
-        "vegetarian",
-        "halal"
-      ],
-      "priceLevel": 2,
-      "avgPrice": 68,
-      "rating": 4.2,
-      "hours": [
-        [
-          "12:00",
-          "20:30"
-        ],
-        [
-          "11:30",
-          "21:00"
-        ],
-        [
-          "11:30",
-          "21:00"
-        ],
-        [
-          "11:30",
-          "21:00"
-        ],
-        [
-          "11:30",
-          "21:00"
-        ],
-        [
-          "11:30",
-          "21:00"
-        ],
-        [
-          "12:00",
-          "20:30"
-        ]
-      ],
-      "emoji": "🍛",
-      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "halal",
-        "spicy",
-        "veg-thali"
-      ],
-      "overview": "Thali sets with a vegetarian option; the only halal kitchen on the centennial side.",
-      "menu": [
-        {
-          "name": "Veg Thali",
-          "price": 68,
-          "stall": "Indian Kitchen",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "indian",
-            "curry"
-          ]
-        },
-        {
-          "name": "Chicken Tikka Masala",
-          "price": 78,
-          "stall": "Indian Kitchen",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "indian",
-            "curry"
-          ]
-        },
-        {
-          "name": "Garlic Naan",
-          "price": 24,
-          "stall": "Indian Kitchen",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "indian"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "knowles-cafe",
-      "name": "Knowles Café",
-      "venue": "Knowles Building, G/F",
-      "zone": "Main Campus",
-      "lat": 22.28325,
-      "lng": 114.13621,
-      "cuisines": [
-        "sandwich",
-        "salad",
-        "coffee",
-        "snack"
-      ],
-      "diets": [
-        "vegetarian"
-      ],
-      "priceLevel": 2,
-      "avgPrice": 55,
-      "rating": 3.7,
+      "diets": [],
+      "priceLevel": 3,
+      "avgPrice": 120,
+      "rating": 4.3,
       "hours": [
         null,
         [
-          "08:30",
-          "17:30"
+          "11:00",
+          "21:00"
         ],
         [
-          "08:30",
-          "17:30"
+          "11:00",
+          "21:00"
         ],
         [
-          "08:30",
-          "17:30"
+          "11:00",
+          "21:00"
         ],
         [
-          "08:30",
-          "17:30"
+          "11:00",
+          "21:00"
         ],
         [
-          "08:30",
-          "17:30"
+          "11:00",
+          "21:00"
         ],
         null
       ],
-      "emoji": "🥙",
-      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=60",
+      "emoji": "🍷",
+      "image": "/img/outlets/restaurant-1887.jpg",
       "tags": [
-        "quick",
-        "takeaway"
-      ],
-      "overview": "Grab-and-go counter aimed at staff; closes early in the afternoon.",
-      "menu": [
-        {
-          "name": "Tuna Melt",
-          "price": 52,
-          "stall": "Knowles Café",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "sandwich",
-            "western"
-          ]
-        },
-        {
-          "name": "Garden Salad",
-          "price": 48,
-          "stall": "Knowles Café",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "salad",
-            "western"
-          ]
-        },
-        {
-          "name": "Americano",
-          "price": 32,
-          "stall": "Knowles Café",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "coffee"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "sushi-university-street",
-      "name": "Sushi Take-Out 寿司屋",
-      "venue": "University Street, Shop 3",
-      "zone": "Main Campus",
-      "lat": 22.28449,
-      "lng": 114.13639,
-      "cuisines": [
-        "japanese",
-        "sushi",
-        "rice"
-      ],
-      "diets": [],
-      "priceLevel": 2,
-      "avgPrice": 74,
-      "rating": 4,
-      "hours": [
-        [
-          "11:30",
-          "20:00"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:00",
-          "20:30"
-        ],
-        [
-          "11:30",
-          "20:00"
-        ]
-      ],
-      "emoji": "🍣",
-      "image": "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "takeaway",
-        "quick"
-      ],
-      "overview": "Pre-packed sushi boxes and donburi; no seating, eat on the street or take away.",
-      "menu": [
-        {
-          "name": "Salmon Nigiri Set",
-          "price": 78,
-          "stall": "Sushi Take-Out 寿司屋",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "japanese",
-            "sushi"
-          ]
-        },
-        {
-          "name": "California Roll",
-          "price": 58,
-          "stall": "Sushi Take-Out 寿司屋",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "japanese",
-            "sushi"
-          ]
-        },
-        {
-          "name": "Chicken Donburi",
-          "price": 72,
-          "stall": "Sushi Take-Out 寿司屋",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "japanese",
-            "rice"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "deli-fresh-main-building",
-      "name": "Deli Fresh",
-      "venue": "Main Building, G/F",
-      "zone": "Main Campus",
-      "lat": 22.28355,
-      "lng": 114.13738,
-      "cuisines": [
-        "sandwich",
-        "salad",
-        "snack"
-      ],
-      "diets": [
-        "vegetarian"
-      ],
-      "priceLevel": 1,
-      "avgPrice": 40,
-      "rating": 3.6,
-      "hours": [
-        null,
-        [
-          "08:00",
-          "16:00"
-        ],
-        [
-          "08:00",
-          "16:00"
-        ],
-        [
-          "08:00",
-          "16:00"
-        ],
-        [
-          "08:00",
-          "16:00"
-        ],
-        [
-          "08:00",
-          "16:00"
-        ],
-        null
-      ],
-      "emoji": "🥖",
-      "image": "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "budget",
-        "quick"
-      ],
-      "overview": "Cheap sandwiches and soup; closes at 4pm sharp.",
-      "menu": [
-        {
-          "name": "Ham & Cheese Sandwich",
-          "price": 38,
-          "stall": "Deli Fresh",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "sandwich",
-            "western"
-          ]
-        },
-        {
-          "name": "Soup of the Day",
-          "price": 28,
-          "stall": "Deli Fresh",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "western"
-          ]
-        },
-        {
-          "name": "Egg Mayo Roll",
-          "price": 32,
-          "stall": "Deli Fresh",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "sandwich",
-            "western"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "haking-wong-dimsum",
-      "name": "Haking Wong Dim Sum 點心坊",
-      "venue": "Haking Wong Building, 1/F",
-      "zone": "Main Campus",
-      "lat": 22.28412,
-      "lng": 114.13752,
-      "cuisines": [
-        "dimsum",
-        "chinese"
-      ],
-      "diets": [],
-      "priceLevel": 2,
-      "avgPrice": 82,
-      "rating": 4.1,
-      "hours": [
-        [
-          "10:00",
-          "16:00"
-        ],
-        [
-          "10:30",
-          "15:00"
-        ],
-        [
-          "10:30",
-          "15:00"
-        ],
-        [
-          "10:30",
-          "15:00"
-        ],
-        [
-          "10:30",
-          "15:00"
-        ],
-        [
-          "10:30",
-          "15:00"
-        ],
-        [
-          "10:00",
-          "16:00"
-        ]
-      ],
-      "emoji": "🥟",
-      "image": "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "lunch-only",
+        "sit-down",
+        "dinner",
         "group-dining"
       ],
-      "overview": "Traditional trolley dim sum, lunch service only — kitchen closes at 3pm.",
+      "overview": "Full-service restaurant on the 7th floor of the Faculty of Medicine building. International cuisine with Western, Chinese and Asian dishes. Weekdays and Saturdays only.",
       "menu": [
         {
-          "name": "Har Gow (4 pcs)",
-          "price": 42,
-          "stall": "Haking Wong Dim Sum 點心坊",
+          "name": "Grilled Sirloin Steak",
+          "price": 158,
+          "stall": "Restaurant 1887",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -1462,14 +2686,13 @@
           "dietary_tags_source": [],
           "sources": [],
           "cuisines": [
-            "chinese",
-            "dimsum"
+            "western"
           ]
         },
         {
-          "name": "Siu Mai (4 pcs)",
-          "price": 40,
-          "stall": "Haking Wong Dim Sum 點心坊",
+          "name": "Pan-fried Sea Bass",
+          "price": 138,
+          "stall": "Restaurant 1887",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -1478,14 +2701,13 @@
           "dietary_tags_source": [],
           "sources": [],
           "cuisines": [
-            "chinese",
-            "dimsum"
+            "western"
           ]
         },
         {
-          "name": "Char Siu Bao (3 pcs)",
-          "price": 36,
-          "stall": "Haking Wong Dim Sum 點心坊",
+          "name": "Vegetarian Risotto",
+          "price": 108,
+          "stall": "Restaurant 1887",
           "verified": false,
           "is_certified_halal": null,
           "is_vegetarian": null,
@@ -1494,250 +2716,18 @@
           "dietary_tags_source": [],
           "sources": [],
           "cuisines": [
-            "chinese",
-            "dimsum"
+            "western"
           ]
         }
       ],
       "sources": [
         {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
+          "label": "HKU CSO Catering — Restaurant 1887 outlet page",
+          "url": "https://catering.hku.hk/en/eateries/1887/",
+          "checkedAt": "2026-11-15"
         }
       ],
-      "verified": false
-    },
-    {
-      "id": "village-vegetarian",
-      "name": "Village Vegetarian 素心",
-      "venue": "Jockey Club Student Village, G/F",
-      "zone": "West Campus",
-      "lat": 22.28005,
-      "lng": 114.13458,
-      "cuisines": [
-        "vegetarian",
-        "vegan",
-        "chinese",
-        "rice"
-      ],
-      "diets": [
-        "vegetarian",
-        "vegan"
-      ],
-      "priceLevel": 1,
-      "avgPrice": 38,
-      "rating": 4.4,
-      "hours": [
-        [
-          "11:00",
-          "21:00"
-        ],
-        [
-          "11:00",
-          "21:00"
-        ],
-        [
-          "11:00",
-          "21:00"
-        ],
-        [
-          "11:00",
-          "21:00"
-        ],
-        [
-          "11:00",
-          "21:00"
-        ],
-        [
-          "11:00",
-          "21:00"
-        ],
-        [
-          "11:00",
-          "21:00"
-        ]
-      ],
-      "emoji": "🌱",
-      "image": "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "budget",
-        "residential"
-      ],
-      "overview": "Cheapest vegan set meals on campus and open seven days a week.",
-      "menu": [
-        {
-          "name": "Vegan Set Meal",
-          "price": 38,
-          "stall": "Village Vegetarian 素心",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        },
-        {
-          "name": "Buddha's Delight Rice",
-          "price": 42,
-          "stall": "Village Vegetarian 素心",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        },
-        {
-          "name": "Tofu & Mushroom Bowl",
-          "price": 34,
-          "stall": "Village Vegetarian 素心",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
-    },
-    {
-      "id": "pokfulam-noodle-house",
-      "name": "Pokfulam Noodle House 薄扶林麵家",
-      "venue": "Pokfulam Road, G/F",
-      "zone": "West Campus",
-      "lat": 22.28148,
-      "lng": 114.13312,
-      "cuisines": [
-        "noodles",
-        "chinese",
-        "rice"
-      ],
-      "diets": [
-        "vegetarian"
-      ],
-      "priceLevel": 1,
-      "avgPrice": 46,
-      "rating": 4,
-      "hours": [
-        [
-          "07:00",
-          "20:00"
-        ],
-        [
-          "07:00",
-          "20:00"
-        ],
-        [
-          "07:00",
-          "20:00"
-        ],
-        [
-          "07:00",
-          "20:00"
-        ],
-        [
-          "07:00",
-          "20:00"
-        ],
-        [
-          "07:00",
-          "20:00"
-        ],
-        [
-          "07:00",
-          "20:00"
-        ]
-      ],
-      "emoji": "🍲",
-      "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=60",
-      "tags": [
-        "breakfast",
-        "budget",
-        "off-campus"
-      ],
-      "overview": "Neighbourhood noodle shop just off campus; opens early for breakfast.",
-      "menu": [
-        {
-          "name": "Wonton Noodle Soup",
-          "price": 46,
-          "stall": "Pokfulam Noodle House 薄扶林麵家",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "noodles"
-          ]
-        },
-        {
-          "name": "Beef Brisket Noodles",
-          "price": 56,
-          "stall": "Pokfulam Noodle House 薄扶林麵家",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "noodles"
-          ]
-        },
-        {
-          "name": "Congee Set",
-          "price": 32,
-          "stall": "Pokfulam Noodle House 薄扶林麵家",
-          "verified": false,
-          "is_certified_halal": null,
-          "is_vegetarian": null,
-          "ingredients_listed": null,
-          "dietary_tags": [],
-          "dietary_tags_source": [],
-          "sources": [],
-          "cuisines": [
-            "chinese",
-            "rice"
-          ]
-        }
-      ],
-      "sources": [
-        {
-          "label": "HKU CEDARS — campus amenities & catering",
-          "url": "https://www.cedars.hku.hk/",
-          "checkedAt": null
-        }
-      ],
-      "verified": false
+      "verified": true
     }
   ]
 }

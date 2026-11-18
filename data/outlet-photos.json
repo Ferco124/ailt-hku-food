@@ -1,0 +1,167 @@
+{
+  "note": "Card photos are photographs of the outlet itself, taken from the gallery on that outlet's page at catering.hku.hk (HKU Campus Services Office, Catering and Hospitality). Images are downscaled to 900px and re-encoded; content is unmodified. Regenerate with `npm run photos`.",
+  "photos": {
+    "juying-tai": {
+      "file": "/img/outlets/juying-tai.jpg",
+      "page": "https://catering.hku.hk/en/eateries/FSCACR/",
+      "photo": "https://catering.hku.hk/cache/img/2a6852b3bb96e06119c2bdda32777e37fc58eb6dbefa.jpeg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "urban-coffee-roaster": {
+      "file": "/img/outlets/urban-coffee-roaster.jpg",
+      "page": "https://catering.hku.hk/en/eateries/mlc/",
+      "photo": "https://catering.hku.hk/cache/img/a217bc16b79dbae3b31cfa1a32f53db52d126b38aa38.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "tamjai-samgor": {
+      "file": "/img/outlets/tamjai-samgor.jpg",
+      "page": "https://catering.hku.hk/en/eateries/CCOutletB/",
+      "photo": "https://catering.hku.hk/cache/img/35a8acf9763b33685ce56e203bc893ca7ae34d4c7e67.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "so330": {
+      "file": "/img/outlets/so330.jpg",
+      "page": "https://catering.hku.hk/en/eateries/cymc/",
+      "photo": "https://catering.hku.hk/cache/img/579f16c7a45d670375c3fb70863fc8e52c191ed811dc.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "asian-gourmet": {
+      "file": "/img/outlets/asian-gourmet.jpg",
+      "page": "https://catering.hku.hk/en/eateries/CCOutletC/",
+      "photo": "https://catering.hku.hk/cache/img/c1d987793a98443d191b9e866199432b8281db1b7981.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "alfafa-bistro": {
+      "file": "/img/outlets/alfafa-bistro.jpg",
+      "page": "https://catering.hku.hk/en/eateries/CCOutletA/",
+      "photo": "https://catering.hku.hk/cache/img/12dba116550e46af427e36cc285d6789de246f6a4934.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "cym-canteen": {
+      "file": "/img/outlets/cym-canteen.jpg",
+      "page": "https://catering.hku.hk/en/eateries/cymr/",
+      "photo": "https://catering.hku.hk/cache/img/d48195787109db16aef4103cc05a37e61f3f449b037f.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "hong-kong-daily": {
+      "file": "/img/outlets/hong-kong-daily.jpg",
+      "page": "https://catering.hku.hk/en/eateries/hkdaily/",
+      "photo": "https://catering.hku.hk/cache/img/4fe1a300e44f80072c0799894692480a86b34186f85f.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "subway-rrs": {
+      "file": "/img/outlets/subway-rrs.jpg",
+      "page": "https://catering.hku.hk/en/eateries/COII/",
+      "photo": "https://catering.hku.hk/cache/img/49f477580574d32255224b4d6fe3f97ca999cbbabe2a.jpg",
+      "candidate": 2,
+      "fetchedAt": "2026-11-18"
+    },
+    "kiosk-sandwich-club": {
+      "file": "/img/outlets/kiosk-sandwich-club.jpg",
+      "page": "https://catering.hku.hk/en/eateries/COIII/",
+      "photo": "https://catering.hku.hk/cache/img/4becdb82786aed055b8494cac2ca031d5fbeb5318db7.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "bijas-vegetarian": {
+      "file": "/img/outlets/bijas-vegetarian.jpg",
+      "page": "https://catering.hku.hk/en/eateries/CCOutletD/",
+      "photo": "https://catering.hku.hk/cache/img/05ff99de1b384fd21e8ab812542e386db10a8342910d.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "27-kebab-house": {
+      "file": "/img/outlets/27-kebab-house.jpg",
+      "page": "https://catering.hku.hk/en/eateries/halalcorner/",
+      "photo": "https://catering.hku.hk/cache/img/34b71883be584f0a43546673a8206b7b6399591a0fc8.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "union-restaurant": {
+      "file": "/img/outlets/union-restaurant.jpg",
+      "page": "https://catering.hku.hk/en/eateries/UR/",
+      "photo": "https://catering.hku.hk/cache/img/1f8ef23f547e547f3c9db04b4a27113f8303bce82415.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "starbucks-composite": {
+      "file": "/img/outlets/starbucks-composite.jpg",
+      "page": "https://catering.hku.hk/en/eateries/COBG03/",
+      "photo": "https://catering.hku.hk/cache/img/097de196a921b19158fb6ebe50abf75bb2cc4765dfb7.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "tai-tai-foodtopia": {
+      "file": "/img/outlets/tai-tai-foodtopia.jpg",
+      "page": "https://catering.hku.hk/en/eateries/COBG02/",
+      "photo": "https://catering.hku.hk/cache/img/0be900671a9ecaab9257b81cd6fdca03e2b19c36d89d.jpg",
+      "candidate": 2,
+      "fetchedAt": "2026-11-18"
+    },
+    "oori-hansik": {
+      "file": "/img/outlets/oori-hansik.jpg",
+      "page": "https://catering.hku.hk/en/eateries/COBG01/",
+      "photo": "https://catering.hku.hk/cache/img/cc04652790fb74255eee35657c705b8d2ccdb60da8ae.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "grove": {
+      "file": "/img/outlets/grove.jpg",
+      "page": "https://catering.hku.hk/en/eateries/3SRC/",
+      "photo": "https://catering.hku.hk/cache/img/173b455b48a2ab0195bbfd0ababee8cb44a16cb04103.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "sandwich-club-kiosk-6sr": {
+      "file": "/img/outlets/sandwich-club-kiosk-6sr.jpg",
+      "page": "https://catering.hku.hk/en/eateries/6SRKiosk/",
+      "photo": "https://catering.hku.hk/cache/img/ddcc0755f2f159170421e02893ecce74e2ecd42da9dd.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "ebeneezers-5sr": {
+      "file": "/img/outlets/ebeneezers-5sr.jpg",
+      "page": "https://catering.hku.hk/en/eateries/5SRKiosk/",
+      "photo": "https://catering.hku.hk/cache/img/c0f44ad18dd0da32bfb629ec27858961309cdcf57c6b.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "subway-sassoon": {
+      "file": "/img/outlets/subway-sassoon.jpg",
+      "page": "https://catering.hku.hk/en/eateries/FanPuiOutpost/",
+      "photo": "https://catering.hku.hk/cache/img/26b0dedeb401dd2b5d619912b99fb653cb29be3f6dc4.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "starbucks-kiosk-sassoon": {
+      "file": "/img/outlets/starbucks-kiosk-sassoon.jpg",
+      "page": "https://catering.hku.hk/en/eateries/FOMBCK/",
+      "photo": "https://catering.hku.hk/cache/img/7f2fe1b5fa144a97b47baa7d70a41e0132d59d8814db.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    },
+    "wholesome-hub": {
+      "file": "/img/outlets/wholesome-hub.jpg",
+      "page": "https://catering.hku.hk/en/eateries/LabBlockGF/",
+      "photo": "https://catering.hku.hk/cache/img/30388873af41f2bae0640de8b249a462bfff6dc79ec9.jpg",
+      "candidate": 1,
+      "crop": "top 170, left 253, 492x322",
+      "fetchedAt": "2026-11-18"
+    },
+    "restaurant-1887": {
+      "file": "/img/outlets/restaurant-1887.jpg",
+      "page": "https://catering.hku.hk/en/eateries/1887/",
+      "photo": "https://catering.hku.hk/cache/img/416c657e95c88ee7a25f3524a91517360b8ec41f4eb2.jpg",
+      "candidate": 1,
+      "fetchedAt": "2026-11-18"
+    }
+  }
+}

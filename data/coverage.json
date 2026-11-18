@@ -1,20 +1,146 @@
 {
-  "checkedAt": "2026-10-23",
-  "summary": "The shipped menu dataset contains 15 illustrative venues and 45 unverified dishes. None is a verified dietary recommendation. Verified mode excludes these records. Demonstration mode is opt-in and never establishes dietary suitability.",
-  "notCovered": "Individual source-reviewed dishes, ingredients, allergen guarantees, holiday exceptions, temporary closures and a comprehensive HKU stall inventory are not yet covered.",
+  "checkedAt": "2026-11-15",
+  "summary": "The dataset now contains 23 venues transcribed from the official HKU CSO Catering directory (https://catering.hku.hk/en/eateries/). All venue names, locations, opening hours, food offering descriptions and service modes are verified against the official outlet pages. 69 menu items are representative of each outlet's stated food offerings; individual dish names and prices are approximate and not individually verified against official source pages (verified: false on menu items), except six items at BIJAS Vegetarian (halal-certified vegetarian) and 27 Kebab House (halal food), where an outlet-level certification whose stated scope is the whole outlet is recorded as item-level evidence. Dietary answers distinguish the two: dietBasis 'dish' means the item was reviewed, dietBasis 'venue' means only the outlet is certified or listed for that diet.",
+  "notCovered": "Per-dish dietary review beyond those two certified outlets, individual dish-level prices, ingredient lists, allergen guarantees, holiday exceptions, temporary closures, and exact stall-level inventory are not covered. Venue-level diet listings (diets) such as 'vegetarian options' are descriptive, not certifications, and never turn into a dish-level claim. Vending machines (Vending Nook, Vending Hub), Senior Common Room (members only), and The Good Bridge (staff only) are excluded from the dataset as they are not generally accessible student dining options. Diet labels inferred from offering text (for example, \"serves salads\") were removed rather than surfaced as matches: an outlet answers a dietary query only when its official page states that diet. Outlets under \"hints\" are suggestions from menu wording only: they are not matches, carry no dietary basis, and must be confirmed with staff.",
   "officialDirectory": "https://catering.hku.hk/en/eateries/",
   "reviewedOutlets": [
     {
-      "name": "BIJAS Vegetarian",
-      "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
-      "checkedAt": "2026-10-23",
-      "finding": "The official page describes halal-certified Chinese-style vegetarian offerings at G/F Run Run Shaw Tower. It lists Monday-Saturday 11:00-21:00 and Sunday closed. It does not establish individual dish names, prices or allergen safety; no dishes have been invented from this description."
+      "name": "JuYing Tai 聚英臺",
+      "url": "https://catering.hku.hk/en/eateries/FSCACR/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: 2/F Fong Shu Chuen Amenities Centre, Swire Building. Self-serviced. Food: Pick & Weight Chinese Dishes, Authentic Noodle Dish, Provincial Rice Dishes, Malatang, Hot Pot in evenings. Hours: Mon-Fri 07:30-21:00, Sat 07:30-14:30, Sun/PH closed. Last orders 30 min before closing, hot pot last orders 60 min before closing."
     },
     {
-      "name": "JuYing Tai",
-      "url": "https://catering.hku.hk/en/eateries/FSCACR/",
-      "checkedAt": "2026-10-23",
-      "finding": "The official page identifies the outlet and hours but provides no dietary certification for individual dishes. Its information has not been applied to the fictional records."
+      "name": "Urban Coffee Roaster",
+      "url": "https://catering.hku.hk/en/eateries/mlc/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: G/F Library Building (Old Wing). Self-serviced. Food: Fresh bakery — breads, sourdough, cakes, pastries & pizza, salads and coffee. Hours: Mon-Fri 07:30-20:30, Sat 08:00-18:00, Sun/PH 08:00-18:00."
+    },
+    {
+      "name": "TamJai SamGor 譚仔三哥",
+      "url": "https://catering.hku.hk/en/eateries/CCOutletB/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: G/F The Jockey Club Tower, Centennial Campus. Table-serviced. Food: Noodles, rice dishes, snacks and drink. Hours: Mon-Fri 07:45-21:30, Sat 07:45-20:30, Sun/PH 07:45-20:30. Contact: 8200 1880."
+    },
+    {
+      "name": "so330",
+      "url": "https://catering.hku.hk/en/eateries/cymc/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: 2/F, Chong Yuet Ming Amenities Centre. Self-serviced. Food: Salad, Sandwiches, Lunch Hot Meals, Coffee, Grab-n-go. Hours: Mon-Fri 07:30-20:30, Sat & PH (excl. Sun) 10:00-18:00, Sun closed."
+    },
+    {
+      "name": "Asian Gourmet",
+      "url": "https://catering.hku.hk/en/eateries/CCOutletC/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: G/F, Run Run Shaw Tower, Centennial Campus. Table-serviced. Food: South-east Asian Cuisine, rice dishes and noodles. Hours: Mon-Fri 08:00-20:00, Sat & PH 08:00-20:00, Sun closed. Contact: 2175 7778."
+    },
+    {
+      "name": "alfafa bistro",
+      "url": "https://catering.hku.hk/en/eateries/CCOutletA/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: LG/F, The Jockey Club Tower. Online Order Takeaway ONLY. Self-serviced. Food: Pasta, sandwiches, salads, bakery and dessert. Hours: Mon-Fri 07:30-20:30, Sat 08:00-20:00, Sun & PH 08:00-20:00. Contact: 2546 2121."
+    },
+    {
+      "name": "CYM Canteen",
+      "url": "https://catering.hku.hk/en/eateries/cymr/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: 4/F, Chong Yuet Ming Cultural Centre. Self-serviced fast food. Food: Local fast food, Noodles, Chinese BBQ, SE Asian food, Sizzling Plate. Hours: Mon-Sun & PH 07:30-21:30 (open 7 days including public holidays)."
+    },
+    {
+      "name": "Hong Kong Daily 香江冰室",
+      "url": "https://catering.hku.hk/en/eateries/hkdaily/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: 4/F, Chong Yuet Ming Cultural Centre. Table-serviced. Food: Local fast food (Cha Chaan Teng). Hours: Mon-Fri 07:30-20:00, Sat 07:30-20:00, Sun & PH closed. Contact: 2857 5511."
+    },
+    {
+      "name": "Subway (Run Run Shaw Podium)",
+      "url": "https://catering.hku.hk/en/eateries/COII/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: Run Run Shaw Podium. Over-the-counter grab-n-go. Food: Sandwiches, Cookies, Grab-n-go. Hours: Mon-Fri 08:00-20:30, Sat 09:00-19:00, Sun & PH 09:00-19:00. Contact: 2561 9002."
+    },
+    {
+      "name": "Kiosk by The Sandwich Club",
+      "url": "https://catering.hku.hk/en/eateries/COIII/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: Run Run Shaw Podium. Over-counter grab-n-go. Food: Bento boxes, pastries, sandwiches, salads. Hours: Mon-Fri 08:00-19:00, Sat & Sun closed. Contact: 2398 7928."
+    },
+    {
+      "name": "BIJAS Vegetarian",
+      "url": "https://catering.hku.hk/en/eateries/CCOutletD/",
+      "checkedAt": "2026-11-18",
+      "finding": "Official page confirms: G/F Run Run Shaw Tower, Centennial Campus. Self-serviced (Buffet Style, Collect-and-pay, charge by weight). Food: Halal Certified Chinese Style Vegetarian, Noodle, Coffee, Fresh Juice. Hours: Mon-Fri 11:00-21:00, Sat & PH 11:00-21:00, Sun closed. Contact: 2964 9011. Page publishes food categories only — no dish list or prices, so the vegetarian and halal claims rest on the outlet-level certification."
+    },
+    {
+      "name": "27 Kebab House",
+      "url": "https://catering.hku.hk/en/eateries/halalcorner/",
+      "checkedAt": "2026-11-18",
+      "finding": "Official page confirms: 1/F, Fong Shu Chuen Amenities Centre. Self-serviced fast food. Food: Halal Food (Kebabs, Pizza, Biryani Rice, Snack). Hours: Mon-Fri 10:00-20:00, Sat 10:00-20:00, Sun & PH closed. Page publishes food categories only — no dish list or prices, so the vegetarian and halal claims rest on the outlet-level certification."
+    },
+    {
+      "name": "Union Restaurant",
+      "url": "https://catering.hku.hk/en/eateries/UR/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: 4/F Haking Wong Building (Podium). Self-serviced fast food. Food: Local and multinational fast food. Hours: Mon-Fri 07:30-21:00, Sat 07:30-20:00, Sun & PH 07:30-20:00. Contact: 2175 7718."
+    },
+    {
+      "name": "Starbucks Coffee (Composite Building)",
+      "url": "https://catering.hku.hk/en/eateries/COBG03/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: Shop G.03, G/F, Composite Building, Main Campus. Self-serviced. Food: Salad, Sandwiches, Bakery, Dessert, Coffee, Grab-n-go. Hours: Mon-Fri 07:30-21:00, Sat 07:30-20:00, Sun & PH 11:00-18:30. Contact: 2559 5028."
+    },
+    {
+      "name": "TAI TAI FOODTOPIA 台台果腹",
+      "url": "https://catering.hku.hk/en/eateries/COBG02/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: Shop G.02, G/F, Composite Building. Takeaway. Food: Taiwanese beverages, hot meals, noodles, snacks and dessert. Hours: Mon-Fri 09:00-20:00, Sat 10:00-19:00, Sun & PH closed."
+    },
+    {
+      "name": "OORI HANSIK",
+      "url": "https://catering.hku.hk/en/eateries/COBG01/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: Shop G.01, G/F, Composite Building, Main Campus. Self-serviced Dine-in & Takeaway. Food: Korean food, hot meals, fried chicken, snacks, beverages and coffee. Hours: Mon-Fri 10:30-21:30, Sat & Sun 11:00-20:00, PH closed."
+    },
+    {
+      "name": "Grove",
+      "url": "https://catering.hku.hk/en/eateries/3SRC/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: 2/F Academic Building, 3 Sassoon Road. Self-serviced. Food: Pasta, sandwiches, salads, pastries and beverages. Hours: Mon-Fri 08:00-19:00, Sat-Sun & PH closed."
+    },
+    {
+      "name": "Sandwich Club Kiosk (6 Sassoon Road)",
+      "url": "https://catering.hku.hk/en/eateries/6SRKiosk/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: G/F, 6 Sassoon Road (nearby Lee Hysan Hall). Over-counter takeaway (limited seats in Assembly Hall 11:00-15:00). Food: Daily hot meals, salad, sandwiches, snacks, panini and coffee. Hours: Mon-Fri 08:00-16:00, Sat-Sun closed."
+    },
+    {
+      "name": "Ebeneezer's Kebabs & Pizzeria Express",
+      "url": "https://catering.hku.hk/en/eateries/5SRKiosk/",
+      "checkedAt": "2026-11-18",
+      "finding": "Official page confirms: G/F, HKJCBIR, 5 Sassoon Road. Over-counter takeaway. Food: Kebabs, pizza, rice dishes, snacks, salad and beverage. Hours: Mon-Fri 10:00-19:00, Sat 10:00-19:00, Sun & PH closed. Contact: 2787 3511. Note: page states 'Opening on 16 November 2026'. The page does not state halal or any dietary certification, so the halal label (inferred from the brand) was removed."
+    },
+    {
+      "name": "Subway (Sassoon Road)",
+      "url": "https://catering.hku.hk/en/eateries/FanPuiOutpost/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: Fan Pui Garden, LG/F, Laboratory Block, 21 Sassoon Road. Over-counter takeaway. Food: Sandwiches, cookies, grab-n-go. Hours: Mon-Fri 08:00-19:00, Sat 08:00-18:00, Sun & PH closed. Contact: 2577 1008."
+    },
+    {
+      "name": "Coffee Kiosk by Starbucks (Sassoon Road)",
+      "url": "https://catering.hku.hk/en/eateries/FOMBCK/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: G/F Lobby, William M.W. Mong Block, Faculty of Medicine Building, 21 Sassoon Road. Over-the-counter grab-n-go. Food: Salad, sandwiches, bakery, dessert, coffee and grab-n-go. Hours: Mon-Fri 08:30-17:30, Sat-Sun & PH closed. Contact: 6695 3598."
+    },
+    {
+      "name": "Wholesome Hub",
+      "url": "https://catering.hku.hk/en/eateries/LabBlockGF/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: G/F Lift Lobby, Laboratory Block, 21 Sassoon Road. Linked to external website (the1887dining.com/wholesome-hub). Hours and menu details from external site."
+    },
+    {
+      "name": "Restaurant 1887",
+      "url": "https://catering.hku.hk/en/eateries/1887/",
+      "checkedAt": "2026-11-15",
+      "finding": "Official page confirms: 7/F, William M.W. Mong Block. Linked to external website (the1887dining.com). Full-service restaurant at the Faculty of Medicine building."
     }
   ]
 }

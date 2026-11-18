@@ -30,7 +30,7 @@ function cachedAnswer(query, demo) {
 }
 
 export async function recommend(query, {
-  now = nowInHK(), demo = false, parser = parseIntent, allowCache = true,
+  now = nowInHK(), demo = false, parser = parseIntent, allowCache = true, limit,
 } = {}) {
   const base = {
     ok: true, query, results: [], mode: 'local', intent: null, disclaimer: DISCLAIMER, coverage,
@@ -74,12 +74,38 @@ export async function recommend(query, {
   if (!hasConstraints(guarded)) {
     return { ...base, reason: 'no_preferences', notice: 'Please specify a diet, cuisine, time or location.', intent: guarded, llm };
   }
-  const result = search(guarded, { now, demo });
+  // The page size is a presentation choice: the browser asks for the whole
+  // qualifying set so it can sort and reveal more without another model call.
+  const result = search(guarded, { now, demo, ...(Number.isInteger(limit) ? { limit } : {}) });
+  // `search` may move a name-like word ("subway") out of `unsupported` and into
+  // the keywords. Report the intent that was actually searched, not the raw one.
+  const effectiveIntent = result.intent ?? guarded;
+  const venueBasis = result.results.filter((r) => r.dietBasis === 'venue').length;
+  const hintCount = result.hints?.results?.length ?? 0;
+  const notices = [];
+  if (demo) notices.push('Demonstration mode: inspect each item verification status; unverified dishes are not dietary recommendations.');
+  if (venueBasis) {
+    notices.push(`${venueBasis} result(s) match at outlet level only: the outlet lists ${effectiveIntent.diets.join(', ')} options, but individual dishes are not reviewed.`);
+  }
   return {
-    ...base, ...result, mode: 'live', intent: guarded, llm,
+    ...base, ...result, mode: 'live', intent: effectiveIntent, llm,
     reason: result.results.length ? null : 'no_match',
     notice: result.results.length
-      ? (demo ? 'Demonstration mode: inspect each item verification status; unverified dishes are not dietary recommendations.' : null)
-      : `${NO_MATCH}${guarded.unsupported.length ? ` Unsupported requirements: ${guarded.unsupported.join('; ')}` : ''}`,
+      ? (notices.join(' ') || null)
+      : `${NO_MATCH}${effectiveIntent.unsupported.length ? ` Unsupported requirements: ${effectiveIntent.unsupported.join('; ')}` : ''}${dietNote(effectiveIntent)}${
+        hintCount ? ` ${hintCount} outlet(s) below may serve vegetarian dishes; none of them states it.` : ''
+      }`,
   };
+}
+
+/**
+ * A diet filter can be applied two ways: a reviewed dish, or an outlet that is
+ * certified/listed for it. When neither exists the answer is genuinely empty,
+ * and the note must say which claim is missing rather than implying the food
+ * does not exist on campus.
+ */
+function dietNote(intent) {
+  if (!intent.diets.length) return '';
+  const label = intent.diets.map((d) => d.replace(/_/g, ' ')).join(', ');
+  return ` No outlet in the dataset is certified or listed for ${label}, so this filter cannot be applied to representative menu items.`;
 }

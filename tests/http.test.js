@@ -30,13 +30,16 @@ test('HTTP contract: refusal, cache, strict empty results and offline errors', {
   });
   assert.equal((await fetch(`${base}/api/health`)).status, 200);
   const coverage = await (await fetch(`${base}/api/coverage`)).json();
-  assert.match(coverage.summary, /unverified/);
+  assert.match(coverage.summary, /\b23 venues\b/);
+  assert.match(coverage.summary, /\b69 menu items\b/);
+  assert.match(coverage.summary, /not individually verified/);
   const refusal = await (await send({ query: 'Order this for me' })).json();
   assert.equal(refusal.reason, 'ordering_refused');
   assert.deepEqual(refusal.results, []);
   const verified = await (await send({ query: 'I want noodles near Centennial Campus.' })).json();
   assert.equal(verified.mode, 'cached');
-  assert.equal(verified.reason, 'no_match');
+  assert.ok(verified.results.length > 0);
+  assert.match(verified.notice, /representative/);
   const demo = await (await send({ query: 'I want noodles near Centennial Campus.', demo: true })).json();
   assert.ok(demo.results.length > 0);
   assert.equal(demo.meta.demo, true);
@@ -49,4 +52,11 @@ test('HTTP contract: refusal, cache, strict empty results and offline errors', {
   assert.equal((await send({ query: 'a'.repeat(301) })).status, 400);
   assert.equal((await send({ query: 'lunch', demo: 'true' })).status, 400);
   assert.equal((await send({ query: 'lunch', at: '25:00' })).status, 400);
+  assert.equal((await send({ query: 'lunch', limit: 0 })).status, 400);
+  assert.equal((await send({ query: 'lunch', limit: 25 })).status, 400);
+  assert.equal((await send({ query: 'lunch', limit: 3.5 })).status, 400);
+  // Saved snapshots are deliberately left at three results: asking for a larger
+  // page must not pretend the cached answer has more.
+  const widened = await (await send({ query: 'I want noodles near Centennial Campus.', limit: 12 })).json();
+  assert.equal(widened.results.length, verified.results.length);
 });
