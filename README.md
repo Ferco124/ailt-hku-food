@@ -166,7 +166,13 @@ results and never offer expansion, because a snapshot cannot honestly answer
 for outlets it never recorded.
 
 Explicit eating times are checked even when `open_now` is false; closing time
-is exclusive. "After 8 PM" is evaluated at 20:00, not as an all-evening
+is exclusive. `open_now` is true only when the request asks for somewhere open
+now: a request with no time in it is evaluated against the full schedule, and
+each card states either when the outlet closes or when it next opens. When
+"open now" alone is what empties the result set, the same matches come back
+labelled with their real hours plus `meta.scheduleOnly: "closed_now"`, so an
+after-hours query is never a blank page; dietary, budget and zone filters are
+never relaxed this way. "After 8 PM" is evaluated at 20:00, not as an all-evening
 availability promise. Unsupported future dates and ranges must be reported
 as unsupported by the parser. Distances remain straight-line estimates
 multiplied by 1.35, not accessible walking-route guarantees.
@@ -357,7 +363,9 @@ accuracy or real menu completeness is claimed by these tests.
   optional page size from 1 to 24: three by default, larger when the browser
   wants the whole qualifying set so it can sort and reveal more locally.
   `meta.totalMatches` reports the true number of matches even when the page is
-  smaller.
+  smaller. `meta.allClosed` marks a result set where every match has closed for
+  the day, with `meta.latestClose` and `meta.nextOpen`; `meta.scheduleOnly`
+  is `closed_now` when the list was returned despite the open-now filter.
 - `GET /api/coverage`: what is and is not covered, plus official source links.
 - `GET /api/health`: runtime model configuration and HK clock (never the key).
 - `GET /api/vocab`: vocabulary for the UI.

@@ -76,7 +76,19 @@ export async function recommend(query, {
   }
   // The page size is a presentation choice: the browser asks for the whole
   // qualifying set so it can sort and reveal more without another model call.
-  const result = search(guarded, { now, demo, ...(Number.isInteger(limit) ? { limit } : {}) });
+  const limitOpt = Number.isInteger(limit) ? { limit } : {};
+  let result = search(guarded, { now, demo, ...limitOpt });
+  // "Open now" asked at 22:00 has an honest but useless answer: nothing. When
+  // the hours filter alone emptied the set, return the same matches with their
+  // real status instead of a dead end. Every other hard filter still applies —
+  // "no reviewed vegetarian dish" must keep saying exactly that — so this only
+  // ever resurrects results that failed on opening hours and nothing else.
+  if (!result.results.length && guarded.open_now && !guarded.arrive_by) {
+    const anyTime = search(guarded, { now, demo, includeClosed: true, ...limitOpt });
+    if (anyTime.results.length) {
+      result = { ...anyTime, meta: { ...anyTime.meta, scheduleOnly: 'closed_now' } };
+    }
+  }
   // `search` may move a name-like word ("subway") out of `unsupported` and into
   // the keywords. Report the intent that was actually searched, not the raw one.
   const effectiveIntent = result.intent ?? guarded;
@@ -87,6 +99,8 @@ export async function recommend(query, {
   if (venueBasis) {
     notices.push(`${venueBasis} result(s) match at outlet level only: the outlet lists ${effectiveIntent.diets.join(', ')} options, but individual dishes are not reviewed.`);
   }
+  const closed = closedScheduleNote(result, now);
+  if (closed) notices.push(closed);
   return {
     ...base, ...result, mode: 'live', intent: effectiveIntent, llm,
     reason: result.results.length ? null : 'no_match',
@@ -96,6 +110,25 @@ export async function recommend(query, {
         hintCount ? ` ${hintCount} outlet(s) below may serve vegetarian dishes; none of them states it.` : ''
       }`,
   };
+}
+
+/**
+ * Why a non-empty list contains nothing that is open right now. The distinction
+ * matters: with `scheduleOnly` the user asked for somewhere open and got the
+ * matches anyway, so the note must not read like a live availability promise.
+ * Returns '' when at least one match is open, or when nothing matched at all.
+ */
+function closedScheduleNote(result, now) {
+  const meta = result.meta ?? {};
+  if (!result.results.length || !meta.allClosed) return '';
+  const next = meta.nextOpen
+    ? `the next scheduled opening is ${meta.nextOpen.daysAhead === 1 ? 'tomorrow' : meta.nextOpen.dayName} ${meta.nextOpen.opensAt}`
+    : 'no opening is recorded for the coming week';
+  const since = meta.latestClose ? `the last close today was ${meta.latestClose}` : 'these have closed for the day';
+  if (meta.scheduleOnly === 'closed_now') {
+    return `Nothing is open at ${now.hhmm} in Hong Kong — ${since}. These are the matches for your request, listed with their real hours rather than as places open now; ${next}. Hours are the regular schedule, not a live check.`;
+  }
+  return `None of these matches is open at ${now.hhmm} in Hong Kong — ${since}; ${next}. Hours are the regular schedule, not a live check.`;
 }
 
 /**

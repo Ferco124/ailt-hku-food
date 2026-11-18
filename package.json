@@ -1,6 +1,6 @@
 {
   "name": "hku-canteen-finder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "HKU Canteen Finder — natural-language canteen recommendations demo",
   "type": "module",

@@ -383,10 +383,24 @@ function resortLocal(sort) {
   paintSortBar();
 }
 
+/**
+ * A closed outlet is more useful with its next scheduled opening than with the
+ * time it closed: "Closed • Opens tomorrow 7:30 AM" answers the question an
+ * empty page used to raise. Snapshots and older cached answers have neither
+ * field, so the reason string stays as the fallback.
+ */
+function statusLine(r) {
+  const s = r.status || {};
+  if (s.open && s.closesAt) return `Open • Closes ${to12h(s.closesAt)}`;
+  if (s.reopensAt) {
+    const when = s.reopensInDays === 1 ? 'tomorrow' : (s.reopensDay || `in ${s.reopensInDays} days`);
+    return `Closed • Opens ${when} ${to12h(s.reopensAt)}`;
+  }
+  return s.reason || 'Hours unknown';
+}
+
 function cardHTML(r, i) {
-  const statusText = (lastMeta?.snapshotAt ? 'Snapshot: ' : 'Schedule: ') + (r.status.open && r.status.closesAt
-    ? `Open • Closes ${to12h(r.status.closesAt)}`
-    : r.status.reason);
+  const statusText = (lastMeta?.snapshotAt ? 'Snapshot: ' : 'Schedule: ') + statusLine(r);
 
   const cuisine = r.cuisines.find((c) => !GENERIC.has(c)) || r.cuisines[0];
   const cuisineLabel = CUISINE_LABEL[cuisine] || titleCase(cuisine || 'Canteen');
@@ -499,7 +513,9 @@ function verificationHTML(r) {
           value: r.status.open ? `Evaluated ${when} HKT`.trim() : 'Closed now',
           note: r.status.open
             ? 'Opening times checked against the published schedule for this day.'
-            : `${r.status.reason} — from the published schedule, not a temporary closure notice.`,
+            : `${r.status.reason}${r.status.reopensAt
+              ? `; reopens ${r.status.reopensInDays === 1 ? 'tomorrow' : r.status.reopensDay} at ${to12h(r.status.reopensAt)}`
+              : ''} — from the published schedule, not a temporary closure notice.`,
         },
   ];
 

@@ -185,6 +185,42 @@ test('future time is enforced without open_now and closing is exclusive', () => 
   assert.equal(find({ arrive_by: '20:00', open_now: false }).results.length, 0);
   assert.equal(find({ arrive_by: '19:59', open_now: false }).results.length, 1);
 });
+const late = { day: 3, dayName: 'Wed', minutes: 1350, hhmm: '22:30' };
+const evening = { ...venue, hours: Array.from({ length: 7 }, () => ['08:00', '20:00']) };
+test('after closing, a match reports its next scheduled opening instead of a bare closure', () => {
+  const raw = { cuisines: ['noodles'], open_now: true };
+  // The default search still answers the literal question: nothing is open.
+  assert.equal(find(raw, { now: late, canteens: [evening] }).results.length, 0);
+
+  const fallback = find(raw, { now: late, canteens: [evening], includeClosed: true });
+  assert.equal(fallback.results.length, 1);
+  const card = fallback.results[0];
+  assert.equal(card.status.open, false);
+  assert.equal(card.status.opensAt, '08:00');
+  assert.equal(card.status.reopensAt, '08:00');
+  assert.equal(card.status.reopensInDays, 1);
+  assert.equal(card.status.reopensDay, 'Thu');
+  assert.equal(fallback.meta.allClosed, true);
+  assert.equal(fallback.meta.latestClose, '20:00');
+});
+test('open-now after closing returns labelled matches, not a dead end', async () => {
+  const parser = async () => ({ ok: true, intent: { cuisines: ['noodles'], open_now: true } });
+  const result = await recommend('noodles', { now: late, parser });
+  assert.ok(result.results.length > 0);
+  assert.equal(result.meta.scheduleOnly, 'closed_now');
+  assert.ok(result.results.every((r) => r.status.open === false));
+  assert.ok(result.results.every((r) => typeof r.status.reopensAt === 'string'));
+  assert.match(result.notice, /Nothing is open at 22:30/);
+  assert.equal(result.reason, null);
+});
+test('a plain after-hours request answers and states that the matches have closed', async () => {
+  const parser = async () => ({ ok: true, intent: { cuisines: ['noodles'] } });
+  const result = await recommend('noodles', { now: late, parser });
+  assert.ok(result.results.length > 0);
+  assert.ok(result.results.every((r) => r.status.open === false));
+  assert.equal(result.meta.scheduleOnly, undefined);
+  assert.match(result.notice, /None of these matches is open at 22:30/);
+});
 test('unknown dietary and location constraints are retained as unsupported', () => {
   for (const raw of [{ diets: ['nut_free'] }, { near: 'Imaginary Castle' }, { max_price_hkd: -1 }]) {
     const parsed = intent(raw);

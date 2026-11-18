@@ -7,7 +7,7 @@ import { closeDb } from '../server/db.js';
 
 const samples = [
   ['I need a cheap vegetarian lunch near the Main Library before 2pm.', { diets: ['vegetarian'], cuisines: ['vegetarian'], near: 'main_library', arrive_by: '14:00', meal: 'lunch', price_preference: 'cheap' }],
-  ['I want noodles near Centennial Campus.', { cuisines: ['noodles'], near: 'centennial_campus', open_now: true }],
+  ['I want noodles near Centennial Campus.', { cuisines: ['noodles'], near: 'centennial_campus', open_now: false }],
   ['Something quick and open now for coffee and a snack.', { cuisines: ['coffee', 'snack'], keywords: ['quick'], open_now: true, meal: 'snack' }],
   ['Halal dinner under 80 dollars with a friend.', { diets: ['halal'], max_price_hkd: 80, meal: 'dinner' }],
 ];

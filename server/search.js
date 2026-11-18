@@ -1,5 +1,7 @@
 import { getCanteens, landmarks } from './db.js';
-import { nowInHK, toMinutes, openStatus, distanceToLandmark, nearestLandmark } from './geo.js';
+import {
+  nowInHK, toMinutes, openStatus, distanceToLandmark, nearestLandmark, latestClose, nextOpening,
+} from './geo.js';
 import { facetForCue } from './data/vocab.js';
 import { eligibleMenu, hasEvidence, matchesDiets, venueListsDiets } from './policy.js';
 
@@ -55,8 +57,11 @@ function evaluate(canteen, intent, ctx) {
     : (menu.some((m) => hasEvidence(m) && matchesDiets(m, intent.diets)) ? 'dish' : 'venue');
 
   // --- hard filters -------------------------------------------------------
+  // `includeClosed` is not a user preference: it is the caller asking for the
+  // matches that the hours filter would have hidden, so they can be labelled
+  // with their real status instead of returning an empty page.
   const status = openStatus(canteen, ctx.now, intent.arrive_by ? checkMinutes : null);
-  if ((intent.open_now || intent.arrive_by) && !status.open) return null;
+  if (!ctx.includeClosed && (intent.open_now || intent.arrive_by) && !status.open) return null;
   if (intent.meal && !intent.arrive_by) {
     const window = { breakfast: [420, 660], lunch: [660, 900], dinner: [1020, 1320], snack: [0, 1440] }[intent.meal];
     if (!status.today || toMinutes(status.today[0]) >= window[1] || toMinutes(status.today[1]) <= window[0]) return null;
@@ -297,7 +302,19 @@ function evaluate(canteen, intent, ctx) {
     reasons: uniqueReasons.slice(0, 4),
     distance,
     walkFrom,
-    status: { open: status.open, reason: status.reason, closesAt: status.closesAt, opensAt: status.opensAt },
+    status: {
+      open: status.open,
+      reason: status.reason,
+      closesAt: status.closesAt,
+      opensAt: status.opensAt,
+      // Only on a closed outlet: the next scheduled opening, so the card can
+      // say "opens tomorrow 07:30" instead of implying it opens later today.
+      ...(status.open ? {} : {
+        reopensAt: status.reopensAt,
+        reopensInDays: status.reopensInDays,
+        reopensDay: status.reopensDay,
+      }),
+    },
   };
 }
 
@@ -374,7 +391,7 @@ function resolveNameCues(intent, canteens) {
  * basis, never counted in `totalMatches`. The user gets somewhere to ask; the
  * app never claims the food is suitable.
  */
-function dietHints(intent, { now, checkMinutes, demo, canteens, exclude }) {
+function dietHints(intent, { now, checkMinutes, demo, canteens, exclude, includeClosed }) {
   // Only the vegetarian case has any name-level signal. "Vegetarian" in a dish
   // name says nothing about halal, gluten or vegan, so those stay unanswered.
   if (intent.unsupported?.length) return [];
@@ -389,7 +406,7 @@ function dietHints(intent, { now, checkMinutes, demo, canteens, exclude }) {
     const allowed = new Set(eligibleMenu(canteen, relaxed, demo).map((m) => m.id));
     const items = plantBasedItems(canteen).filter((m) => allowed.has(m.id));
     if (!items.length) continue;
-    const scored = evaluate(canteen, relaxed, { now, checkMinutes, demo });
+    const scored = evaluate(canteen, relaxed, { now, checkMinutes, demo, includeClosed });
     if (!scored) continue;
 
     hints.push({
@@ -416,12 +433,14 @@ function dietHints(intent, { now, checkMinutes, demo, canteens, exclude }) {
  *
  * Hard constraints are never relaxed. Only eligible menu items are returned.
  */
-export function search(intent, { now = nowInHK(), limit = MAX_RESULTS, demo = false, canteens = getCanteens() } = {}) {
+export function search(intent, {
+  now = nowInHK(), limit = MAX_RESULTS, demo = false, canteens = getCanteens(), includeClosed = false,
+} = {}) {
   const effective = resolveNameCues(intent, canteens);
   const checkMinutes = effective.arrive_by ? toMinutes(effective.arrive_by) : now.minutes;
   const relaxed = [];
   const ranked = (effective.unsupported?.length ? [] : canteens)
-    .map((c) => evaluate(c, effective, { now, checkMinutes, demo }))
+    .map((c) => evaluate(c, effective, { now, checkMinutes, demo, includeClosed }))
       .filter(Boolean)
       .sort((a, b) => b.score - a.score || a.distance - b.distance || b.canteen.rating - a.canteen.rating);
 
@@ -443,9 +462,14 @@ export function search(intent, { now = nowInHK(), limit = MAX_RESULTS, demo = fa
   // Exclude everything that already qualified as a match, not just the visible
   // page, so the same outlet never appears twice on screen.
   const hintList = dietHints(effective, {
-    now, checkMinutes, demo, canteens,
+    now, checkMinutes, demo, canteens, includeClosed,
     exclude: new Set(ranked.map((r) => r.canteen.id)),
   });
+
+  // Every match has closed for the day. That is a fact worth reporting at the
+  // top of the list, and the next scheduled opening is the useful number — the
+  // caller turns this into a notice instead of an unexplained empty page.
+  const allClosed = strong.length > 0 && strong.every((r) => !r.status.open);
 
   return {
     // The caller's intent, plus any cue rescued from `unsupported`, so the API
@@ -493,6 +517,10 @@ export function search(intent, { now = nowInHK(), limit = MAX_RESULTS, demo = fa
       dayName: now.dayName,
       evaluated: canteens.length,
       demo,
+      allClosed,
+      ...(allClosed
+        ? { latestClose: latestClose(canteens, now.day), nextOpen: nextOpening(canteens, now.day) }
+        : {}),
     },
     // Deliberately a sibling of `results`, never a member of it, and never
     // counted in `totalMatches`: these are places to ask, not dietary answers.

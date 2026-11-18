@@ -24,6 +24,7 @@ medical_refused, ordering_refused or allergen_refused respectively.
 8. Interpret English and Chinese. Use arrive_by for an explicit eating time, including "after 8 PM" as "20:00".
 9. Put explicit campus-area restrictions in zone (Main Campus, Centennial Campus, West Campus).
 10. For unsupported dates (tomorrow, holidays), time ranges or ambiguous constraints, put them in unsupported rather than guessing.
+11. Set open_now to true only when the user asks for somewhere open now, still open, or to eat now/tonight. A request with no time in it is not an open-now request: use false, so closed outlets can still be listed with their hours.
 
 ALLOWED VALUES
 cuisines: ${CUISINES.join(', ')}
@@ -43,7 +44,7 @@ OUTPUT SCHEMA
   "diets": string[],               // all requested restrictions from the diet list; never truncate
   "max_price_hkd": number | null,  // hard budget per person, only if the user gives a number
   "price_preference": "cheap" | "mid" | "any",
-  "open_now": boolean,             // true unless the user implies they are eating later
+  "open_now": boolean,             // true only when the user asks for somewhere open right now
   "arrive_by": "HH:MM" | null,     // 24-hour clock, only if the user gives a deadline such as "before 2pm"
   "near": string | null,           // a landmark key from the list above
   "max_walk_minutes": number | null,
@@ -61,7 +62,7 @@ User: "I need a cheap vegetarian lunch near the Main Library before 2pm."
 {"cuisines":["vegetarian"],"diets":["vegetarian"],"max_price_hkd":null,"price_preference":"cheap","open_now":false,"arrive_by":"14:00","near":"main_library","max_walk_minutes":null,"meal":"lunch","keywords":["cheap"],"sort":"best_match","confidence":0.92}
 
 User: "I want noodles near Centennial Campus."
-{"cuisines":["noodles"],"diets":[],"max_price_hkd":null,"price_preference":"any","open_now":true,"arrive_by":null,"near":"centennial_campus","max_walk_minutes":null,"meal":null,"keywords":[],"sort":"best_match","confidence":0.88}
+{"cuisines":["noodles"],"diets":[],"max_price_hkd":null,"price_preference":"any","open_now":false,"arrive_by":null,"near":"centennial_campus","max_walk_minutes":null,"meal":null,"keywords":[],"sort":"best_match","confidence":0.88}
 
 User: "Something quick and open now for coffee and a snack."
 {"cuisines":["coffee","snack"],"diets":[],"max_price_hkd":null,"price_preference":"any","open_now":true,"arrive_by":null,"near":null,"max_walk_minutes":null,"meal":"snack","keywords":["quick"],"sort":"best_match","confidence":0.9}
