@@ -25,6 +25,7 @@ medical_refused, ordering_refused or allergen_refused respectively.
 9. Put explicit campus-area restrictions in zone (Main Campus, Centennial Campus, West Campus).
 10. For unsupported dates (tomorrow, holidays), time ranges or ambiguous constraints, put them in unsupported rather than guessing.
 11. Set open_now to true only when the user asks for somewhere open now, still open, or to eat now/tonight. A request with no time in it is not an open-now request: use false, so closed outlets can still be listed with their hours.
+12. A bare outlet or stall name is a complete request: put it in requested_stall and leave unsupported empty. A name is never an unsupported requirement and never an ambiguous constraint, because the application looks the name up itself.
 
 ALLOWED VALUES
 cuisines: ${CUISINES.join(', ')}

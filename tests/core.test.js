@@ -391,6 +391,80 @@ test('a venue name is a search term, not an unsupported requirement', () => {
   assert.deepEqual(result.intent.unsupported, []);
   assert.deepEqual(result.intent.keywords, ['synthetic stall']);
 });
+// Names are typed from memory, and the dataset spells them its own way. These
+// are the spellings a person actually produces for the same two outlets.
+const named = (raw) => search(intent(raw), { now }).results.map((r) => r.id);
+test('a named outlet is found however its name is spelled', () => {
+  for (const raw of [
+    { requested_stall: 'tamjai' }, { requested_stall: 'TamJai SamGor' },
+    { requested_stall: 'tam jai sam gor' }, { requested_stall: '譚仔三哥' },
+  ]) assert.deepEqual(named(raw), ['tamjai-samgor'], JSON.stringify(raw));
+
+  assert.deepEqual(named({ requested_stall: 'ju ying tai' }), ['juying-tai']);
+  // Two outlets genuinely carry the name; both are answers, not a guess.
+  assert.deepEqual(named({ requested_stall: 'subway' }).sort(), ['subway-rrs', 'subway-sassoon']);
+  // Partial names are a real way to search, and the name is why it ranks.
+  const partial = search(intent({ requested_stall: 'tamjai' }), { now });
+  assert.equal(partial.meta.venueMatched, 1);
+  assert.ok(partial.results[0].reasons.some((r) => /outlet you named/.test(r.text)));
+  assert.ok(partial.results[0].matchPct >= 50);
+});
+test('a name echoed back as an "ambiguous" remark does not block the lookup', async () => {
+  // Observed from the parser on a bare "tamjai": it fills requested_stall and
+  // also calls its own parse ambiguous. An unsupported entry stops retrieval,
+  // so the remark would hide the outlet the user just named.
+  const parser = async () => ({
+    ok: true,
+    intent: { requested_stall: 'tamjai', unsupported: ['ambiguous query "tamjai"'] },
+  });
+  const result = await recommend('tamjai', { now, parser });
+  assert.deepEqual(result.results.map((r) => r.id), ['tamjai-samgor']);
+  assert.deepEqual(result.intent.unsupported, []);
+
+  // A real limitation that happens to mention the name is still honoured.
+  const kept = search(intent({ requested_stall: 'tamjai', unsupported: ['tamjai tomorrow'] }), { now });
+  assert.deepEqual(kept.intent.unsupported, ['tamjai tomorrow']);
+  assert.equal(kept.results.length, 0);
+});
+test('a name typed into "unsupported" keeps its spacing problem invisible', () => {
+  const result = search(intent({ unsupported: ['ju ying tai'] }), { now });
+  assert.deepEqual(result.intent.unsupported, []);
+  assert.deepEqual(result.intent.keywords, ['ju ying tai']);
+  assert.equal(result.results[0]?.id, 'juying-tai');
+});
+test('the after-hours summary describes the matches, not the whole directory', () => {
+  const night = { day: 3, dayName: 'Wed', minutes: 1350, hhmm: '22:30' };
+  const result = search(intent({ requested_stall: 'tamjai' }), { now: night });
+  assert.deepEqual(result.results.map((r) => r.id), ['tamjai-samgor']);
+  assert.equal(result.meta.nextOpen.opensAt, '07:45');
+  assert.equal(result.meta.nextOpen.dayName, 'Thu');
+});
+test('an outlet that does not exist is named as missing, not as missing food', async () => {
+  const parser = async () => ({ ok: true, intent: { requested_stall: 'nandos' } });
+  const result = await recommend('nandos', { now, parser });
+  assert.equal(result.reason, 'no_match');
+  assert.deepEqual(result.results, []);
+  assert.equal(result.meta.venueMatched, 0);
+  assert.match(result.notice, /I don't have an outlet called "nandos"/);
+  // The food-availability wording belongs to cuisine and diet queries, not names.
+  assert.ok(!/No match found in the current dataset/.test(result.notice));
+});
+test('a named outlet that fails a diet keeps the dietary answer', async () => {
+  const parser = async () => ({ ok: true, intent: { requested_stall: 'tamjai', diets: ['vegetarian'] } });
+  const result = await recommend('vegetarian at tamjai', { now, parser, allowCache: false });
+  assert.deepEqual(result.results, []);
+  // The outlet was found; what failed was the unreviewed menu, and the notice
+  // must say that rather than claim the outlet does not exist.
+  assert.equal(result.meta.venueMatched, 1);
+  assert.ok(!/don't have an outlet called/.test(result.notice));
+});
+test('"a stall named X" for an unknown X reports the name, before any model call', async () => {
+  const result = await recommend('Is there a stall named Imaginary Moon Cafe?', {
+    now, parser: async () => assert.fail('Safety must precede API calls'),
+  });
+  assert.equal(result.reason, 'no_match');
+  assert.match(result.notice, /I don't have an outlet called "Imaginary Moon Cafe"/);
+});
 test('cheapest ordering uses the matching dish rather than venue-wide averages', () => {
   const inexpensive = { ...venue, id: 'cheap-item', avgPrice: 100, menu: [item('vegetarian', 20)] };
   const expensive = { ...venue, id: 'expensive-item', avgPrice: 10, menu: [item('vegetarian', 50)] };

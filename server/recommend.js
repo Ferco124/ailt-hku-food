@@ -4,7 +4,7 @@ import { hasConstraints, validateIntent } from './schema.js';
 import { search } from './search.js';
 import { nowInHK } from './time.js';
 import { loadAll } from './data/loadData.js';
-import { DISCLAIMER, NO_MATCH, refusalFor, WALKTHROUGH_VERSION } from './policy.js';
+import { DISCLAIMER, NO_MATCH, outletMatches, refusalFor, WALKTHROUGH_VERSION } from './policy.js';
 import { getCanteens } from './db.js';
 
 export const coverage = JSON.parse(readFileSync(new URL('../data/coverage.json', import.meta.url), 'utf8'));
@@ -29,6 +29,18 @@ function cachedAnswer(query, demo) {
   };
 }
 
+/**
+ * A missing outlet is not the same answer as "nothing matches your
+ * preferences". Reusing the generic NO_MATCH copy for a name would read as "no
+ * food like that exists on campus", when all that happened is that the
+ * directory does not carry that outlet — so this says which name is unknown
+ * and what the app can do instead.
+ */
+function unknownVenueNotice(name, total) {
+  const size = total ? ` (${total} outlets are listed)` : '';
+  return `I don't have an outlet called "${name}" in the directory${size}. Try part of the name, or describe the food you want instead.`;
+}
+
 export async function recommend(query, {
   now = nowInHK(), demo = false, parser = parseIntent, allowCache = true, limit,
 } = {}) {
@@ -39,8 +51,9 @@ export async function recommend(query, {
   const refusal = refusalFor(query);
   if (refusal) return { ...base, ...refusal };
   const named = query.match(/\bstall (?:named|called)\s+["']?(.+?)["']?[.!?]?$/i);
-  if (named && !getCanteens().some((c) => c.menu.some((m) => m.stall.toLowerCase() === named[1].toLowerCase()))) {
-    return { ...base, reason: 'no_match', notice: NO_MATCH };
+  const directory = getCanteens();
+  if (named && !directory.some((c) => outletMatches(named[1], c))) {
+    return { ...base, reason: 'no_match', notice: unknownVenueNotice(named[1].trim(), directory.length) };
   }
 
   const llm = await parser(query);
@@ -101,12 +114,18 @@ export async function recommend(query, {
   }
   const closed = closedScheduleNote(result, now);
   if (closed) notices.push(closed);
+  // A name that matched no outlet at all is a different failure from a name
+  // that matched one which then failed a diet or budget constraint; only the
+  // first one is the directory's gap rather than the user's filter.
+  const venueMissed = effectiveIntent.requested_stall && result.meta.venueMatched === 0;
   return {
     ...base, ...result, mode: 'live', intent: effectiveIntent, llm,
     reason: result.results.length ? null : 'no_match',
     notice: result.results.length
       ? (notices.join(' ') || null)
-      : `${NO_MATCH}${effectiveIntent.unsupported.length ? ` Unsupported requirements: ${effectiveIntent.unsupported.join('; ')}` : ''}${dietNote(effectiveIntent)}${
+      : `${venueMissed
+        ? unknownVenueNotice(effectiveIntent.requested_stall, result.meta.evaluated)
+        : NO_MATCH}${effectiveIntent.unsupported.length ? ` Unsupported requirements: ${effectiveIntent.unsupported.join('; ')}` : ''}${dietNote(effectiveIntent)}${
         hintCount ? ` ${hintCount} outlet(s) below may serve vegetarian dishes; none of them states it.` : ''
       }`,
   };

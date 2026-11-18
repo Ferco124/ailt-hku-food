@@ -156,6 +156,17 @@ legacy `avgPrice` field now carries this matching-item price for compatibility.
 Unknown prices cannot satisfy a hard budget and sort after known prices.
 A walking limit without a starting landmark is reported as unsupported.
 
+A named outlet is looked up, not string-matched: outlet names, Chinese names and
+stall names are compared on a compact form that drops case, spacing, punctuation
+and width, so "tamjai", "tam jai sam gor" and "譚仔三哥" all reach
+`TamJai SamGor 譚仔三哥`, and "ju ying tai" reaches `JuYing Tai 聚英臺`. A fragment
+shorter than three characters must match exactly, and nothing is guessed beyond
+containment: a typo misses rather than resolving to an outlet nobody asked for.
+When a name matches no outlet at all, the notice names the missing outlet
+instead of reusing the "no food matches" wording, and `meta.venueMatched`
+tells the caller apart "no outlet is called that" from "the outlet exists but
+fails a diet, budget or hours constraint".
+
 Relevance filtering decides membership, `sort` decides order. The API defaults
 to three results but returns the whole qualifying set on request (`limit`, max
 24), each result carrying its `rank` in the default best-match order. The page
@@ -366,6 +377,8 @@ accuracy or real menu completeness is claimed by these tests.
   smaller. `meta.allClosed` marks a result set where every match has closed for
   the day, with `meta.latestClose` and `meta.nextOpen`; `meta.scheduleOnly`
   is `closed_now` when the list was returned despite the open-now filter.
+  `meta.venueMatched` is the number of outlets answering a requested outlet
+  name, before any other filter, or `null` when no name was requested.
 - `GET /api/coverage`: what is and is not covered, plus official source links.
 - `GET /api/health`: runtime model configuration and HK clock (never the key).
 - `GET /api/vocab`: vocabulary for the UI.

@@ -3,7 +3,8 @@ import {
   nowInHK, toMinutes, openStatus, distanceToLandmark, nearestLandmark, latestClose, nextOpening,
 } from './geo.js';
 import { facetForCue } from './data/vocab.js';
-import { eligibleMenu, hasEvidence, matchesDiets, venueListsDiets } from './policy.js';
+import { compact, looseNameMatch } from './text.js';
+import { eligibleMenu, hasEvidence, matchesDiets, outletMatches, venueListsDiets } from './policy.js';
 
 const MAX_RESULTS = 3;
 
@@ -14,6 +15,13 @@ const title = (s) => String(s).replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUp
 const cueWord = (cue) => String(cue).replace(/_/g, ' ').trim().toLowerCase();
 
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
+ * An `unsupported` entry worded as a doubt about the parse rather than as a
+ * constraint the dataset cannot answer. Used only to drop a name echoed back at
+ * us (see resolveNameCues), never to excuse a real limitation.
+ */
+const PARSE_DOUBT = /(ambiguous|unclear|unknown|not a (?:dish|cuisine|constraint|preference|venue))/i;
 
 /** Whole-word containment, so "tea" does not match "steak". */
 const containsCue = (haystack, cue) => new RegExp(`\\b${escapeRe(cue)}\\b`).test(haystack);
@@ -127,9 +135,15 @@ function evaluate(canteen, intent, ctx) {
   // word in its own name outranks one that merely stocks the item.
   const identityText = [canteen.name, canteen.venue, ...baseline.map((m) => m.stall ?? '')]
     .join(' ').toLowerCase();
+  // The outlet's own name, for cues that only differ by spacing: "ju ying tai"
+  // against "JuYing Tai 聚英臺". Only the name counts here, not the whole text —
+  // folding spaces elsewhere would let "noodle" pass as "noodles" and award
+  // identity points to a venue that merely sells them.
+  const nameText = [canteen.name, canteen.nameZh].filter(Boolean).join(' ');
   const identityCues = [...new Set([...intent.cuisines, ...intent.keywords])]
     .map(cueWord).filter((c) => c.length >= 3);
-  const identityHit = identityCues.find((c) => containsCue(identityText, c));
+  const identityHit = identityCues.find((c) => containsCue(identityText, c) ||
+    (c.length >= 6 && looseNameMatch(c, nameText)));
   if (identityCues.length) {
     // Only a pure name query ("subway") treats this as a requirement. When a
     // cuisine was asked for, the cuisine block above already carries that
@@ -140,6 +154,17 @@ function evaluate(canteen, intent, ctx) {
       score += 18;
       reasons.push({ icon: '🎯', text: `Name matches "${title(identityHit)}"` });
     }
+  }
+
+  // Named outlet. `requested_stall` is already a hard filter (policy.js), so
+  // every venue that survives it is the place the user asked for by name. The
+  // points are not extra evidence: without them a pure name query would score
+  // from rating and distance alone and could fall under the relevance floor,
+  // which would answer "did you mean this outlet" with an empty page.
+  if (intent.requested_stall) {
+    applicable += 18;
+    score += 18;
+    reasons.push({ icon: '🎯', text: 'Matches the outlet you named' });
   }
 
   // Dietary fit. Dish evidence is the full claim; an outlet-level listing is
@@ -220,11 +245,16 @@ function evaluate(canteen, intent, ctx) {
     ].join(' ').toLowerCase();
 
     const hits = new Set();
+    const compactHaystack = compact(haystack);
     for (const k of intent.keywords) {
       const facet = facetForCue(k);
       if (facet && canteen.tags.includes(facet)) {
         hits.add(facet.replace(/-/g, ' '));
       } else if (haystack.includes(k)) {
+        hits.add(k);
+      } else if (compact(k).length >= 6 && compactHaystack.includes(compact(k))) {
+        // Typed names lose their spacing: "ju ying tai" against "JuYing Tai".
+        // Only long cues may match this way, or "tea" would count as "steak".
         hits.add(k);
       }
     }
@@ -360,18 +390,33 @@ function sortBasis(sort, intent) {
  * rather than guessing.
  */
 function resolveNameCues(intent, canteens) {
-  const cues = intent.unsupported ?? [];
-  if (!cues.length) return intent;
+  const raw = intent.unsupported ?? [];
+  if (!raw.length) return intent;
 
-  const text = canteens.map((c) => [
+  // The parser sometimes echoes a bare name back as a remark about its own
+  // parse — `ambiguous query "tamjai"` — and any unsupported entry blocks
+  // retrieval outright, so that remark would hide the outlet the user named.
+  // It is a doubt about the request, not an unmet constraint, so it is dropped
+  // when it both restates the requested name and is worded as a doubt. A real
+  // constraint that happens to mention the name ("tamjai tomorrow") survives.
+  const echo = compact(intent.requested_stall);
+  const cues = echo.length >= 3
+    ? raw.filter((cue) => !(PARSE_DOUBT.test(cue) && compact(cue).includes(echo)))
+    : raw;
+  if (!cues.length) return { ...intent, unsupported: [] };
+
+  // Compared in compact form and per outlet, so "ju ying tai" still finds
+  // "JuYing Tai 聚英臺" while two unrelated records cannot join across the
+  // boundary of the concatenated corpus to invent a name.
+  const texts = canteens.map((c) => compact([
     c.name, c.venue, ...(c.menu ?? []).map((m) => `${m.name} ${m.stall ?? ''}`),
-  ].join(' ')).join(' ').toLowerCase();
+  ].join(' ')));
 
   const promoted = cues.filter((cue) => {
-    const word = cueWord(cue);
-    return word.length >= 3 && containsCue(text, word);
+    const word = compact(cueWord(cue));
+    return word.length >= 3 && texts.some((text) => text.includes(word));
   });
-  if (!promoted.length) return intent;
+  if (!promoted.length) return { ...intent, unsupported: cues };
 
   return {
     ...intent,
@@ -439,6 +484,12 @@ export function search(intent, {
   const effective = resolveNameCues(intent, canteens);
   const checkMinutes = effective.arrive_by ? toMinutes(effective.arrive_by) : now.minutes;
   const relaxed = [];
+  // How many outlets answer the name at all, before any other filter. It tells
+  // the caller apart "no outlet is called that" from "the outlet exists but
+  // fails your diet/budget/hours" — two answers that need different words.
+  const venueMatched = effective.requested_stall
+    ? canteens.filter((c) => outletMatches(effective.requested_stall, c)).length
+    : null;
   const ranked = (effective.unsupported?.length ? [] : canteens)
     .map((c) => evaluate(c, effective, { now, checkMinutes, demo, includeClosed }))
       .filter(Boolean)
@@ -516,10 +567,17 @@ export function search(intent, {
       checkTime: effective.arrive_by || now.hhmm,
       dayName: now.dayName,
       evaluated: canteens.length,
+      venueMatched,
       demo,
       allClosed,
+      // Computed over the matches, not the directory: "the next scheduled
+      // opening is tomorrow 07:30" has to describe an outlet on this list, or
+      // it is a confident statement about somewhere the user never asked for.
       ...(allClosed
-        ? { latestClose: latestClose(canteens, now.day), nextOpen: nextOpening(canteens, now.day) }
+        ? {
+          latestClose: latestClose(strong.map((r) => r.canteen), now.day),
+          nextOpen: nextOpening(strong.map((r) => r.canteen), now.day),
+        }
         : {}),
     },
     // Deliberately a sibling of `results`, never a member of it, and never
