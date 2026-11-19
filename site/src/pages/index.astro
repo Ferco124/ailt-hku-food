@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+import InteractiveDemo from '../components/InteractiveDemo';
+
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const repo = 'https://github.com/Ferco124/ailt-hku-food';
+const features = [
+  { number: '01', title: 'Ask in your own words', line1: 'Describe a meal in English or Chinese.', line2: 'The model turns your request into search intent.' },
+  { number: '02', title: 'Find your kind of food', line1: 'Explore cuisine, budget and dietary filters.', line2: 'Constraints are applied to the local dataset.' },
+  { number: '03', title: 'Explore campus', line1: 'Search by campus area, landmark or outlet.', line2: 'Walking distance and opening hours can matter too.' },
+  { number: '04', title: 'See the details', line1: 'Review venue and representative dish details.', line2: 'Prices, hours and source information add context.' },
+  { number: '05', title: 'Understand the limits', line1: 'Dietary claims show their basis and sources.', line2: 'Missing evidence is never a safety guarantee.' },
+];
+---
+
+<Layout
+  title="HKU Dining Navigator | A more thoughtful way to find food"
+  description="Explore the HKU Campus Dining & Dietary Navigator: a local, information-only project for discovering campus food."
+>
+  <header class="site-header">
+    <nav class="shell nav" aria-label="Main navigation">
+      <a class="brand" href={`${base}#top`} aria-label="HKU Dining Navigator home">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span>HKU <strong>DINING</strong><small>PROJECT SHOWCASE</small></span>
+      </a>
+      <div class="nav-links">
+        <a href={`${base}#about`}>The project</a>
+        <a href={`${base}#features`}>Features</a>
+        <a href={`${base}#how-it-works`}>How it works</a>
+      </div>
+      <a class="nav-cta" href={repo} target="_blank" rel="noopener noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> A STUDENT PROJECT FOR HKU</div>
+        <h1>Good food,<br /><em>less guesswork.</em></h1>
+        <p class="hero-intro">Meet your campus dining navigator. Tell it what you're looking for, and explore food options across HKU in a more thoughtful way.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" href={`${base}#demo`}>Explore the project <span aria-hidden="true">↗</span></a>
+          <a class="button button-text" href={`${base}#how-it-works`}>See how it works <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-footnote"><span class="spark" aria-hidden="true">✳</span> BUILT FOR THE HKU COMMUNITY <span class="footnote-divider"></span> INFORMATION ONLY</div>
+      </div>
+      <div class="hero-art" aria-label="Illustration of the campus dining discovery process">
+        <div class="art-caption"><span>THE CAMPUS FOOD QUESTION</span><span>01 — 03</span></div>
+        <div class="art-circle">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="plate"><div class="plate-inner"><span>food<br /><em>for thought.</em></span><small>HKU DINING NAVIGATOR</small></div></div>
+          <div class="floating-note note-top"><span>✦</span> YOUR WORDS</div>
+          <div class="floating-note note-bottom"><span>↗</span> LOCAL DATA</div>
+        </div>
+        <div class="art-bottom"><span>A LITTLE MORE CLARITY.</span><span>● &nbsp; HKU CAMPUS</span></div>
+      </div>
+    </section>
+
+    <section class="notice shell" aria-label="Important project limitations">
+      <span class="notice-icon" aria-hidden="true">!</span>
+      <div><strong>Prototype, not dietary advice.</strong> The dataset is not ready for real dietary recommendations. Dish names and prices are representative and not yet source-verified, and dietary constraints currently return no results. Confirm ingredients, dietary suitability and cross-contamination risks with canteen staff.</div>
+    </section>
+
+    <section class="section shell overview" id="about">
+      <div><p class="section-kicker"><span>01</span> THE PROJECT</p><h2>One campus.<br /><em>Many choices.</em></h2></div>
+      <div class="overview-copy"><p class="lead">Finding a meal that fits your day shouldn't mean searching through a dozen different pages.</p><p>Designed for HKU students, our local, browser-based navigator brings campus dining information together. Ask in plain English or Chinese and explore matches based on what matters to you—from budget and location to meal time.</p><a class="inline-link" href={`${base}#how-it-works`}>A closer look at the process <span aria-hidden="true">↗</span></a></div>
+      <div class="stats">
+        <div><strong>23</strong><span>VENUES IN THE DATASET</span></div>
+        <div><strong>69</strong><span>REPRESENTATIVE MENU ITEMS</span></div>
+        <div><strong>2</strong><span>LANGUAGES FOR QUERIES</span></div>
+      </div>
+      <p class="stats-note">Venue information was reviewed against the official HKU catering directory. Menu items and prices still need source verification.</p>
+    </section>
+
+    <section class="features-section" id="features">
+      <div class="shell section">
+        <div class="section-heading"><div><p class="section-kicker"><span>02</span> THE EXPERIENCE</p><h2>Made for the<br /><em>way you eat.</em></h2></div><p>From a simple question to a more informed choice. Here's what the project brings together.</p></div>
+        <div class="feature-grid">
+          {features.map((feature) => (
+            <article class="feature-card">
+              <div class="image-placeholder"><span class="placeholder-icon" aria-hidden="true">＋</span><span>SCREENSHOT {feature.number}</span></div>
+              <div class="feature-title"><span>{feature.number} /</span><h3>{feature.title}</h3></div>
+              <p>{feature.line1}<br />{feature.line2}</p>
+            </article>
+          ))}
+        </div>
+        <p class="placeholder-hint">Screenshots will be added by the project team.</p>
+      </div>
+    </section>
+
+    <section class="section shell process" id="how-it-works">
+      <div class="section-heading"><div><p class="section-kicker"><span>03</span> BEHIND THE SCENES</p><h2>AI helps understand.<br /><em>Local data does the rest.</em></h2></div><p>The language model interprets the request; it doesn't invent the recommendations.</p></div>
+      <div class="pipeline">
+        <div class="pipeline-step"><span>01 / INPUT</span><div class="pipeline-icon">Aa</div><h3>Your request</h3><p>Write what you're looking for in English or Chinese.</p></div>
+        <div class="pipeline-step"><span>02 / INTERPRET</span><div class="pipeline-icon">✳</div><h3>Intent parsing</h3><p>A language model translates the request into search constraints.</p></div>
+        <div class="pipeline-step"><span>03 / RETRIEVE</span><div class="pipeline-icon">▤</div><h3>Local data</h3><p>The app filters and ranks locally stored venue and menu records.</p></div>
+        <div class="pipeline-step"><span>04 / EXPLORE</span><div class="pipeline-icon">↗</div><h3>Results & context</h3><p>See matching details and the sources behind dietary claims.</p></div>
+      </div>
+      <div class="tech-row"><span>THE STACK</span><strong>Browser interface</strong><i>✳</i><strong>Node.js</strong><i>✳</i><strong>SQLite</strong><i>✳</i><strong>Language model</strong></div>
+    </section>
+
+    <section class="demo-section" id="demo">
+      <div class="shell demo-layout">
+        <div><p class="section-kicker light"><span>04</span> TRY THE IDEA</p><h2>A little taste<br /><em>of the journey.</em></h2><p class="demo-intro">Pick an example to see the kind of request the navigator is designed to understand. This is a simple illustration, not a live search.</p><div class="demo-callout"><span>✳</span><p><strong>Thoughtfully grounded.</strong><br />Actual results come from local data, not from the language model.</p></div></div>
+        <InteractiveDemo client:load />
+      </div>
+    </section>
+
+    <section class="section shell video-section" id="video">
+      <div class="section-heading"><div><p class="section-kicker"><span>05</span> SEE IT IN ACTION</p><h2>The full picture,<br /><em>in a few minutes.</em></h2></div><p>Watch the project walkthrough to see how the real app works.</p></div>
+      <div class="video-placeholder"><div class="play-icon" aria-hidden="true">▶</div><strong>DEMO VIDEO</strong><span>Video coming soon</span></div>
+    </section>
+
+    <section class="section shell quick-start" id="quick-start">
+      <div><p class="section-kicker"><span>06</span> GET STARTED</p><h2>Curious to<br /><em>try it yourself?</em></h2><p>The showcase is static. To use the actual navigator, run the project locally from the repository or use a packaged release if available.</p><a class="button button-dark" href={repo} target="_blank" rel="noopener noreferrer">Visit the repository <span aria-hidden="true">↗</span></a></div>
+      <div class="steps">
+        <div><span>01</span><p><strong>Get the project</strong><br />Clone or download the repository, or use a packaged release.</p></div>
+        <div><span>02</span><p><strong>Start it locally</strong><br />Follow the repository README. A source checkout requires Node.js 22.16 or newer.</p></div>
+        <div><span>03</span><p><strong>Open your browser</strong><br />Visit <code>http://127.0.0.1:4173</code> and try a sample request.</p></div>
+      </div>
+    </section>
+
+    <section class="shell limitations">
+      <div><span>PLEASE NOTE</span><h3>Designed with boundaries.</h3></div>
+      <p>The app does not order food, provide medical advice, or guarantee allergen safety. An empty result means no match in the current dataset, not that suitable food is unavailable. When the model is unavailable, exact sample queries may use clearly labelled cached walkthroughs rather than live results.</p>
+    </section>
+  </main>
+  <footer>
+    <div class="shell footer-main"><div><a class="footer-brand" href={`${base}#top`}><span>✳</span> HKU DINING NAVIGATOR</a><p>A student project exploring a more thoughtful<br />way to navigate campus dining.</p></div><div><span class="footer-label">PROJECT</span><a href={repo} target="_blank" rel="noopener noreferrer">GitHub repository ↗</a><a href={`${base}#video`}>Demo video — coming soon</a></div><div><span class="footer-label">THE TEAM</span><p>Team members to be added.</p></div></div>
+    <div class="shell footer-bottom"><span>HKU CAMPUS DINING & DIETARY NAVIGATOR</span><span>INFORMATION ONLY · NOT DIETARY ADVICE</span></div>
+  </footer>
+</Layout>
