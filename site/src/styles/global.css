@@ -403,29 +403,11 @@ h1 em,h2 em {
 .feature-card {
   min-width: 0
 }
-.image-placeholder {
-  aspect-ratio: 1.1;
-  background: #e2e8d9;
-  border: 1px dashed #b7c8b0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  color: #83967c;
-  font-size: 9px;
-  font-weight: 750;
-  letter-spacing: .12em
-}
-.placeholder-icon {
-  width: 37px;
-  height: 37px;
-  border: 1px solid #b4c5ac;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 20px;
-  font-weight: 400
+.feature-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #d5dccd;
 }
 .feature-title {
   display: flex;
@@ -447,11 +429,6 @@ h1 em,h2 em {
   font-size: 11px;
   line-height: 1.8;
   margin-top: 8px
-}
-.placeholder-hint {
-  margin-top: 24px;
-  color: #879384;
-  font-size: 11px
 }
 .pipeline {
   display: grid;
@@ -637,33 +614,11 @@ h1 em,h2 em {
   color: #849080;
   margin-top: 17px
 }
-.video-placeholder {
-  height: 340px;
-  background: #e4eadc;
-  border: 1px dashed #b5c5af;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #81947b;
-  gap: 12px
-}
-.play-icon {
-  display: grid;
-  place-items: center;
-  width: 62px;
-  height: 62px;
-  border: 1px solid #a4b99e;
-  border-radius: 50%;
-  font-size: 17px;
-  padding-left: 3px
-}
-.video-placeholder strong {
-  font-size: 10px;
-  letter-spacing: .15em
-}
-.video-placeholder span {
-  font-size: 12px
+.demo-video {
+  display: block;
+  width: min(100%, 880px);
+  aspect-ratio: 55 / 36;
+  background: #202f23
 }
 .quick-start {
   display: grid;
@@ -881,9 +836,6 @@ footer {
   .demo-layout,.quick-start {
     grid-template-columns: 1fr;
     gap: 40px
-  }
-  .video-placeholder {
-    height: 235px
   }
   .limitations {
     grid-template-columns: 1fr;
