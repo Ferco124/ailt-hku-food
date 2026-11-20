@@ -614,33 +614,11 @@ h1 em,h2 em {
   color: #849080;
   margin-top: 17px
 }
-.video-placeholder {
-  height: 340px;
-  background: #e4eadc;
-  border: 1px dashed #b5c5af;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #81947b;
-  gap: 12px
-}
-.play-icon {
-  display: grid;
-  place-items: center;
-  width: 62px;
-  height: 62px;
-  border: 1px solid #a4b99e;
-  border-radius: 50%;
-  font-size: 17px;
-  padding-left: 3px
-}
-.video-placeholder strong {
-  font-size: 10px;
-  letter-spacing: .15em
-}
-.video-placeholder span {
-  font-size: 12px
+.demo-video {
+  display: block;
+  width: min(100%, 880px);
+  aspect-ratio: 55 / 36;
+  background: #202f23
 }
 .quick-start {
   display: grid;
@@ -858,9 +836,6 @@ footer {
   .demo-layout,.quick-start {
     grid-template-columns: 1fr;
     gap: 40px
-  }
-  .video-placeholder {
-    height: 235px
   }
   .limitations {
     grid-template-columns: 1fr;

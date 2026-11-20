@@ -113,7 +113,11 @@ const features = [
 
     <section class="section shell video-section" id="video">
       <div class="section-heading"><div><p class="section-kicker"><span>05</span> SEE IT IN ACTION</p><h2>The full picture,<br /><em>in a few minutes.</em></h2></div><p>Watch the project walkthrough to see how the real app works.</p></div>
-      <div class="video-placeholder"><div class="play-icon" aria-hidden="true">▶</div><strong>DEMO VIDEO</strong><span>Video coming soon</span></div>
+      <video class="demo-video" controls playsinline preload="metadata" aria-label="HKU Dining Navigator project walkthrough">
+        <source src={`${base}Demo-vid.mp4`} type="video/mp4" />
+        <track kind="subtitles" src={`${base}Demo-vid.en.vtt`} srclang="en" label="English" default />
+        Your browser does not support video playback. <a href={`${base}Demo-vid.mp4`}>Download the video</a>.
+      </video>
     </section>
 
     <section class="section shell quick-start" id="quick-start">
@@ -131,7 +135,7 @@ const features = [
     </section>
   </main>
   <footer>
-    <div class="shell footer-main"><div><a class="footer-brand" href={`${base}#top`}><span>✳</span> HKU DINING NAVIGATOR</a><p>A student project exploring a more thoughtful<br />way to navigate campus dining.</p></div><div><span class="footer-label">PROJECT</span><a href={repo} target="_blank" rel="noopener noreferrer">GitHub repository ↗</a><a href={`${base}#video`}>Demo video — coming soon</a></div><div><span class="footer-label">THE TEAM</span><p>CHEUNG, Tsun Ho<br />CHUNG, Ho Kiu<br />HU, Beijia<br />MO, Zimeng</p></div></div>
+    <div class="shell footer-main"><div><a class="footer-brand" href={`${base}#top`}><span>✳</span> HKU DINING NAVIGATOR</a><p>A student project exploring a more thoughtful<br />way to navigate campus dining.</p></div><div><span class="footer-label">PROJECT</span><a href={repo} target="_blank" rel="noopener noreferrer">GitHub repository ↗</a><a href={`${base}#video`}>Demo video</a></div><div><span class="footer-label">THE TEAM</span><p>CHEUNG, Tsun Ho<br />CHUNG, Ho Kiu<br />HU, Beijia<br />MO, Zimeng</p></div></div>
     <div class="shell footer-bottom"><span>HKU CAMPUS DINING & DIETARY NAVIGATOR</span><span>INFORMATION ONLY · NOT DIETARY ADVICE</span></div>
   </footer>
 </Layout>

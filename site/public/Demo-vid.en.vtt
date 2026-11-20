@@ -1,0 +1,185 @@
+WEBVTT
+
+00:00:00.240 --> 00:00:03.480
+This is the Campus Dining
+and Dietary Navigator,
+
+00:00:03.640 --> 00:00:09.040
+running live at hkufood.kit0719.com.
+
+00:00:09.040 --> 00:00:11.640
+A deployed app, not a mock-up.
+
+00:00:12.900 --> 00:00:16.720
+I'll start with the question
+the project exists for:
+
+00:00:17.000 --> 00:00:19.100
+Halal food near the Main Building.
+
+00:00:19.800 --> 00:00:21.500
+Two venues come back,
+
+00:00:22.300 --> 00:00:26.700
+and each card shows the walking time
+from where I'm standing.
+
+00:00:35.700 --> 00:00:38.300
+First, what the language model
+actually produced:
+
+00:00:38.800 --> 00:00:42.600
+a diet, a place, a budget, four fields,
+
+00:00:43.100 --> 00:00:44.500
+and never chooses a restaurant.
+
+00:00:45.100 --> 00:00:48.000
+Retrieval does that from our own dataset.
+
+00:00:48.600 --> 00:00:51.700
+We can sort the order
+based on our personal needs.
+
+00:00:57.300 --> 00:01:02.200
+Opening the top result,
+the badge is the key one: dish evidence.
+
+00:01:03.000 --> 00:01:06.700
+The halal claim is attached
+to individual dishes we reviewed,
+
+00:01:06.700 --> 00:01:09.000
+not to the venue's reputation.
+
+00:01:09.700 --> 00:01:13.700
+Every dish under matching menu items
+carries the source we read,
+
+00:01:14.100 --> 00:01:16.600
+the sentence we relied on, and the date.
+
+00:01:17.600 --> 00:01:18.500
+Let me open one.
+
+00:01:22.800 --> 00:01:26.000
+That's the official catering page
+behind that answer.
+
+00:01:35.000 --> 00:01:36.700
+And it isn't English only.
+
+00:01:37.100 --> 00:01:38.800
+Let me ask the same thing in Chinese.
+
+00:01:48.870 --> 00:01:51.550
+We got the same pipeline, same evidence.
+
+00:01:52.210 --> 00:01:55.030
+The parser reads Chinese queries natively.
+
+00:01:55.030 --> 00:01:58.810
+Nobody on this campus should have
+to translate their lunch.
+
+00:02:01.800 --> 00:02:05.000
+Now, three constraints in one sentence.
+
+00:02:05.500 --> 00:02:06.000
+Let us try.
+
+00:02:06.700 --> 00:02:10.100
+Vegetarian under $50 near Centennial.
+
+00:02:29.900 --> 00:02:33.800
+We get the diet, budget, distance
+parsed in one pass,
+
+00:02:34.200 --> 00:02:36.900
+and every card shows
+whether it's open right now,
+
+00:02:37.300 --> 00:02:40.200
+how far the walk is,
+and the cheapest matching dish.
+
+00:02:40.700 --> 00:02:41.800
+That's the whole point.
+
+00:02:42.200 --> 00:02:44.400
+One question in, one complete answer out.
+
+00:02:44.400 --> 00:02:48.400
+Every answer traces back
+to a dated HKU page.
+
+00:02:48.700 --> 00:02:52.000
+Nothing here is a model's guess
+about what a canteen serves,
+
+00:02:52.500 --> 00:02:55.200
+which is exactly what makes this usable
+for halal,
+
+00:02:55.400 --> 00:02:57.000
+vegetarian, and budget questions,
+
+00:02:57.600 --> 00:02:59.000
+[unclear]
+
+00:03:01.100 --> 00:03:02.600
+Now, the case that matters more:
+
+00:03:03.000 --> 00:03:05.800
+Is the chicken kebab safe
+for a peanut allergy?
+
+00:03:06.900 --> 00:03:07.800
+The app refuses.
+
+00:03:10.100 --> 00:03:11.700
+It cannot confirm allergen safety.
+
+00:03:12.300 --> 00:03:15.400
+It's informational only.
+Confirm with staff.
+
+00:03:15.400 --> 00:03:20.600
+And this refusal is a rule that fires
+before the model is even called,
+
+00:03:21.300 --> 00:03:25.200
+which is why it says the same thing
+even with no network.
+
+00:03:25.900 --> 00:03:27.500
+We tested on 30 queries.
+
+00:03:28.100 --> 00:03:29.800
+Safety refusal: five out of five.
+
+00:03:30.300 --> 00:03:31.700
+Dietary: 12 out of 15.
+
+00:03:32.200 --> 00:03:34.800
+And three misses are [unclear].
+
+00:03:34.970 --> 00:03:37.450
+Vegan certification, breakfast before 11.
+
+00:03:38.430 --> 00:03:42.930
+And the time and location: nine out of 10,
+against an 80% target.
+
+00:03:43.900 --> 00:03:45.200
+Two honest limits:
+
+00:03:45.500 --> 00:03:47.000
+allergen safety is never guessed,
+
+00:03:47.500 --> 00:03:50.300
+and this is information,
+never medical advice.
+
+00:03:50.800 --> 00:03:51.600
+Thanks for watching.
